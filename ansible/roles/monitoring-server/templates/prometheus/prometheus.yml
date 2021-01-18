@@ -35,30 +35,14 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets: ['loki:3100']
+  - job_name: 'alertgram'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['alertgram:8081']
 
-#  - job_name: 'pushgateway'
-#    scrape_interval: 10s
-#    honor_labels: true
-#    static_configs:
-#      - targets: ['pushgateway:9091']
-#
-#  - job_name: 'statsd'
-#    scrape_interval: 10s
-#    honor_labels: true
-#    static_configs:
-#      - targets: ['statsd:9125']
-#
-#  - job_name: arangodb
-#    static_configs:
-#{% for host in groups['arangodb'] %}
-#      - targets: ['{{ host }}:9101']
-#      - targets: ['{{ host }}:9102']
-#{% endfor %}
-#
-#
-#alerting:
-#  alertmanagers:
-#  - scheme: http
-#    static_configs:
-#    - targets:
-#      - 'alertmanager:9093'
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - 'alertmanager:9093'

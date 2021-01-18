@@ -1,8 +1,19 @@
+global:
+    resolve_timeout: 5m
 route:
-    receiver: 'alertmananger-bot'
-
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 3h
+    receiver: telegram
+      routes:
+      # Only important alerts.
+      - match_re:
+          severity: ^(critical)$
+        receiver: telegram-critical
 receivers:
-- name: 'alertmananger-bot'
-  webhook_configs:
-  - send_resolved: true
-    url: 'http://alertmanager-bot:8080'
+  - name: "telegram"
+    webhook_config:
+      - url: "http://alertgram:8080/alerts"
+- name: telegram-critical
+    webhook_configs:
+    - url: 'http://alertgram:8080/alerts?chat-id=-XXXXXXX'
