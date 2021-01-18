@@ -1,0 +1,53 @@
+version: "3"
+
+networks:
+  proxy_nw:
+    external: true
+
+services:
+  nodeexporter:
+    image: prom/node-exporter:v1.0.1
+    container_name: nodeexporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: unless-stopped
+    ports:
+      - 9100:9100
+    networks:
+      - proxy_nw
+    labels:
+      org.label-schema.group: "monitoring"
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://{{ hostvars[groups['ELK'][0]].inventory_hostname }}:12201"
+        tag: "nodeexporter"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.36.0
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /cgroup:/cgroup:ro
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    networks:
+      - proxy_nw
+    labels:
+      org.label-schema.group: "monitoring"
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://{{ hostvars[groups['ELK'][0]].inventory_hostname }}:12201"
+        tag: "cadvisor"

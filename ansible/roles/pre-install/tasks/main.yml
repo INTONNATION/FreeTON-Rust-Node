@@ -1,0 +1,49 @@
+
+- name: "Install docker"
+  shell: 'curl -fsSL https://get.docker.com | sh'
+  tags: install
+
+- name: "Install docker-compose"
+  shell: 'curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+  tags: install
+
+- name: "Install docker-compose | chmod"
+  shell: 'chmod +x /usr/local/bin/docker-compose'
+  tags: install
+
+- name: install pip
+  package:
+    name: python3-pip
+    state: present
+  tags: install
+
+- name: "Install pip libs"
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - passlib
+  tags: install
+
+- name: Disable swappiness
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+    sysctl_set: yes
+  with_items:
+    - { name: 'vm.swappiness', value: '0' }
+    - { name: 'vm.max_map_count', value: '3072000' }
+  tags: install
+
+- name: Update kernal parametes
+  shell: "echo madvise > /sys/kernel/mm/transparent_hugepage/defrag"
+  tags: install
+
+- name: Update kernal parametes
+  shell: "echo madvise > /sys/kernel/mm/transparent_hugepage/enabled"
+  tags: install
+
+- name: "Create proxy network"
+  shell: 'docker netwrk create proxy_nw || true '
+  tags: up

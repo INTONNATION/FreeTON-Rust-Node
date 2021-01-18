@@ -1,0 +1,64 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'docker-host-alpha'
+
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+rule_files:
+  - "alert.rules"
+
+# A scrape configuration containing exactly one endpoint to scrape.
+scrape_configs:
+#  - job_name: 'nodeexporter'
+#    scrape_interval: 5s
+#    static_configs:
+#{% for host in groups['monitoring-node'] %}
+#      - targets: ['{{ host }}:9100']
+#{% endfor %}
+#
+#  - job_name: 'cadvisor'
+#    scrape_interval: 5s
+#    static_configs:
+#{% for host in groups['monitoring-node'] %}
+#      - targets: ['{{ host }}:8080']
+#{% endfor %}
+
+  - job_name: 'prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'loki'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['loki:3100']
+
+#  - job_name: 'pushgateway'
+#    scrape_interval: 10s
+#    honor_labels: true
+#    static_configs:
+#      - targets: ['pushgateway:9091']
+#
+#  - job_name: 'statsd'
+#    scrape_interval: 10s
+#    honor_labels: true
+#    static_configs:
+#      - targets: ['statsd:9125']
+#
+#  - job_name: arangodb
+#    static_configs:
+#{% for host in groups['arangodb'] %}
+#      - targets: ['{{ host }}:9101']
+#      - targets: ['{{ host }}:9102']
+#{% endfor %}
+#
+#
+#alerting:
+#  alertmanagers:
+#  - scheme: http
+#    static_configs:
+#    - targets:
+#      - 'alertmanager:9093'

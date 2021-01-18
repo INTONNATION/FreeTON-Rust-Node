@@ -1,0 +1,13 @@
+- name: monitoring-server
+  hosts: monitoring-server
+  remote_user: root
+  roles:
+    - pre-install
+    - monitoring-server
+
+- name: monitoring-node
+  hosts: monitoring-node
+  remote_user: root
+  roles:
+    - pre-install
+    - monitoring-node

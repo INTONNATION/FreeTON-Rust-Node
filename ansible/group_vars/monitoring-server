@@ -1,0 +1,5 @@
+telegram_user_ids:
+  -
+telegram_bot_token:
+grafana_username: admin
+grafana_password: admin

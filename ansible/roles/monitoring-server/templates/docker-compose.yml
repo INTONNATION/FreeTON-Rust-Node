@@ -1,0 +1,129 @@
+version: "3"
+
+networks:
+  proxy_nw:
+#    internal: true
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+    alertmanagerbot_data: {}
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.20.1
+    container_name: prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    networks:
+      - proxy_nw
+    labels:
+      org.label-schema.group: "monitoring"
+
+
+#  alertmanager:
+#    image: prom/alertmanager:v0.21.0
+#    container_name: alertmanager
+#    volumes:
+#      - ./alertmanager:/etc/alertmanager
+#    command:
+#      - '--config.file=/etc/alertmanager/config.yml'
+#      - '--storage.path=/alertmanager'
+#    restart: unless-stopped
+#    ports:
+#      - 9093:9093
+#    networks:
+#      - proxy_nw
+#    labels:
+#      org.label-schema.group: "monitoring"
+#    logging:
+#      driver: gelf
+#      options:
+#        gelf-address: "udp://{{ hostvars[groups['ELK'][0]].inventory_hostname }}:12201"
+#        tag: "alertmanager"
+#
+#  alertmanager-bot:
+#    image: metalmatze/alertmanager-bot:0.4.2
+#    container_name: alertmanager-bot
+#    volumes:
+#      - alertmanagerbot_data:/data
+#    command:
+#      - --alertmanager.url=http://alertmanager:9093
+#      - --log.level=info
+#      - --store=bolt
+#      - --bolt.path=/data/bot.db
+#    environment:
+#      TELEGRAM_ADMIN: "{% for id in telegram_user_ids %}{{ id }}\n{% endfor %}"
+#      TELEGRAM_TOKEN: "{{ telegram_bot_token }}"
+#    restart: unless-stopped
+#    ports:
+#      - 8088:8080
+#    networks:
+#      - proxy_nw
+#    labels:
+#      org.label-schema.group: "monitoring"
+
+  grafana:
+    image: grafana/grafana:7.1.1
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    networks:
+      - proxy_nw
+
+    labels:
+      org.label-schema.group: "monitoring"
+
+  loki:
+    image: grafana/loki:master
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - proxy_nw
+    labels:
+      org.label-schema.group: "monitoring"
+
+  promtail:
+    depends_on:
+        - loki
+    image: grafana/promtail:master
+    volumes:
+        - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - proxy_nw
+
+
+#  pushgateway:
+#    image: prom/pushgateway:v1.2.0
+#    container_name: pushgateway
+#    restart: unless-stopped
+#    ports:
+#      - 9091:9091
+#    networks:
+#      - proxy_nw
+#    labels:
+#      org.label-schema.group: "monitoring"
+#    logging:
+#      driver: gelf
+#      options:
+#        gelf-address: "udp://{{ hostvars[groups['ELK'][0]].inventory_hostname }}:12201"
+#        tag: "pushgateway"

@@ -1,0 +1,19 @@
+
+- name: "Create /opt dir"
+  shell: 'mkdir -p /opt/{{ role_name }}'
+  tags: up
+
+- name: "Template docker-compose.yml"
+  template:
+    src: 'docker-compose.yml'
+    dest: '/opt/{{ role_name }}'
+    mode: 0755
+  tags: up
+
+- name: "Run docker-compose"
+  shell: 'cd /opt/{{ role_name }} && docker-compose up -d'
+  tags: up
+
+- name: "Shut down docker-compose"
+  shell: 'cd /opt/{{ role_name }} && docker-compose down'
+  tags: down
