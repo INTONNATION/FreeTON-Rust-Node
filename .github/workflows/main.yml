@@ -1,6 +1,9 @@
 name: Build Rust node and tools
 
-on: [push]
+on:
+  push:
+    branches:
+      - 'v*'
 
 jobs:
   build:
@@ -34,3 +37,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: scripts/build/rust-node-tools.tar.gz
         asset_name: rust-node-tools-${{ github.ref }}.tar.gz
+        asset_content_type: application/gzip
