@@ -5,8 +5,11 @@ server:
 positions:
   filename: /tmp/positions.yaml
 
+{% for host in groups['monitoring-node'] %}
 clients:
-  - url: {{ loki_server_url }}/loki/api/v1/push
+  - url: http://{{ host }}:3100/loki/api/v1/push
+{% endfor %}
+
 
 scrape_configs:
   - job_name: journal
@@ -17,4 +20,12 @@ scrape_configs:
     relabel_configs:
       - source_labels: ['__journal__systemd_unit']
         target_label: 'unit'
+  - job_name: system
+    static_configs:
+    - targets:
+      - localhost
+    labels:
+      job: varlogs
+      __path__: /var/log/*log
+
 

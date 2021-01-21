@@ -71,8 +71,8 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
-      - GF_SECURITY_ADMIN_USER= {{ grafana_username }}
-      - GF_SECURITY_ADMIN_PASSWORD= {{ grafana_password }}
+      - GF_SECURITY_ADMIN_USER={{ grafana_username }}
+      - GF_SECURITY_ADMIN_PASSWORD={{ grafana_password }}
       - GF_USERS_ALLOW_SIGN_UP=false
     restart: unless-stopped
     ports:
@@ -85,7 +85,10 @@ services:
 
   loki:
     image: grafana/loki:master
+    container_name: loki
     command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - 3100:3100
     volumes:
       - ./loki/config.yml:/etc/loki/local-config.yml
     networks:

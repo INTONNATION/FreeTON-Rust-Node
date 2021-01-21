@@ -93,7 +93,7 @@
       mode: "u=rw,g=r,o="
     become: yes
     tags:
-      - loki
+      - loki-config
 
   - name: Loki | Template upgrade script
     template:
