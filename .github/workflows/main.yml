@@ -1,6 +1,10 @@
 name: Build Rust node and tools
 
-on: [push]
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build:
@@ -34,3 +38,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: scripts/build/rust-node-tools.tar.gz
         asset_name: rust-node-tools-${{ github.ref }}.tar.gz
+        asset_content_type: application/gzip
