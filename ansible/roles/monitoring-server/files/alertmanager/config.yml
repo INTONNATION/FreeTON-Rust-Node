@@ -5,15 +5,11 @@ route:
     group_interval: 5m
     repeat_interval: 3h
     receiver: telegram
-      routes:
-      # Only important alerts.
-      - match_re:
-          severity: ^(critical)$
-        receiver: telegram-critical
+
+
 receivers:
-  - name: "telegram"
-    webhook_config:
-      - url: "http://alertgram:8080/alerts"
-- name: telegram-critical
-    webhook_configs:
-    - url: 'http://alertgram:8080/alerts?chat-id={{ telegram_chat_id }}'
+- name: 'telegram'
+  webhook_configs:
+  - send_resolved: true
+    url: 'http://alertgram:8080/alerts'
+

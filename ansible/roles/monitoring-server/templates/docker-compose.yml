@@ -53,8 +53,8 @@ services:
     volumes:
       - alertgram_data:/data
     environment:
-      telegram.api-token= {{ telegram_api_token }}
-      telegram.chat-id= {{ telegram_chat_id}}
+      - ALERTGRAM_TELEGRAM_API_TOKEN={{ telegram_api_token }}
+      - ALERTGRAM_TELEGRAM_CHAT_ID={{ telegram_chat_id }}
     restart: unless-stopped
     ports:
       - 8088:8080

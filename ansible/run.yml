@@ -9,5 +9,4 @@
   hosts: monitoring-node
   remote_user: root
   roles:
-    - pre-install
     - monitoring-node
