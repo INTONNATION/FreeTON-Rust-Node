@@ -23,12 +23,12 @@ clone_and_build tonos-cli ${TONOS_CLI_GITHUB_REPO} ${TONOS_CLI_GITHUB_COMMIT_ID}
 
 if [ $1 = "--release-tar" ]; then
     tar --transform 's/.*\///g' -cvzf rust-node-tools.tar.gz \
-        build/ton-node/target/release/ton_node \
-        build/ton-labs-node-tools/target/release/console \
-        build/ton-labs-node-tools/target/release/dhtscan \
-        build/ton-labs-node-tools/target/release/gendht \
-        build/ton-labs-node-tools/target/release/keygen \
-        build/ton-labs-node-tools/target/release/print \
-        build/ton-labs-node-tools/target/release/zerostate \
-        build/tonos-cli/target/release/tonos-cli
+        ton-node/target/release/ton_node \
+        ton-labs-node-tools/target/release/console \
+        ton-labs-node-tools/target/release/dhtscan \
+        ton-labs-node-tools/target/release/gendht \
+        ton-labs-node-tools/target/release/keygen \
+        ton-labs-node-tools/target/release/print \
+        ton-labs-node-tools/target/release/zerostate \
+        tonos-cli/target/release/tonos-cli
 fi
