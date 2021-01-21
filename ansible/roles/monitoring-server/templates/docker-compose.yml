@@ -6,7 +6,7 @@ networks:
 volumes:
     prometheus_data: {}
     grafana_data: {}
-    alertmanagerbot_data: {}
+    alertgram_data: {}
 
 services:
   prometheus:
@@ -51,10 +51,10 @@ services:
     image: slok/alertgram:latest
     container_name: alertgram
     volumes:
-      - alertmanagerbot_data:/data
+      - alertgram_data:/data
     environment:
-      telegram.api-token: XXXXX
-      telegram.chat-id: YYYYY
+      telegram.api-token= {{ telegram_api_token }}
+      telegram.chat-id= {{ telegram_chat_id}}
     restart: unless-stopped
     ports:
       - 8088:8080
@@ -71,8 +71,8 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER= {{ grafana_username }}
+      - GF_SECURITY_ADMIN_PASSWORD= {{ grafana_password }}
       - GF_USERS_ALLOW_SIGN_UP=false
     restart: unless-stopped
     ports:
@@ -86,17 +86,9 @@ services:
   loki:
     image: grafana/loki:master
     command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki/config.yml:/etc/loki/local-config.yml
     networks:
       - proxy_nw
     labels:
       org.label-schema.group: "monitoring"
-
-  promtail:
-    depends_on:
-        - loki
-    image: grafana/promtail:master
-    volumes:
-        - /var/log:/var/log
-    command: -config.file=/etc/promtail/config.yml
-    networks:
-      - proxy_nw

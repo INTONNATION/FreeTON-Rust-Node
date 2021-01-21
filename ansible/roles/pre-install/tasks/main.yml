@@ -43,7 +43,3 @@
 - name: Update kernal parametes
   shell: "echo madvise > /sys/kernel/mm/transparent_hugepage/enabled"
   tags: install
-
-- name: "Create proxy network"
-  shell: 'docker netwrk create proxy_nw || true '
-  tags: up

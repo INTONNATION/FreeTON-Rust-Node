@@ -16,4 +16,4 @@ receivers:
       - url: "http://alertgram:8080/alerts"
 - name: telegram-critical
     webhook_configs:
-    - url: 'http://alertgram:8080/alerts?chat-id=-XXXXXXX'
+    - url: 'http://alertgram:8080/alerts?chat-id={{ telegram_chat_id }}'
