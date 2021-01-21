@@ -1,3 +1,7 @@
+name: Build Rust node and tools
+
+on: [push]
+
 jobs:
   build:
 
