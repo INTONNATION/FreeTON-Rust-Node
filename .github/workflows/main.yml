@@ -32,5 +32,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: scripts/rust-node-tools.tar.gz
+        asset_path: scripts/build/rust-node-tools.tar.gz
         asset_name: rust-node-tools-${{ github.ref }}.tar.gz
