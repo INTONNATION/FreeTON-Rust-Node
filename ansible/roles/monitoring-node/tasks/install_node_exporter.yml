@@ -46,7 +46,6 @@
   when:
     - node_exporter_version == "latest"
     - node_exporter_binary_local_dir | length == 0
-  delegate_to: localhost
   run_once: true
 
 - block:
@@ -61,7 +60,6 @@
       with_items: "{{ _checksums }}"
       when:
         - "('linux-' + go_arch + '.tar.gz') in item"
-  delegate_to: localhost
   when: node_exporter_binary_local_dir | length == 0
 
 - name: create node_exporter binary install directory
@@ -101,7 +99,6 @@
       until: _download_binary is succeeded
       retries: 5
       delay: 2
-      delegate_to: localhost
       check_mode: false
 
     - name: Unpack node_exporter binary
@@ -110,7 +107,6 @@
         src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-{{ go_arch }}.tar.gz"
         dest: "/tmp"
         creates: "/tmp/node_exporter-{{ node_exporter_version }}.linux-{{ go_arch }}/node_exporter"
-      delegate_to: localhost
       check_mode: false
 
     - name: Propagate node_exporter binaries
