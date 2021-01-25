@@ -1,0 +1,6 @@
+---
+- name: Install statsd
+  import_tasks: install.yml
+
+- name: Run as systemd service
+  import_tasks: configure.yml

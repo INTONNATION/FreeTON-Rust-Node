@@ -1,0 +1,13 @@
+[Unit]
+Description=FreeTON Rust full node
+
+[Service]
+Environment="STATSD_DOMAIN=localhost:"
+Environment="STATSD_PORT=9125"
+User=rustnode
+Type=simple
+ExecStart=/usr/local/bin/ton_node --configs {{ rustnode_conf_dir }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
