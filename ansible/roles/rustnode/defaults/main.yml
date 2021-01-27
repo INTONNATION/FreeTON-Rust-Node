@@ -11,7 +11,7 @@ state: installed
 
 version: "latest" # tag or hash commit (required if state: installed,upgraded,reinstalled)
 
-build: "false"# local, remote, false
+build: false
 
 network: rustnet.ton.dev
 

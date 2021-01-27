@@ -9,18 +9,7 @@
 
 - name: Start remote build
   shell: "/opt/FreeTON-Rust-Node/scripts/build.sh"
-  when: build == "remote"
-
-- name: Scripts local checkout
-  git:
-    repo: '{{ git_repo_url }}'
-    dest: "{{ playbook_dir }}/FreeTON-Rust-Node"
-  delegate_to: localhost
-  when: build == "local"
-
-- name: Start local build
-  shell: "{{ playbook_dir }}/FreeTON-Rust-Node/scripts/install_deps.sh && {{ playbook_dir }}/FreeTON-Rust-Node/scripts/build.sh"
-  when: build == "local"
+  when: build == true
 
 - name: Get assets
   get_url:
@@ -29,17 +18,17 @@
     headers:
       Accept: "application/vnd.github.v3+json"
     dest: "/tmp/assets_response"
-  when: build != "local" and build != "remote"
+  when: build == false
 
 - name: Get download url
   shell: |
     cat "/tmp/assets_response" | jq '.assets | .[] | select(.browser_download_url | contains("tar.gz")) | .url' | sed -e 's/^"//' -e 's/"$//'
   register: "download_url"
-  when: build != "local" and build != "remote"
+  when: build == false
 
 - debug:
     msg: "{{ download_url.stdout }}"
-  when: build != "local" and build != "remote"
+  when: build == false
 
 - name: Download latest release
   get_url:
@@ -49,11 +38,11 @@
     force: yes
     headers:
       Accept: "application/octet-stream"
-  when: version == "latest" and (build != "local" and build != "remote")
+  when: version == "latest" and build == false
 
 - name: Unachive release 
   unarchive:
     src: /tmp/rusnode.tar.gz
     dest: /usr/local/bin
     remote_src: yes
-  when: version == "latest" and (build != "local" and build != "remote")
+  when: version == "latest" and build == false
