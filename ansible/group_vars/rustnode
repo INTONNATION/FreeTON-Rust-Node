@@ -1,0 +1,31 @@
+
+# Pre-install
+github_token: 964b5da8b16f666662b675046e27e4b7881e648e
+git_repo: "azavodovsky/FreeTON-Rust-Node"
+scripts_dir: "/opt/FreeTON-Rust-Node"
+
+# dstatsd
+statsd_version: "0.19.0"
+statsd_conf_dir: "/etc/statsd"
+
+# rustnode
+
+version: "latest"
+
+build: false
+
+network: rustnet.ton.dev
+
+database_path: "/opt/node_db"
+rustnode_conf_dir: /etc/rustnode
+
+logging: 
+#  logger: syslog
+#  logger: file
+#  logger: promtail
+#  level: debug
+#  promtail:
+#    server: 
+#    port: 
+#  file:
+#    path: "" if logger: file

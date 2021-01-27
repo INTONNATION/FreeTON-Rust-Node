@@ -1,9 +1,4 @@
 ---
-- name: Create rustnode user
-  user:
-    name: rustnode
-    create_home: no
-    shell: /usr/sbin/nologin
 
 - name: Create config directory
   file:
@@ -14,11 +9,13 @@
   with_items:
     - "{{ rustnode_conf_dir }}"
     - "{{ database_path }}"
+  tags: install
 
 - name: Download {{ network }} global config 
   get_url:
     url: "https://raw.githubusercontent.com/tonlabs/{{ network }}/main/configs/ton-global.config.json"
     dest: "{{ rustnode_conf_dir }}/ton-global.config.json"
+  tags: install
 
 - name: Copy config file
   copy:
@@ -27,6 +24,7 @@
     owner: rustnode
   with_items:
     - {"src": "log_cfg.yml", "dest": "{{ rustnode_conf_dir }}/log_cfg.yml"}
+  tags: install
 
 - name: Template systemd service
   template:
@@ -35,6 +33,7 @@
   with_items:
     - {"src": "rust_node.service.j2", "dest": "/etc/systemd/system/rust_node.service"}
     - {"src": "default_config.json.j2", "dest": "{{ rustnode_conf_dir }}/default_config.json"}
+  tags: install
 
 - name: Start rust_node
   systemd:
@@ -42,3 +41,5 @@
     state: "started"
     name: "rust_node"
     daemon_reload: yes
+  tags: start
+

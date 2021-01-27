@@ -1,0 +1,13 @@
+---
+
+- name: Create config directory
+  file: 
+    path: "{{ statsd_conf_dir }}"
+    state: directory
+    owner: statsd
+    mode: '0755'
+  tags: install
+
+- name: Install statsd
+  shell: "{{ scripts_dir }}/scripts/statsd.sh {{ statsd_version }}"
+  tags: install

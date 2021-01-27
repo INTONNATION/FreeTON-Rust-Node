@@ -6,7 +6,7 @@ Environment="STATSD_DOMAIN=localhost:"
 Environment="STATSD_PORT=9125"
 User=rustnode
 Type=simple
-ExecStart=/usr/local/bin/ton_node --configs {{ rustnode_conf_dir }}
+ExecStart=/usr/local/bin/ton_node --configs {{ rustnode_conf_dir }} | logger -n {{ hostvars[groups['monitoring-node'][0]]['ansible_inventory'] }} -P 1514 -T --octet-count --rfc5424
 Restart=on-failure
 
 [Install]

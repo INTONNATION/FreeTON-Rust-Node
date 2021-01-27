@@ -11,35 +11,28 @@
   shell: 'chmod +x /usr/local/bin/docker-compose'
   tags: install
 
-- name: install pip
-  package:
-    name: python3-pip
-    state: present
+- name: Copy scripts to remote
+  copy:
+    src: "{{ item }}"
+    dest: "{{ scripts_dir }}/scripts"
+  with_fileglob:
+    - ../scripts/*
   tags: install
 
-- name: "Install pip libs"
-  pip:
-    name: "{{ item }}"
-  with_items:
-    - passlib
+- name: Install dependencies
+  shell: '{{ scripts_dir }}/scripts/install_deps.sh'
   tags: install
 
-- name: Disable swappiness
-  sysctl:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    state: present
-    reload: yes
-    sysctl_set: yes
-  with_items:
-    - { name: 'vm.swappiness', value: '0' }
-    - { name: 'vm.max_map_count', value: '3072000' }
+- name: Create rustnode user
+  user:
+    name: rustnode
+    create_home: no
+    shell: /usr/sbin/nologin
   tags: install
 
-- name: Update kernal parametes
-  shell: "echo madvise > /sys/kernel/mm/transparent_hugepage/defrag"
-  tags: install
-
-- name: Update kernal parametes
-  shell: "echo madvise > /sys/kernel/mm/transparent_hugepage/enabled"
+- name: Create statsd user
+  user:
+    name: statsd
+    create_home: no
+    shell: /usr/sbin/nologin
   tags: install

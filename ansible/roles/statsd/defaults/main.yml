@@ -1,5 +1,1 @@
----
-# defaults file for statsd
-git_repo_url: "https://github.com/azavodovsky/FreeTON-Rust-Node"
-statsd_version: "0.19.0"
-statsd_conf_dir: "/etc/statsd"
+ 

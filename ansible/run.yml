@@ -5,14 +5,16 @@
     - pre-install
     - monitoring-server
 
-- name: monitoring-node
-  hosts: monitoring-node
-  remote_user: root
-  roles:
-    - monitoring-node
+#- name: monitoring-node
+#  hosts: monitoring-node
+#  remote_user: root
+#  roles:
+#    - monitoring-node
 
 - name: rustnode
   hosts: rustnode
   remote_user: root
   roles:
+   - pre-install
+   - statsd
    - rustnode
