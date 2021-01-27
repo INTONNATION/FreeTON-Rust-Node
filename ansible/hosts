@@ -1,4 +1,2 @@
 [monitoring-server]
 localhost ansible_connection=local
-[rustnode]
-localhost ansible_connection=local

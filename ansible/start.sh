@@ -35,6 +35,22 @@ fi
 
 export ANSIBLE_HOST_KEY_CHECKING=False
 
+PS3='Please enter what do you want to install: '
+options=("Rust Node" "Monitoring Server")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Rust Node")
+	    echo '[rustnode]' > hosts
+            break
+	    ;;
+        "Monitoring Server")
+	    echo '[monitoring-server]' > hosts
+	    break
+	    ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done
 
 PS3='Please enter install method: '
 options=("SSH" "Local" "Quit")
@@ -45,13 +61,13 @@ do
             echo "Installation on remote server..."
 	    read -p "IP address or hostname of remote server: " -r host
             read -p "SSH username: " -r username
-	    printf '%s\n%s\n' '[monitoring-server]' ${host} '[rustnode]' ${host} > hosts
+	    echo ${host} >> hosts
             ansible-playbook -i hosts -u $username --become --become-method=sudo -k  run.yml
 	    break
             ;;
         "Local")
             echo "Installation on local server..."
-	    printf '%s\n%s\n' '[monitoring-server]' 'localhost ansible_connection=local' '[rustnode]' 'localhost ansible_connection=local' > hosts
+	    echo 'localhost ansible_connection=local' >> hosts
 	    ansible-playbook -i hosts run.yml
 	    break
             ;;
