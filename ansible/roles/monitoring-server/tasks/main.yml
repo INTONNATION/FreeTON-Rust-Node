@@ -1,3 +1,14 @@
+- name: "Install docker"
+  shell: 'curl -fsSL https://get.docker.com | sh'
+  tags: install
+
+- name: "Install docker-compose"
+  shell: 'curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+  tags: install
+
+- name: "Install docker-compose | chmod"
+  shell: 'chmod +x /usr/local/bin/docker-compose'
+  tags: install
 
 - name: "Create /opt dir"
   shell: 'mkdir -p /opt'
@@ -27,7 +38,3 @@
 - name: "Run docker-compose"
   shell: 'cd /opt/{{ role_name }} && docker-compose up -d'
   tags: up
-
-- name: "Shut down docker-compose"
-  shell: 'cd /opt/{{ role_name }} && docker-compose down'
-  tags: down
