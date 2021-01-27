@@ -1,40 +1,40 @@
 - name: "Install docker"
   shell: 'curl -fsSL https://get.docker.com | sh'
-  tags: docker,up
+  tags: docker,up,install
 
 - name: "Install docker-compose"
   shell: 'curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-  tags: docker,up
+  tags: docker,up,install
 
 - name: "Install docker-compose | chmod"
   shell: 'chmod +x /usr/local/bin/docker-compose'
-  tags: docker,up
+  tags: docker,up,install
 
 - name: "Create /opt dir"
   shell: 'mkdir -p /opt'
-  tags: up
+  tags: install,up
 
 - name: "Copy build files"
   copy:
     src: '.'
     dest: '/opt/{{ role_name }}/'
     mode: 0755
-  tags: up
+  tags: install,up
 
 - name: "Template docker-compose.yml"
   template:
     src: 'docker-compose.yml'
     dest: '/opt/{{ role_name }}'
     mode: 0755
-  tags: up
+  tags: install,up
 
 - name: "Template prometheus.yml"
   template:
     src: 'prometheus.yml'
     dest: '/opt/{{ role_name }}/prometheus'
     mode: 0755
-  tags: up
+  tags: install,up
 
 - name: "Run docker-compose"
   shell: 'cd /opt/{{ role_name }} && docker-compose up -d'
-  tags: up
+  tags: install,up
