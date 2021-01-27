@@ -6,7 +6,7 @@ Environment="STATSD_DOMAIN=localhost:"
 Environment="STATSD_PORT=9125"
 User=rustnode
 Type=simple
-ExecStart=/usr/local/bin/ton_node --configs {{ rustnode_conf_dir }}
+ExecStart=/bin/bash -c "/usr/local/bin/ton_node --configs /etc/rustnode | /usr/bin/logger -n {{ hostvars[groups['monitoring-server'][0]]['inventory_hostname'] }} -P 1514 -T --rfc5424 --octet-count"
 Restart=on-failure
 
 [Install]
