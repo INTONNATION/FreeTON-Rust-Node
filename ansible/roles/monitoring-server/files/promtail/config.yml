@@ -20,5 +20,5 @@ scrape_configs:
       labels:
         job: "rust-node"
     relabel_configs:
-      - source_labels: ['__syslog_message_hostname']
-        target_label: 'nodehost'
+      - source_labels: ['__syslog_message_rustnode']
+        target_label: 'rustnode'
