@@ -1,7 +1,7 @@
 ---
 # tasks file for rustnode
 - name: Build Rust Node and Console (Optional)
-  import_tasks: 1_install.yml
+  import_tasks: install.yml
 
 - name: Install Rust Node
-  import_tasks: 2_start.yml
+  import_tasks: start.yml

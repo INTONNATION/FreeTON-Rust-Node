@@ -1,0 +1,18 @@
+---
+- name: Copy config file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: statsd
+  with_items:
+    - {"src": "statsd-mapping.yaml", "dest": "{{ statsd_conf_dir }}/statsd-mapping.yaml"}
+    - {"src": "statsd-exporter.service", "dest": "/etc/systemd/system/statsd-exporter.service"}
+  tags: install
+
+- name: Start statsd
+  systemd: 
+    enabled: yes
+    state: "started"
+    name: "statsd-exporter"
+    daemon_reload: yes
+  tags: start

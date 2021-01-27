@@ -2,24 +2,11 @@
   copy:
     src: "{{ item }}"
     dest: "{{ scripts_dir }}/scripts"
+    mode: 0755
   with_fileglob:
     - ../scripts/*
   tags: install
 
 - name: Install dependencies
   shell: '{{ scripts_dir }}/scripts/install_deps.sh'
-  tags: install
-
-- name: Create rustnode user
-  user:
-    name: rustnode
-    create_home: no
-    shell: /usr/sbin/nologin
-  tags: install
-
-- name: Create statsd user
-  user:
-    name: statsd
-    create_home: no
-    shell: /usr/sbin/nologin
   tags: install

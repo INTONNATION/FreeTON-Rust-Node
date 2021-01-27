@@ -1,4 +1,4 @@
-[monitoring-server]
-64.227.124.59
-#[rustnode]
-#localhost ansible_connection=local
+#[monitoring-server]
+#64.227.124.59
+[rustnode]
+localhost ansible_connection=local
