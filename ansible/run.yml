@@ -10,3 +10,9 @@
   remote_user: root
   roles:
     - monitoring-node
+
+- name: rustnode
+  hosts: rustnode
+  remote_user: root
+  roles:
+   - rustnode

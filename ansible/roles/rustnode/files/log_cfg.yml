@@ -13,64 +13,57 @@ appenders:
     encoder:
       pattern: "{f}:{L} {l} [{h({t})}] {I}: {m}{n}"
 
-  logfile:
-    kind: file
-    path: "/ton-node/logs/output.log"
-    encoder:
-      pattern: "{d(%s.%f)} {l} [{h({t})}] {I}: {m}{n}"
-
-  tvm_logfile:
-    kind: file
-    path: "/ton-node/logs/tvm.log"
+  tvm_stdout:
+    kind: console
     encoder:
       pattern: "{m}{n}"
 
 root:
   level: warn
   appenders:
-    - logfile
+    - console
 
 loggers:
   # node messages
   node:
     level: debug
     appenders:
-      - logfile
+      - stdout
 
   ton_node:
     level: trace
     additive: false
     appenders:
-      - logfile
+      - stdout
 
   # adnl messages
   adnl:
     level: debug
     appenders:
-      - logfile
+      - stdout
 
   # block messages
   ton_block:
     level: debug
     appenders:
-      - logfile
+      - stdout
 
   # block messages
   executor:
     level: debug
     appenders:
-      - logfile
+      - stdout
 
   # tvm messages
   tvm:
     level: trace
     appenders:
-      - tvm_logfile
+      - tvm_stdout
 
   librdkafka:
     level: warn
     appenders:
-      - logfile
+      - stdout
 
   validator:
     level: debug
