@@ -5,7 +5,7 @@ global:
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-      monitor: 'monitoring-host-alpha'
+      monitor: 'rustnode'
 
 # Load and evaluate rules in this file every 'evaluation_interval' seconds.
 rule_files:
@@ -20,6 +20,12 @@ scrape_configs:
       - targets: ['{{ host }}:9100']
 {% endfor %}
 
+  - job_name: 'statsdexporter'
+    scrape_interval: 5s
+    static_configs:
+{% for host in groups['rustnode'] %}
+      - targets: ['{{ host }}:9102']
+{% endfor %}
 
   - job_name: 'prometheus'
     scrape_interval: 10s
