@@ -21,17 +21,19 @@ clone_and_build ton-node ${TON_NODE_GITHUB_REPO} ${TON_NODE_GITHUB_COMMIT_ID} "-
 clone_and_build ton-labs-node-tools ${TON_NODE_TOOLS_GITHUB_REPO} ${TON_NODE_TOOLS_GITHUB_COMMIT_ID} "--release"
 clone_and_build tonos-cli ${TONOS_CLI_GITHUB_REPO} ${TONOS_CLI_GITHUB_COMMIT_ID} "--release"
 
-bins=ton-node/target/release/ton_node \
+bins="ton-node/target/release/ton_node \
     ton-labs-node-tools/target/release/console \
     ton-labs-node-tools/target/release/dhtscan \
     ton-labs-node-tools/target/release/gendht \
     ton-labs-node-tools/target/release/keygen \
     ton-labs-node-tools/target/release/print \
     ton-labs-node-tools/target/release/zerostate \
-    tonos-cli/target/release/tonos-cli
+    tonos-cli/target/release/tonos-cli"
 
-if [ $1 = "--release-tar" ]; then
-    tar --transform 's/.*\///g' -cvzf rust-node-tools.tar.gz $bins
+if [ ! -z $1 ]; then
+    if [ $1 = "--release-tar" ]; then
+        tar --transform 's/.*\///g' -cvzf rust-node-tools.tar.gz $bins
+    fi
 else
     cp -r $bins /usr/local/bin/
 fi
