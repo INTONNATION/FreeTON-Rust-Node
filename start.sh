@@ -62,13 +62,13 @@ do
 	    read -p "IP address or hostname of remote server: " -r host
             read -p "SSH username: " -r username
 	    echo ${host} >> hosts
-            ansible-playbook -i hosts -u $username --become --become-method=sudo -k  run.yml
+            ansible-playbook -i hosts -u $username --become --become-method=sudo -k  ansible/run.yml
 	    break
             ;;
         "Local")
             echo "Installation on local server..."
 	    echo 'localhost ansible_connection=local' >> hosts
-	    ansible-playbook -i hosts run.yml
+	    ansible-playbook -i hosts ansible/run.yml
 	    break
             ;;
         "Quit")

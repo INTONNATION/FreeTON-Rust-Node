@@ -10,7 +10,6 @@ statsd_conf_dir: "/etc/statsd"
 
 # rustnode
 
-release_file_name: "rust-node-tools-refs.heads.v0.0.0.tar.gz"
 release_version: "latest"
 build: false
 network: rustnet.ton.dev

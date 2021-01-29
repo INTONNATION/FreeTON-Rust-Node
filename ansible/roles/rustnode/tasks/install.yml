@@ -11,9 +11,7 @@
   when: build == true
   tags: install
 
-# TODO Naming 
-
 - name: Install latest node tools
-  shell: "{{ scripts_dir }}/scripts/get_release.sh {{ release_file_name }} {{ release_version }} {{ git_repo }} {{ github_token }}"
+  shell: "{{ scripts_dir }}/scripts/get_release.sh {{ release_version }} {{ git_repo }} {{ github_token }}"
   when: build == false
   tags: install
