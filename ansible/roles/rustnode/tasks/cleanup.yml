@@ -1,0 +1,7 @@
+---
+- name: Remove databases
+  file:
+    state: absent
+    path: "{{ database_path }}/"
+  tags:
+   - restart

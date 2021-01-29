@@ -16,13 +16,9 @@ network: rustnet.ton.dev
 database_path: "/opt/node_db"
 rustnode_conf_dir: /etc/rustnode
 
-logging: 
-#  logger: syslog
-#  logger: file
-#  logger: promtail
-#  level: debug
-#  promtail:
-#    server: 
-#    port: 
-#  file:
-#    path: "" if logger: file
+logging:
+  remote:
+    enabled: false
+    #addr: "" # defaults to monitoring-server inventory hostname
+  level:
+    root: debug
