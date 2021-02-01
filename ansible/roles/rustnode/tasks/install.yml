@@ -4,16 +4,21 @@
     name: rustnode
     create_home: no
     shell: /usr/sbin/nologin
-  tags: install
+  tags:
+   - install
+   - upgrade
+   - restart
 
 - name: Start remote build
   shell: "{{ scripts_dir }}/scripts/build.sh"
   when: build == true
-  tags: install
+  tags: 
+   - install
+   - upgrade
 
-# TODO Naming 
-
-- name: Install latest node tools
-  shell: "{{ scripts_dir }}/scripts/get_release.sh {{ release_file_name }} {{ release_version }} {{ git_repo }} {{ github_token }}"
+- name: Install node tools from repo
+  shell: "{{ scripts_dir }}/scripts/get_release.sh {{ release_version }} {{ git_repo }} {{ github_token }}"
   when: build == false
-  tags: install
+  tags: 
+   - install
+   - upgrade

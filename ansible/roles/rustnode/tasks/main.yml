@@ -3,5 +3,8 @@
 - name: Build Rust Node and Console (Optional)
   import_tasks: install.yml
 
-- name: Install Rust Node
+- name: Cleanup database (restart)
+  import_tasks: cleanup.yml
+
+- name: Start Rust Node
   import_tasks: start.yml

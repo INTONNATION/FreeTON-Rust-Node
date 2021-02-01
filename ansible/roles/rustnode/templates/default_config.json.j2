@@ -2,7 +2,7 @@
     "log_config_name": "log_cfg.yml",
     "ton_global_config_name": "ton-global.config.json",
     "internal_db_path": "{{ database_path }}",
-    "ip_address": "0.0.0.0:30303",
+    "ip_address": "{% if ipdiscovery == "auto" %}0.0.0.0:30303{% elif ipdiscovery == "local" %}{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:30303{% else %}{{ ipdiscovery }}:30303{% endif %}",
     "control_server_port": 4925,
     "shard_keeper": {
         "get_peer_attempt_timeout_ms": 1000,

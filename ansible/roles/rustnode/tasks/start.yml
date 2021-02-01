@@ -9,37 +9,40 @@
   with_items:
     - "{{ rustnode_conf_dir }}"
     - "{{ database_path }}"
-  tags: install
+  tags:
+   - install
+   - upgrade
+   - restart
 
 - name: Download {{ network }} global config 
   get_url:
-    url: "https://raw.githubusercontent.com/tonlabs/{{ network }}/main/configs/ton-global.config.json"
+    url: "{{ ton_network_global_conf_url }}"
     dest: "{{ rustnode_conf_dir }}/ton-global.config.json"
-  tags: install
+  tags:
+   - install
+   - upgrade
+   - restart
 
-- name: Copy config file
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: rustnode
-  with_items:
-    - {"src": "log_cfg.yml", "dest": "{{ rustnode_conf_dir }}/log_cfg.yml"}
-  tags: install
-
-- name: Template systemd service
+- name: Template config files and systemd service
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
     - {"src": "rust-node.service.j2", "dest": "/etc/systemd/system/rust-node.service"}
     - {"src": "default_config.json.j2", "dest": "{{ rustnode_conf_dir }}/default_config.json"}
-  tags: install
+    - {"src": "log_cfg.yml.j2", "dest": "{{ rustnode_conf_dir }}/log_cfg.yml"}
+  tags:
+   - install
+   - upgrade
+   - restart
 
 - name: Start rust_node
   systemd:
     enabled: yes
-    state: "started"
+    state: "restarted"
     name: "rust-node"
     daemon_reload: yes
-  tags: start
-
+  tags:
+   - install
+   - upgrade
+   - restart

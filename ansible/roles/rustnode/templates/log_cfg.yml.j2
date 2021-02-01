@@ -19,53 +19,53 @@ appenders:
       pattern: "{m}{n}"
 
 root:
-  level: warn
+  level: {{ logging.level.root }}
   appenders:
     - console
 
 loggers:
   # node messages
   node:
-    level: debug
+    level: {{ logging.level.node | default(logging.level.root) }}
     appenders:
       - stdout
 
   ton_node:
-    level: trace
+    level: {{ logging.level.ton_node | default(logging.level.root) }}
     additive: false
     appenders:
       - stdout
 
   # adnl messages
   adnl:
-    level: debug
+    level: {{ logging.level.adnl | default(logging.level.root) }}
     appenders:
       - stdout
 
   # block messages
   ton_block:
-    level: debug
+    level: {{ logging.level.ton_block | default(logging.level.root) }}
     appenders:
       - stdout
 
   # block messages
   executor:
-    level: debug
+    level: {{ logging.level.executor | default(logging.level.root) }}
     appenders:
       - stdout
 
   # tvm messages
   tvm:
-    level: trace
+    level: {{ logging.level.tvm | default(logging.level.root) }}
     appenders:
       - tvm_stdout
 
   librdkafka:
-    level: warn
+    level: {{ logging.level.librdkafka | default(logging.level.root) }}
     appenders:
       - stdout
 
   validator:
-    level: debug
+    level: {{ logging.level.validator | default(logging.level.root) }}
     appenders:
-      - stdout_ref        
+      - stdout_ref
