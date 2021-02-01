@@ -10,7 +10,7 @@ statsd_conf_dir: "/etc/statsd"
 
 # rustnode
 
-release_version: "latest"
+release_version: "7a091cc"
 build: false
 network: rustnet.ton.dev
 database_path: "/opt/node_db"

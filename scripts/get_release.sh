@@ -5,7 +5,7 @@ TOKEN=$3
 if [ "$VERSION" = "latest" ]; then
   parser=".[0].assets[0].id"
 else
-  parser=".[] | select(.tag_name == \"$VERSION\").assets[0].id"
+  parser=".[] | select(.tag_name == \"ton-node-v-$VERSION\").assets[0].id"
 fi;
 
 asset_id=`curl -H "Authorization: token $TOKEN" H "Accept: application/vnd.github.v3.raw" -s https://api.github.com/repos/$REPO/releases | jq "$parser"`
