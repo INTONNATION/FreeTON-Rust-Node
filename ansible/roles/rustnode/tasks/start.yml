@@ -16,7 +16,7 @@
 
 - name: Download {{ network }} global config 
   get_url:
-    url: "https://raw.githubusercontent.com/tonlabs/{{ network }}/main/configs/ton-global.config.json"
+    url: "{{ ton_network_global_conf_url }}"
     dest: "{{ rustnode_conf_dir }}/ton-global.config.json"
   tags:
    - install
