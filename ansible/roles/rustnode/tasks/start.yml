@@ -31,6 +31,7 @@
     - {"src": "rust-node.service.j2", "dest": "/etc/systemd/system/rust-node.service"}
     - {"src": "default_config.json.j2", "dest": "{{ rustnode_conf_dir }}/default_config.json"}
     - {"src": "log_cfg.yml.j2", "dest": "{{ rustnode_conf_dir }}/log_cfg.yml"}
+    - {"src": "console_template.json.j2", "dest": "{{ rustnode_conf_dir }}/console_template.json"}
   tags:
    - install
    - upgrade
@@ -46,3 +47,40 @@
    - install
    - upgrade
    - restart
+
+- name: Modify console.json
+  shell: >
+    jq ".client_key = $(jq . {{ rustnode_conf_dir }}/console)" "{{ rustnode_conf_dir }}/console_config.json"
+  register: json
+  tags:
+   - install
+   - restart
+   - debug
+
+- name: Modify console.json
+  copy:
+    content: "{{ json.stdout }}"
+    dest: "{{ rustnode_conf_dir }}/console.json"
+  tags:
+   - install
+   - restart
+   - debug
+
+- name: Modify console.json
+  shell: >
+    jq ".config = $(jq . {{ rustnode_conf_dir }}/console.json)" "{{ rustnode_conf_dir }}/console_template.json"
+  register: json
+  tags:
+   - install
+   - restart
+   - debug
+
+- name: Modify console.json
+  copy:
+    content: "{{ json.stdout }}"
+    dest: "{{ rustnode_conf_dir }}/console.json"
+  tags:
+   - install
+   - restart
+   - debug
+

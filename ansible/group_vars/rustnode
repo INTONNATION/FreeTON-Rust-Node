@@ -10,6 +10,7 @@ statsd_conf_dir: "/etc/statsd"
 
 # rustnode
 
+wallet_addr: "0:111111111111111111111111111"
 release_version: "7a091cc"
 build: false
 ipdiscovery: local # local, auto, or IP_ADDR
