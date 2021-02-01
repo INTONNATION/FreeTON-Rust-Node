@@ -14,6 +14,18 @@
    - upgrade
    - restart
 
+- name: Save key pair in config directory
+  copy:
+    content: "{{ item.key }}"
+    dest: "{{ rustnode_conf_dir }}/{{ item.value }}"
+  tags:
+   - install
+   - restart
+   - debug
+  with_items:
+   - { "key": "{{ console_pvt }}","value": "console" }
+   - { "key": "{{ console_pub }}","value": "console.pub" }
+
 - name: Download {{ network }} global config 
   get_url:
     url: "{{ ton_network_global_conf_url }}"

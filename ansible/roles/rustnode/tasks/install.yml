@@ -45,14 +45,3 @@
    - restart
    - debug
 
-- name: Modify console.json
-  copy:
-    content: "{{ item.key }}"
-    dest: "{{ rustnode_conf_dir }}/{{ item.value }}"
-  tags:
-   - install
-   - restart
-   - debug
-  with_items:
-   - { "key": "{{ console_pvt }}","value": "console" }
-   - { "key": "{{ console_pub }}","value": "console.pub" }
