@@ -1,3 +1,23 @@
+---
+- name: Remove Scripts dir
+  file:
+    state: absent
+    path: "{{ item }}/"
+  with_items:
+   - "{{ scripts_dir }}"
+  tags:
+   - upgrade
+
+- name: Create Scripts dir
+  file:
+    state: directory
+    path: "{{ item }}/scripts"
+  with_items:
+   - "{{ scripts_dir }}"
+  tags:
+   - install
+   - upgrade
+
 - name: Copy scripts to remote
   copy:
     src: "{{ item }}"
@@ -5,7 +25,9 @@
     mode: 0755
   with_fileglob:
     - ../scripts/*
-  tags: install
+  tags: 
+    - install
+    - upgrade
 
 - name: Install dependencies
   shell: '{{ scripts_dir }}/scripts/install_deps.sh'

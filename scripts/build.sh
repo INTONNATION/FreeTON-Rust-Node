@@ -3,6 +3,7 @@
 set -e
 
 . ./env.sh
+source ~/.cargo/env
 
 mkdir -p build
 cd build

@@ -10,7 +10,7 @@
    - restart
 
 - name: Start remote build
-  shell: "{{ scripts_dir }}/scripts/build.sh"
+  shell: "cd {{ scripts_dir }}/scripts && ./build.sh"
   when: build == true
   tags: 
    - install

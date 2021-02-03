@@ -12,7 +12,7 @@ statsd_conf_dir: "/etc/statsd"
 
 wallet_addr: "0:111111111111111111111111111"
 release_version: "7a091cc"
-build: false
+build: true
 ipdiscovery: local # local, auto, or IP_ADDR
 ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
 database_path: "/opt/node_db"
