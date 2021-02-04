@@ -1,0 +1,9 @@
+---
+- name: Remove databases
+  file:
+    state: absent
+    path: "{{ item }}/"
+  with_items:
+   - "{{ rustvalidator_conf_dir }}"
+  tags:
+   - restart

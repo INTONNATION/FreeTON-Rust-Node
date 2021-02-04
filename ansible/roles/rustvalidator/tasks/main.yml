@@ -1,0 +1,10 @@
+---
+# tasks file for rustnode
+- name: Build Rust Node and Console (Optional)
+  import_tasks: install.yml
+
+- name: Cleanup configs (restart)
+  import_tasks: cleanup.yml
+
+- name: Start Rust Node
+  import_tasks: start.yml
