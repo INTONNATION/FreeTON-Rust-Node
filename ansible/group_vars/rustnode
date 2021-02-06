@@ -25,7 +25,7 @@ logging:
   level:
     root: debug
 
-config_abi_validator_url=
-config_abi_elector_url=
-rustvalidator_conf_dir=
-configs_dir="/etc/rustnode"
+#config_abi_validator_url=
+#config_abi_elector_url=
+#rustvalidator_conf_dir=
+#configs_dir="/etc/rustnode"
