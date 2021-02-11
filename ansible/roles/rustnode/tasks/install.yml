@@ -1,5 +1,5 @@
 ---
-- name: Start rust_node
+- name: Stop rust_node
   systemd:
     state: "stopped"
     name: "rust-node"

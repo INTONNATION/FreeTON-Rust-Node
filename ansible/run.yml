@@ -8,4 +8,5 @@
   hosts: rustnode
   remote_user: root
   roles:
-    - rustvalidator
+      - rustnode
+#      - rustvalidator

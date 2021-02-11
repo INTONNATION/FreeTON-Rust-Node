@@ -1,20 +1,19 @@
 
-# Pre-install
-github_token: 964b5da8b16f666662b675046e27e4b7881e648e
-git_repo: "azavodovsky/FreeTON-Rust-Node"
-scripts_dir: "/opt/FreeTON-Rust-Node"
-
-# dstatsd
+# statsd
 statsd_version: "0.19.0"
 statsd_conf_dir: "/etc/statsd"
 
 # rustnode
 
-wallet_addr: "0:111111111111111111111111111"
+github_token: 964b5da8b16f666662b675046e27e4b7881e648e
+git_repo: "azavodovsky/FreeTON-Rust-Node"
+scripts_dir: "/opt/FreeTON-Rust-Node"
 release_version: "7a091cc"
+
+wallet_addr: "0:5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"
 build: true
 ipdiscovery: local # local, auto, or IP_ADDR
-ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
+ton_network_global_conf_url: https://raw.githubusercontent.com/FreeTON-Network/fld.ton.dev/main/configs/fld.ton.dev/ton-global.config.json
 database_path: "/opt/node_db"
 rustnode_conf_dir: /etc/rustnode
 

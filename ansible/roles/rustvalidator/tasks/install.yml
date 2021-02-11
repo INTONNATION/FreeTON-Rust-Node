@@ -35,7 +35,7 @@
 
 
 
-- name: Download {{ network }} abhi configs
+- name: Download {{ network }} abi configs
   get_url:
     url: "{{ item.key }}"
     dest: "{{ rustvalidator_conf_dir }}/{{ item.value }}"
