@@ -12,6 +12,8 @@
   file:
     state: directory
     path: "{{ item }}/scripts"
+    mode: 0755
+    group: rust
   with_items:
    - "{{ scripts_dir }}"
   tags:
@@ -23,6 +25,7 @@
     src: "{{ item }}"
     dest: "{{ scripts_dir }}/scripts"
     mode: 0755
+    group: rust
   with_fileglob:
     - ../scripts/*
   tags: 

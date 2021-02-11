@@ -4,7 +4,7 @@ import subprocess
 from dotenv import load_dotenv
 import os
 
-load_dotenv('./.env')
+load_dotenv('/etc/rustvalidator/.env')
 
 elector_addr = os.getenv('elector_addr')
 elector_addr_hex = os.getenv('elector_addr_hex')

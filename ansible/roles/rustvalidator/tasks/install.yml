@@ -22,18 +22,42 @@
    - upgrade
    - restart
 
-- name: Install specified python requirements in indicated (virtualenv)
-  pip:
-    requirements: requirements.txt
-    virtualenv: venv
+- name: Install requirements for package install
+  package:
+    name:
+      - python3-pip
+      - python3-virtualenv
+      - python3-dev
+      - virtualenv
+    state: present
+  tags:
+    - install
 
-- name: "copy validator.py"
-  template:
-    src: '../scripts/validator.py'
+- name: Install system packages required for pyenv
+  package:
+    name:
+      - gcc
+      - libbz2-dev
+      - libreadline-dev
+      - libssl-dev
+      - libsqlite3-dev
+      - make
+      - zlib1g-dev
+    state: present
+  tags:
+    - install
+
+- name: "Copy requirements.txt"
+  copy:
+    src: 'requirements.txt'
     dest: '{{ rustvalidator_conf_dir }}'
-    mode: 0755
+  tags:
+    - install
 
-
+- name: Install specified python requirements in indicated
+  shell : 'cd {{ rustvalidator_conf_dir }}; pip3 install -r requirements.txt'
+  tags:
+    - install
 
 - name: Download {{ network }} abhi configs
   get_url:
