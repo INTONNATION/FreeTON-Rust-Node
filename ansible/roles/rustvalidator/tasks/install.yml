@@ -24,7 +24,7 @@
 
 - name: "copy validator.py"
   template:
-    src: 'validator.py'
+    src: '../scripts/validator.py'
     dest: '{{ rustvalidator_conf_dir }}'
     mode: 0755
 
