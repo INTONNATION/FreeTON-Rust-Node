@@ -1,6 +1,9 @@
 import datetime
 import logging
 import subprocess
+from dotenv import load_dotenv
+
+load_dotenv('./.env')
 
 elector_addr = "-1:3333333333333333333333333333333333333333333333333333333333333333"
 elector_addr_hex = "-1:3333333333333333333333333333333333333333333333333333333333333333"

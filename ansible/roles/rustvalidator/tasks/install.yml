@@ -22,6 +22,11 @@
    - upgrade
    - restart
 
+- name: Install specified python requirements in indicated (virtualenv)
+  pip:
+    requirements: requirements.txt
+    virtualenv: venv
+
 - name: "copy validator.py"
   template:
     src: '../scripts/validator.py'

@@ -8,7 +8,4 @@
   hosts: rustnode
   remote_user: root
   roles:
-   - pre-install
-   - nodeexporter
-   - statsd
-   - rustnode
+    - rustvalidator
