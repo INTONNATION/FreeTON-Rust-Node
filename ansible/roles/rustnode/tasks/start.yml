@@ -40,7 +40,7 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - {"src": "rust-validator.service.j2", "dest": "/etc/systemd/system/rust-node.service"}
+    - {"src": "rust-node.service.j2", "dest": "/etc/systemd/system/rust-node.service"}
     - {"src": "default_config.json.j2", "dest": "{{ rustnode_conf_dir }}/default_config.json"}
     - {"src": "log_cfg.yml.j2", "dest": "{{ rustnode_conf_dir }}/log_cfg.yml"}
     - {"src": "console_template.json.j2", "dest": "{{ rustnode_conf_dir }}/console_template.json"}
