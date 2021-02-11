@@ -23,11 +23,13 @@ def cli_depool_config():
     depool_config = subprocess.check_output(
         'tonos-cli config --addr %s/depool.addr --wallet %s --keys %s/msig.keys.json' % (
             configs_dir, msig_addr, configs_dir), encoding='utf-8', shell=True)
+    logging.info(depool_config)
     return depool_config
 
 
 def get_depool_addr():
     depool_addr = subprocess.check_output('cat %s/depool.addr")' % (configs_dir), encoding='utf-8', shell=True)
+    logging.info(depool_addr)
     return depool_addr
 
 
@@ -38,13 +40,13 @@ def recover_query_boc():
 
 
 def cli_submit_transaction(msig_addr: str, elector_addr_hex: str, value: str, boc: str):
-    trx = subprocess.check_output('tonos-cli call %s submitTransaction \
+    result = subprocess.check_output('tonos-cli call %s submitTransaction \
             \"{\\"dest\\":\\"%s\\",\\"value\\":\\"%s\\",\\"bounce\\":true,\\"allBalance\\":false,\\"payload\\":\\"%s\\"}\" \
             --abi %s/SafeMultisigWallet.abi.json \
             --sign %s/msig.keys.json' % (msig_addr, elector_addr_hex, value, boc, configs_dir, configs_dir),
                                   encoding='utf-8', shell=True)
-    logging.info(trx)
-    return trx
+    logging.info(result)
+    return result
 
 
 def cli_get_active_election_id(elector_addr: str):
@@ -115,9 +117,9 @@ def submit_stake():
                                         shell=True)
     boc = validator_query_boc();
     depool_addr = get_depool_addr()
-    trx = cli_submit_transaction(msig_addr, depool_addr, int(nanostake), boc)
-    logging.info(trx)
-    return trx
+    result_of_submit = cli_submit_transaction(msig_addr, depool_addr, int(nanostake), boc)
+    logging.info(result_of_submit)
+    return result_of_submit
 
 
 def cli_get_active_election_id():

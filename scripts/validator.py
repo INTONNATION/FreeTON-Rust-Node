@@ -92,7 +92,7 @@ def check_validator_balance(msig_addr_hex: str):
 
 
 def get_min_stake():
-    min_stake = subproccess.check_output(
+    min_stake = subprocess.check_output(
         'tonos-cli getconfig 17 | grep min_stake | awk \'{print $2}\' | tr -d \'\\"\' | tr -d \',\'', encoding='utf-8',
         shell=True)
     min_stake_in_tokens = int(min_stake) / 1000000000
@@ -112,22 +112,23 @@ def submit_stake():
     nanostake = subprocess.check_output('tonos-cli convert tokens %s | tail -1' % (int(stake)), encoding='utf-8',
                                         shell=True)
     boc = validator_query_boc();
-    trx = cli_submit_transaction(msig_addr, elector_addr_hex, int(nanostake), boc)
-    logging.info(trx)
-    return trx
+    result_of_submit = cli_submit_transaction(msig_addr, elector_addr_hex, int(nanostake), boc)
+    logging.info(result_of_submit)
+    return result_of_submit
 
 
 try:
     recover_amount = cli_get_recover_amount(elector_addr, msig_addr_hex)
+    logging.info('recover amount = 0')
     if recover_amount != "0":
         console_recover_stake()
         boc = recover_query_boc()
-        # cli_submit_transaction(msig_addr, elector_addr_hex, 1000000000, boc)
+        cli_submit_transaction(msig_addr, elector_addr_hex, 1000000000, boc)
         logging.info('RECOVER STAKE REQUESTED')
     else:
         logging.info('NO TOKENS TO RECOVER')
 
     console_create_elector_request()
-    # submit_stake()
+    submit_stake()
 except:
-    logging.info('ERROR')
+    logging.info('ERROR running validator')
