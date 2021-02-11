@@ -4,15 +4,15 @@ import subprocess
 from dotenv import load_dotenv
 import os
 
-load_dotenv('/etc/rustvalidator/.env')
+load_dotenv('/etc/rust-validator/.env')
 
-elector_addr = os.getenv('elector_addr')
-elector_addr_hex = os.getenv('elector_addr_hex')
-msig_addr_hex = os.getenv('msig_addr_hex')
-msig_addr = os.getenv('msig_addr')
-configs_dir = os.getenv('configs_dir')
-remained_for_fees = os.getenv('remained_for_fees')
-depool_addr = os.getenv('depool_addr')
+elector_addr = os.getenv('ELECTOR_ADDR')
+elector_addr_hex = os.getenv('ELECTOR_ADDR_HEX')
+msig_addr_hex = os.getenv('MSIG_ADDR_HEX')
+msig_addr = os.getenv('MSIG_ADDR')
+configs_dir = os.getenv('CONFIGS_DIR')
+remained_for_fees = os.getenv('REMAINED_FOR_FEES')
+depool_addr = os.getenv('DEPOOL_ADDR')
 
 logging.basicConfig(
     level=logging.INFO,
