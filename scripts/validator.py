@@ -12,6 +12,7 @@ msig_addr_hex = os.getenv('msig_addr_hex')
 msig_addr = os.getenv('msig_addr')
 configs_dir = os.getenv('configs_dir')
 remained_for_fees = os.getenv('remained_for_fees')
+depool_addr = os.getenv('depool_addr')
 
 logging.basicConfig(
     level=logging.INFO,

@@ -11,6 +11,7 @@
     name: rustnode
     create_home: no
     shell: /usr/sbin/nologin
+    group: rust
   tags:
    - install
    - upgrade

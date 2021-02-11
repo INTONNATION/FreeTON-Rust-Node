@@ -13,6 +13,7 @@ msig_addr = os.getenv('msig_addr')
 configs_dir = os.getenv('configs_dir')
 remained_for_fees = os.getenv('remained_for_fees')
 elector_type = os.getenv('elector_type')
+depool_addr = os.getenv('depool_addr')
 
 logging.basicConfig(
     level=logging.INFO,

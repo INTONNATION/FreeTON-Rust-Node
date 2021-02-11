@@ -8,6 +8,12 @@
   tags:
    - upgrade
 
+- name: create rust user group
+  group:
+    name: rust
+  tags:
+    - install
+
 - name: Create Scripts dir
   file:
     state: directory

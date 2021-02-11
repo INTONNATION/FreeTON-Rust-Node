@@ -5,7 +5,7 @@ Description=FreeTON Rust full node
 Environment="STATSD_DOMAIN=localhost:"
 Environment="STATSD_PORT=9125"
 
-User=rustnode
+User=rustvalidator
 Type=simple
 ExecStart=/bin/bash -c "/usr/bin/python3   {{ scripts_dir }}/scripts/validator.py | /usr/bin/logger -n {{ logging.remote.addr | default(hostvars[groups['monitoring-server'][0]]['inventory_hostname']) }} -P 1514 -T --rfc5424 --octet-count"
 Restart=on-failure

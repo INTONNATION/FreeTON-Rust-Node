@@ -4,6 +4,7 @@
     name: rustvalidator
     create_home: no
     shell: /usr/sbin/nologin
+    group: rust
   tags:
    - install
    - upgrade
@@ -64,7 +65,7 @@
     url: "{{ item.key }}"
     dest: "{{ rustvalidator_conf_dir }}/{{ item.value }}"
   with_items:
-    - { "key": "{{ config_abi_validator_url }}","value": "Validator.abi.json" }
+    - { "key": "{{ config_safemultisig_abi }}","value": "SafeMultisigWallet.abi.json" }
     - { "key": "{{ config_abi_elector_url }}","value": "Elector.abi.json" }
   tags:
    - install
