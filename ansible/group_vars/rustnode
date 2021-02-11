@@ -25,7 +25,12 @@ logging:
   level:
     root: debug
 
-#config_abi_validator_url=
-#config_abi_elector_url=
-#rustvalidator_conf_dir=
-#configs_dir="/etc/rustnode"
+config_abi_validator_url="https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/docker-compose/ton-node/configs/default_config.json"
+config_abi_elector_url="https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/docker-compose/ton-node/configs/Elector.abi.json"
+rustvalidator_conf_dir="/etc/rustnode"
+configs_dir="/etc/rustnode"
+elector_addr = "-1:3333333333333333333333333333333333333333333333333333333333333333"
+elector_addr_hex = "-1:3333333333333333333333333333333333333333333333333333333333333333"
+msig_addr_hex = "0x11111111111111111111111111111"
+msig_addr = "0x11111111111111111111111111111"
+elector_type = "solidity"

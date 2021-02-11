@@ -41,7 +41,7 @@ def main():
 
 def call_example(address: str):
     elector_abi = Abi.from_path(
-        path=os.path.join("./", 'Elector.abi.json'))
+        path=os.path.join("../", 'Elector.abi.json'))
     call_set = CallSet(
         function_name='compute_returned_stake',
         input={'wallet_addr': address})
@@ -55,7 +55,7 @@ def call_example(address: str):
 
 def compute_returned_stake(address: str):
     elector_abi = Abi.from_path(
-        path=os.path.join("./", 'Elector.abi.json'))
+        path=os.path.join("../", 'Elector.abi.json'))
     call_set = CallSet(
         function_name='compute_returned_stake',
         input={'wallet_addr': address})

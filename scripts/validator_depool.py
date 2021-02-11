@@ -2,18 +2,17 @@ import datetime
 import logging
 import subprocess
 from dotenv import load_dotenv
+import os
 
 load_dotenv('./.env')
 
-elector_addr = "-1:3333333333333333333333333333333333333333333333333333333333333333"
-elector_addr_hex = "-1:3333333333333333333333333333333333333333333333333333333333333333"
-msig_addr_hex = "0x4000610da7d7f89b92cd64212e5b983d9ccac9938333174f352a5b3c416997c4"
-msig_addr = "-1:4000610da7d7f89b92cd64212e5b983d9ccac9938333174f352a5b3c416997c4"
-# It stores ABIs, keys and configs like  msig.keys.json, Elector.abi.json, SafeMultisigWallet.abi.json, console.json etc
-configs_dir = "/etc/rustnode"
-remained_for_fees = 100
-
-elector_type = "solidity"
+elector_addr = os.getenv('elector_addr')
+elector_addr_hex = os.getenv('elector_addr_hex')
+msig_addr_hex = os.getenv('msig_addr_hex')
+msig_addr = os.getenv('msig_addr')
+configs_dir = os.getenv('configs_dir')
+remained_for_fees = os.getenv('remained_for_fees')
+elector_type = os.getenv('elector_type')
 
 logging.basicConfig(
     level=logging.INFO,
