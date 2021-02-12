@@ -12,7 +12,7 @@
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall
 
 - name: Save key pair in config directory
   copy:
@@ -20,7 +20,7 @@
     dest: "{{ rustnode_conf_dir }}/{{ item.value }}"
   tags:
    - install
-   - restart
+   - reinstall
    - debug
   with_items:
    - { "key": "{{ console_pvt }}","value": "console" }
@@ -33,32 +33,32 @@
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall
 
 - name: Template config files and systemd service
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - {"src": "rust-node.service.j2", "dest": "/etc/systemd/system/rust-node.service"}
+    - {"src": "rustnode.service.j2", "dest": "/etc/systemd/system/rustnode.service"}
     - {"src": "default_config.json.j2", "dest": "{{ rustnode_conf_dir }}/default_config.json"}
     - {"src": "log_cfg.yml.j2", "dest": "{{ rustnode_conf_dir }}/log_cfg.yml"}
     - {"src": "console_template.json.j2", "dest": "{{ rustnode_conf_dir }}/console_template.json"}
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall
 
 - name: Start rust_node
   systemd:
     enabled: yes
-    state: "restarted"
-    name: "rust-node"
+    state: "reinstalled"
+    name: "rustnode"
     daemon_reload: yes
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall
 
 - name: Modify console.json
   shell: >
@@ -66,7 +66,7 @@
   register: json
   tags:
    - install
-   - restart
+   - reinstall
 
 - name: Modify console.json
   copy:
@@ -74,7 +74,7 @@
     dest: "{{ rustnode_conf_dir }}/console.json"
   tags:
    - install
-   - restart
+   - reinstall
 
 - name: Modify console.json
   shell: >
@@ -82,7 +82,7 @@
   register: json
   tags:
    - install
-   - restart
+   - reinstall
 
 - name: Modify console.json
   copy:
@@ -90,4 +90,4 @@
     dest: "{{ rustnode_conf_dir }}/console.json"
   tags:
    - install
-   - restart
+   - reinstall

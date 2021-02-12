@@ -15,5 +15,5 @@
   tags: install
 
 - name: Install statsd
-  shell: "{{ scripts_dir }}/scripts/statsd.sh {{ statsd_version }}"
+  shell: "{{ scripts_dir }}/statsd.sh {{ statsd_version }}"
   tags: install

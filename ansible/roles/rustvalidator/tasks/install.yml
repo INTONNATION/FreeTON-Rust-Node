@@ -1,4 +1,17 @@
 ---
+
+environment:
+  ELECTOR_ADDR: "{{ elector_addr }}"
+  ELECTOR_ADDR_HEX: "{{ elector_addr_hex }}"
+  MSIG_ADDR_HEX: "{{ msig_addr_hex}}"
+  MSIG_ADDR: "{{ msig_addr}}"
+  MSIG_ADDR_HEX_0: "{{ msig_addr_hex_0 }}"
+  CONFIGS_DIR: "{{ rustvalidator_conf_dir }}"
+  DEPOOL_ADDR: "{{ depool_addr }}"
+  REMAINED_FOR_FEES: "{{ remained_for_fees }}"
+  VALIDATOR: "{{ validator }}"
+  ELECTOR_TYPE: "{{ elector_type }}"
+
 - name: Create rustvalidator user
   user:
     name: rustvalidator
@@ -8,7 +21,7 @@
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall
 
 - name: Create config directory
   file:
@@ -21,7 +34,7 @@
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall
 
 - name: Install requirements for package install
   package:
@@ -75,19 +88,19 @@
   with_items:
     - { "key": "{{ config_safemultisig_abi }}","value": "SafeMultisigWallet.abi.json" }
     - { "key": "{{ config_abi_elector_url }}","value": "Elector.abi.json" }
+    - { "key": "{{ config_abi_depool_helper_url }}","value": "DePoolHelper.abi.json" }
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall
 
 - name: Template systemd service
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - {"src": "env.j2", "dest": "{{ rustvalidator_conf_dir}}/.env"}
-    - {"src": "rust-validator.service.j2", "dest": "/etc/systemd/system/rust-validator.service"}
+    - {"src": "rustvalidator.service.j2", "dest": "/etc/systemd/system/rustvalidator.service"}
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall

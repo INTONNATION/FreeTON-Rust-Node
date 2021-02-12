@@ -1,10 +1,12 @@
 ---
-- name: Start rust_node
-  systemd:
-    state: "stopped"
-    name: "rust-node"
-  tags:
-   - upgrade
+
+environment:
+  TON_NODE_GITHUB_REPO: "{{ ton_node_github_repo }}"
+  TON_NODE_GITHUB_COMMIT_ID: "{{ ton_node_github_commit_id }}"
+  TON_NODE_TOOLS_GITHUB_REPO: "{{ ton_node_tools_github_repo }}"
+  TON_NODE_TOOLS_GITHUB_COMMIT_ID: "{{ ton_node_tools_github_commit_id }}"
+  TONOS_CLI_GITHUB_REPO: "{{ tonos_cli_github_repo }}"
+  TONOS_CLI_GITHUB_COMMIT_ID: "{{ tonos_cli_github_commit_id }}"
 
 - name: Create rustnode user
   user:
@@ -14,18 +16,16 @@
     group: rust
   tags:
    - install
-   - upgrade
-   - restart
 
 - name: Start remote build
-  shell: "cd {{ scripts_dir }}/scripts && ./build.sh"
+  shell: "cd {{ scripts_dir }} && ./build.sh"
   when: build == true
   tags: 
    - install
    - upgrade
 
 - name: Install node tools from repo
-  shell: "{{ scripts_dir }}/scripts/get_release.sh {{ release_version }} {{ git_repo }} {{ github_token }}"
+  shell: "{{ scripts_dir }}/get_release.sh {{ release_version }} {{ git_repo }} {{ github_token }}"
   when: build == false
   tags: 
    - install
@@ -35,17 +35,17 @@
   command: keygen
   tags:
    - install
-   - restart
+   - reinstall
   register: console
 
 - set_fact:
     console_pub: "{{ console.stdout | from_json | json_query('public') | to_json }}"
   tags:
    - install
-   - restart
+   - reinstall
 
 - set_fact:
     console_pvt: "{{ console.stdout | from_json | json_query('private') | to_json }}"
   tags:
    - install
-   - restart
+   - reinstall

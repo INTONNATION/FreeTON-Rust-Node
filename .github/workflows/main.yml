@@ -9,6 +9,13 @@ jobs:
   build:
 
     runs-on: ubuntu-18.04
+    env:
+      TON_NODE_GITHUB_REPO: "https://github.com/tonlabs/ton-labs-node.git"
+      TON_NODE_GITHUB_COMMIT_ID: "dc1a964"
+      TON_NODE_TOOLS_GITHUB_REPO: "https://github.com/tonlabs/ton-labs-node-tools.git"
+      TON_NODE_TOOLS_GITHUB_COMMIT_ID: "34f25ca"
+      TONOS_CLI_GITHUB_REPO: "https://github.com/tonlabs/tonos-cli.git"
+      TONOS_CLI_GITHUB_COMMIT_ID: "master"
 
     steps:
     - uses: actions/checkout@v2
@@ -39,6 +46,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: scripts/build/rust-node-tools.tar.gz
+        asset_path: scripts/build/rustnode-tools.tar.gz
         asset_name: ${{ steps.extract_branch.outputs.branch }}.tar.gz
         asset_content_type: application/gzip

@@ -94,7 +94,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "line {job=\"rust-node\", nodehost=\"ns3174448\"}"
+              "options": "line {job=\"rustnode\", nodehost=\"ns3174448\"}"
             },
             "properties": [
               {
@@ -145,7 +145,7 @@
       "pluginVersion": "7.1.1",
       "targets": [
         {
-          "expr": "{job=\"rust-node\"} |=\"ERROR\"",
+          "expr": "{job=\"rustnode\"} |=\"ERROR\"",
           "legendFormat": "",
           "refId": "A"
         }
@@ -164,7 +164,7 @@
             "indexByName": {},
             "renameByName": {
               "id": "Log ID",
-              "line {job=\"rust-node\", nodehost=\"ns3174448\"}": "Log msg"
+              "line {job=\"rustnode\", nodehost=\"ns3174448\"}": "Log msg"
             }
           }
         }

@@ -2,7 +2,6 @@
 
 set -e
 
-. ./env.sh
 source ~/.cargo/env
 
 mkdir -p build
@@ -33,7 +32,7 @@ bins="ton-node/target/release/ton_node \
 
 if [ ! -z $1 ]; then
     if [ $1 = "--release-tar" ]; then
-        tar --transform 's/.*\///g' -cvzf rust-node-tools.tar.gz $bins
+        tar --transform 's/.*\///g' -cvzf rustnode-tools.tar.gz $bins
     fi
 else
     cp -r $bins /usr/local/bin/

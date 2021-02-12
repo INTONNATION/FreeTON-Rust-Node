@@ -18,7 +18,7 @@ scrape_configs:
       idle_timeout: 60s
       label_structured_data: yes
       labels:
-        job: "rust-node"
+        job: "rustnode"
     relabel_configs:
       - source_labels: ['__syslog_message_rustnode']
         target_label: 'rustnode'

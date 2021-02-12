@@ -7,4 +7,4 @@
    - "{{ rustnode_conf_dir }}"
    - "{{ database_path }}"
   tags:
-   - restart
+   - reinstall

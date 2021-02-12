@@ -3,11 +3,11 @@
 - name: Start rust_validator
   systemd:
     enabled: yes
-    state: "restarted"
-    name: "rust-validator"
+    state: "reinstalled"
+    name: "rustvalidator"
     daemon_reload: yes
   tags:
    - install
    - upgrade
-   - restart
+   - reinstall
 

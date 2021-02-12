@@ -1,8 +1,14 @@
 
+ton_node_github_repo: "https://github.com/tonlabs/ton-labs-node.git"
+ton_node_github_commit_id: "dc1a964"
+ton_node_tools_github_repo: "https://github.com/tonlabs/ton-labs-node-tools.git"
+ton_node_tools_github_commit_id: "34f25ca"
+tonos_cli_github_repo: "https://github.com/tonlabs/tonos-cli.git"
+tonos_cli_github_commit_id: "master"
+
 # Pre-install
 github_token: 964b5da8b16f666662b675046e27e4b7881e648e
 git_repo: "azavodovsky/FreeTON-Rust-Node"
-scripts_dir: "/opt/FreeTON-Rust-Node"
 
 # dstatsd
 statsd_version: "0.19.0"
@@ -15,8 +21,10 @@ release_version: "7a091cc"
 build: true
 ipdiscovery: local # local, auto, or IP_ADDR
 ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
-database_path: "/opt/node_db"
+database_path: "/opt/rustnode/db"
+scripts_dir: "/opt/rustnode/scripts"
 rustnode_conf_dir: /etc/rustnode
+rustvalidator_conf_dir: "/etc/rustvalidator"
 
 logging:
   remote:
@@ -25,15 +33,16 @@ logging:
   level:
     root: debug
 
+validator: "depool"
+remained_for_fees: 100
 config_safemultisig_abi: "https://raw.githubusercontent.com/tonlabs/ton-labs-contracts/master/solidity/safemultisig/SafeMultisigWallet.abi.json"
 config_abi_elector_url: "https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/docker-compose/ton-node/configs/Elector.abi.json"
-rustvalidator_conf_dir: "/etc/rust-validator"
-configs_dir: "/etc/rust-node"
+config_abi_depool_helper_url: "https://raw.githubusercontent.com/tonlabs/ton-labs-contracts/master/solidity/depool/DePoolHelper.abi.json"
 elector_addr: "-1:3333333333333333333333333333333333333333333333333333333333333333"
 elector_addr_hex: "-1:3333333333333333333333333333333333333333333333333333333333333333"
 msig_addr_hex: "1x5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"
 msig_addr_hex_0: "0x5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"
 msig_addr: "1:5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"
-elector_type: "solidity"
+elector_type: "fift"
 depool_addr: "0:8aec1c2470a6ffbce7179d5ab777ced781ef40f0d25ebd874a727359c341e29c"
 dapp_server_url: "https://gql.custler.net"

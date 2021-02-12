@@ -29,7 +29,7 @@
 - name: Copy scripts to remote
   copy:
     src: "{{ item }}"
-    dest: "{{ scripts_dir }}/scripts"
+    dest: "{{ scripts_dir }}"
     mode: 0775
     group: rust
   with_fileglob:
@@ -39,5 +39,5 @@
     - upgrade
 
 - name: Install dependencies
-  shell: '{{ scripts_dir }}/scripts/install_deps.sh'
+  shell: '{{ scripts_dir }}/install_deps.sh'
   tags: install
