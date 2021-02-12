@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 import os
 import time
 
+load_dotenv('/etc/rust-validator/.env')
+
 elector_addr = os.getenv('ELECTOR_ADDR')
 elector_addr_hex = os.getenv('ELECTOR_ADDR_HEX')
 msig_addr_hex = os.getenv('MSIG_ADDR_HEX')
@@ -15,6 +17,7 @@ remained_for_fees = os.getenv('REMAINED_FOR_FEES')
 depool_addr = os.getenv('DEPOOL_ADDR')
 elector_type = os.getenv('ELECTOR_TYPE')
 validator = os.getenv('VALIDATOR')
+helper_addr = os.getenv('HELPER_ADDR')
 
 logging.basicConfig(
     level=logging.INFO,
@@ -31,15 +34,15 @@ def cli_get_active_election_id_from_depool_event():
         'tonos-cli depool --addr %s events > %s/events.txt 2>&1' % (
             depool_addr, configs_dir), encoding='utf-8', shell=True)
     active_election_id_from_depool_event = subprocess.check_output(
-        'grep \"^{\" %s/events.txt | grep electionId |jq \".electionId\" | head -1 | tr -d \'"\' | xargs printf "%%d\n" ' % (
+        'grep \"^{\" %s/events.txt | grep electionId |jq \".electionId\" | head -1 | tr -d \'"\' | xargs printf "%%d\n" | tr -d \"\n\" ' % (
             configs_dir), encoding='utf-8', shell=True)
     return active_election_id_from_depool_event
 
 def get_proxy_addr_from_depool_event(active_election_id_from_depool_event,active_election_id):
     if active_election_id_from_depool_event == active_election_id:
         proxy_addr_from_depool_event = subprocess.check_output(
-            'grep \\"^{\\" \\ %s/events.txt | grep electionId |jq \".proxy\" | head -1 | tr -d \'"\' | xargs printf "%d\n" ' % (
-                elector_addr), encoding='utf-8', shell=True)
+            'grep \"^{\" %s/events.txt | grep electionId |jq \".proxy\" | head -1 | tr -d \'"\' | tr -d \"\n\" ' % (
+                configs_dir), encoding='utf-8', shell=True)
         return proxy_addr_from_depool_event
     else:
         logging.info("ACTIVE_ELECTION_ID_FROM_DEPOOL_EVENT %s does not match to ACTIVE_ELECTION_ID %s" % (int(active_election_id_from_depool_event), active_election_id))
@@ -47,7 +50,7 @@ def get_proxy_addr_from_depool_event(active_election_id_from_depool_event,active
 
 def add_proxy_addr_to_console(validator_msig_addr):
     subprocess.check_output(
-        'jq \".wallet_id = %s \" %s/console.json > /tmp/console.json' % (
+        'jq \".wallet_id = \\"%s\\" \" %s/console.json > /tmp/console.json' % (
             validator_msig_addr, configs_dir), encoding='utf-8', shell=True)
     subprocess.check_output(
         'cp /tmp/console.json %s/console.json' % (configs_dir), encoding='utf-8', shell=True)
@@ -150,6 +153,7 @@ def get_stake():
 
 def submit_stake():
     if validator == 'depool':
+        boc = validator_query_boc()
         result_of_submit = cli_submit_transaction(msig_addr, depool_addr, 1000000000, boc)
     elif validator == 'single':
         stake = get_stake()
@@ -218,5 +222,5 @@ try:
       logging.info('Validator must be depool or single!')
   time.sleep(60)
 except:
-  time.sleep(60)
+  #time.sleep(60)
   logging.info('ERROR running validator')

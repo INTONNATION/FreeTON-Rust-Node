@@ -8,6 +8,7 @@ environment:
   MSIG_ADDR_HEX_0: "{{ msig_addr_hex_0 }}"
   CONFIGS_DIR: "{{ rustvalidator_conf_dir }}"
   DEPOOL_ADDR: "{{ depool_addr }}"
+  HELPER_ADDR: "{{ helper_addr }}"
   REMAINED_FOR_FEES: "{{ remained_for_fees }}"
   VALIDATOR: "{{ validator }}"
   ELECTOR_TYPE: "{{ elector_type }}"
