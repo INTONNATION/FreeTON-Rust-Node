@@ -6,14 +6,15 @@ import os
 
 load_dotenv('/etc/rustvalidator/.env')
 
-elector_addr = os.getenv('elector_addr')
-elector_addr_hex = os.getenv('elector_addr_hex')
-msig_addr_hex = os.getenv('msig_addr_hex')
-msig_addr = os.getenv('msig_addr')
-configs_dir = os.getenv('configs_dir')
-remained_for_fees = os.getenv('remained_for_fees')
-elector_type = os.getenv('elector_type')
-depool_addr = os.getenv('depool_addr')
+elector_addr = os.getenv('ELECTOR_ADDR')
+elector_addr_hex = os.getenv('ELECTOR_ADDR_HEX')
+msig_addr_hex = os.getenv('MSIG_ADDR_HEX')
+msig_addr_hex_0 = os.getenv('MSIG_ADDR_HEX_0')
+msig_addr = os.getenv('MSIG_ADDR')
+configs_dir = os.getenv('CONFIGS_DIR')
+remained_for_fees = os.getenv('REMAINED_FOR_FEES')
+depool_addr = os.getenv('DEPOOL_ADDR')
+elector_type = 'fift'
 
 logging.basicConfig(
     level=logging.INFO,
@@ -28,10 +29,6 @@ def cli_depool_config():
     return depool_config
 
 
-def get_depool_addr():
-    depool_addr = subprocess.check_output('cat %s/depool.addr")' % (configs_dir), encoding='utf-8', shell=True)
-    logging.info(depool_addr)
-    return depool_addr
 
 
 def recover_query_boc():
@@ -117,7 +114,6 @@ def submit_stake():
     nanostake = subprocess.check_output('tonos-cli convert tokens %s | tail -1' % (int(stake)), encoding='utf-8',
                                         shell=True)
     boc = validator_query_boc();
-    depool_addr = get_depool_addr()
     result_of_submit = cli_submit_transaction(msig_addr, depool_addr, int(nanostake), boc)
     logging.info(result_of_submit)
     return result_of_submit
@@ -153,7 +149,7 @@ def cli_get_active_election_id_from_depool_event():
 
 try:
     cli_depool_config()
-    if cli_get_active_election_id():
+    if cli_get_active_election_id() != cli_get_active_election_id_from_depool_event():
         console_create_elector_request()
         submit_stake()
 except:
