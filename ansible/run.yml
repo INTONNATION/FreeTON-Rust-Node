@@ -1,15 +1,15 @@
-#- name: monitoring-server
-#  hosts: monitoring-server
-#  remote_user: root
-#  roles:
-#    - monitoring-server
+- name: monitoring-server
+  hosts: monitoring-server
+  remote_user: root
+  roles:
+    - monitoring-server
 
 - name: rustnode
   hosts: rustnode
   remote_user: root
   roles:
    - pre-install
-#   - nodeexporter
-#   - statsd
-#   - rustnode
+   - nodeexporter
+   - statsd
+   - rustnode
    - rustvalidator

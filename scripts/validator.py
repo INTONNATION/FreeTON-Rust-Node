@@ -10,7 +10,7 @@ load_dotenv('/etc/rust-validator/.env')
 elector_addr = os.getenv('ELECTOR_ADDR')
 elector_addr_hex = os.getenv('ELECTOR_ADDR_HEX')
 msig_addr_hex = os.getenv('MSIG_ADDR_HEX')
-msig_addr_hex_0 = '0x4000610da7d7f89b92cd64212e5b983d9ccac9938333174f352a5b3c416997c4'
+msig_addr_hex_0 = os.getenv('MSIG_ADDR_HEX_0')
 msig_addr = os.getenv('MSIG_ADDR')
 configs_dir = os.getenv('CONFIGS_DIR')
 remained_for_fees = os.getenv('REMAINED_FOR_FEES')
@@ -28,11 +28,13 @@ def cli_get_recover_amount(elector_addr: str, msig_addr_hex: str):
             elector_addr, msig_addr_hex, configs_dir), encoding='utf-8', shell=True)
     return recover_amount
 
+
 def cli_get_recover_amount_fift(elector_addr: str, msig_addr_hex: str):
     recover_amount = subprocess.check_output(
         'tonos-cli runget %s compute_returned_stake %s 2>&1 | grep "Result:" | awk -F\'"\' \'{print $2}\' | tr -d \"\n\"' % (
             elector_addr, msig_addr_hex), encoding='utf-8', shell=True)
     return recover_amount
+
 
 def console_recover_stake():
     subprocess.check_output('console -C %s/console.json -c recover_stake' % (configs_dir), encoding='utf-8', shell=True)
@@ -53,17 +55,19 @@ def cli_submit_transaction(msig_addr: str, elector_addr_hex: str, value: str, bo
     logging.info(trx)
     return trx
 
+
 def cli_get_active_election_id(elector_addr: str):
     if elector_type == 'fift':
         active_election_id = subprocess.check_output(
-            'tonos-cli runget %s active_election_id | grep Result: | awk -F \'\\"\' \'{print $2}\' ' % (
-                 elector_addr), encoding='utf-8', shell=True)
+            'tonos-cli runget %s active_election_id | grep Result: | awk -F \'\\"\' \'{print $2}\' |tr -d \"\n\"' % (
+                elector_addr), encoding='utf-8', shell=True)
     else:
         active_election_id = subprocess.check_output(
             'tonos-cli run %s active_election_id {} --abi %s/Elector.abi.json | grep value0 | awk \'{print $2}\' | tr -d \"\\"\"|tr -d \"\n\"' % (
                 elector_addr, configs_dir), encoding='utf-8', shell=True)
     logging.info('ACTIVE ELECTION ID: %s' % active_election_id)
     return active_election_id
+
 
 def console_create_elector_request(election_start):
     subprocess.check_output('tonos-cli getconfig 15 > global_config_15_raw', encoding='utf-8', shell=True)
@@ -84,6 +88,7 @@ def console_create_elector_request(election_start):
     request = subprocess.check_output(
         'console -C %s/console.json -c "election-bid %s %s"' % (configs_dir, election_start, election_stop),
         encoding='utf-8', shell=True)
+    print('console -C %s/console.json -c "election-bid %s %s"' % (configs_dir, election_start, election_stop))
     logging.info(request)
 
 
@@ -100,6 +105,7 @@ def check_validator_balance():
     logging.info('BALANCE %s' % balance_in_tokens)
     return balance_in_tokens
 
+
 def get_min_stake():
     min_stake = subprocess.check_output(
         'tonos-cli getconfig 17 | grep min_stake | awk \'{print $2}\' | tr -d \'\\"\' | tr -d \',\'', encoding='utf-8',
@@ -111,8 +117,6 @@ def get_min_stake():
 
 def get_stake():
     actual_balance = check_validator_balance()
-    print(type(actual_balance))
-    print(type(remained_for_fees))
     stake = (int(actual_balance) - int(remained_for_fees)) / 2
     print(stake)
     logging.info('WILL BE STAKED %s' % stake)
@@ -128,32 +132,37 @@ def submit_stake():
     logging.info(result_of_submit)
     return result_of_submit
 
+
 while True:
-  try:
-    if elector_type == 'fift':
-      recover_amount = cli_get_recover_amount_fift(elector_addr, msig_addr_hex_0)
-      logging.info('recover amount = %s' % recover_amount)
-    else:
-      recover_amount = cli_get_recover_amount(elector_addr, msig_addr_hex)
-      logging.info('recover amount = %s' % recover_amount)
-    if recover_amount != "0":
-        console_recover_stake()
-        boc = recover_query_boc()
-        cli_submit_transaction(msig_addr, elector_addr_hex, 1000000000, boc)
-        logging.info('RECOVER STAKE REQUESTED')
-    else:
-        logging.info('NO TOKENS TO RECOVER')
-    election_id = cli_get_active_election_id(elector_addr)
-    with open("%s/active-election-id-submitted" % configs_dir, 'r') as the_file:
-        submitted_election_id = the_file.read()
-    if election_id != "0" and int(election_id) != int(submitted_election_id):
-      console_create_elector_request(election_id)
-      submit_stake()
-      submitted_election_id = election_id
-      with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
-        the_file.write(submitted_election_id)
-    else:
-        logging.info('Already submitted or not active elections')
-    time.sleep(600)
-  except:
-    logging.info('ERROR running validator')
+    try:
+        if elector_type == 'fift':
+            recover_amount = cli_get_recover_amount_fift(elector_addr, msig_addr_hex_0)
+            logging.info('recover amount = %s' % recover_amount)
+        else:
+            recover_amount = cli_get_recover_amount(elector_addr, msig_addr_hex)
+            logging.info('recover amount = %s' % recover_amount)
+        if recover_amount != "0":
+            console_recover_stake()
+            boc = recover_query_boc()
+            cli_submit_transaction(msig_addr, elector_addr_hex, 1000000000, boc)
+            logging.info('RECOVER STAKE REQUESTED')
+        else:
+            logging.info('NO TOKENS TO RECOVER')
+        election_id = cli_get_active_election_id(elector_addr)
+        with open("%s/active-election-id-submitted" % configs_dir, 'r') as the_file:
+            submitted_election_id = the_file.read()
+        if int(election_id) != 0 and int(election_id) != int(submitted_election_id):
+            try:
+                print(int(election_id))
+                console_create_elector_request(election_id)
+                submit_stake()
+                submitted_election_id = election_id
+                with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
+                    the_file.write(submitted_election_id)
+            except:
+                logging.info('Stake does not sent!')
+        else:
+            logging.info('Already submitted or not active elections')
+        time.sleep(600)
+    except:
+        logging.info('ERROR running validator')

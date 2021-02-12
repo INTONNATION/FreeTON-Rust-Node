@@ -60,6 +60,14 @@
   tags:
     - install
 
+- name: Config tonos-cli
+  shell : 'cd {{ rustvalidator_conf_dir }}; tonos-cli config --url {{ dapp_server_url }}'
+  tags:
+    - install
+
+- name: setup tonoscli
+  shell: "echo 'TONOSCLI_CONFIG="{{ rustvalidator_conf_dir }}/tonos-cli.conf.json"'
+
 - name: Download {{ network }} abhi configs
   get_url:
     url: "{{ item.key }}"
