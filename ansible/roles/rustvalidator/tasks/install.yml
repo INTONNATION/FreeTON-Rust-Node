@@ -1,18 +1,5 @@
 ---
 
-environment:
-  ELECTOR_ADDR: "{{ elector_addr }}"
-  ELECTOR_ADDR_HEX: "{{ elector_addr_hex }}"
-  MSIG_ADDR_HEX: "{{ msig_addr_hex}}"
-  MSIG_ADDR: "{{ msig_addr}}"
-  MSIG_ADDR_HEX_0: "{{ msig_addr_hex_0 }}"
-  CONFIGS_DIR: "{{ rustvalidator_conf_dir }}"
-  DEPOOL_ADDR: "{{ depool_addr }}"
-  HELPER_ADDR: "{{ helper_addr }}"
-  REMAINED_FOR_FEES: "{{ remained_for_fees }}"
-  VALIDATOR: "{{ validator }}"
-  ELECTOR_TYPE: "{{ elector_type }}"
-
 - name: Create rustvalidator user
   user:
     name: rustvalidator
@@ -80,7 +67,7 @@ environment:
     - install
 
 - name: setup tonoscli
-  shell: "echo 'TONOSCLI_CONFIG="{{ rustvalidator_conf_dir }}/tonos-cli.conf.json"'
+  shell: "echo TONOSCLI_CONFIG={{ rustvalidator_conf_dir }}/tonos-cli.conf.json"
 
 - name: Download {{ network }} abhi configs
   get_url:

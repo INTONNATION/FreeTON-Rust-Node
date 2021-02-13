@@ -4,6 +4,8 @@ Description=FreeTON Rust full node
 [Service]
 Environment="STATSD_DOMAIN=localhost:"
 Environment="STATSD_PORT=9125"
+LimitNOFILE=16000
+LimitNOFILESoft=16000
 
 User=rustnode
 Type=simple

@@ -3,7 +3,7 @@
 - name: Start rust_validator
   systemd:
     enabled: yes
-    state: "reinstalled"
+    state: "started"
     name: "rustvalidator"
     daemon_reload: yes
   tags:

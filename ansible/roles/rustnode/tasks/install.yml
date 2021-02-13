@@ -1,12 +1,13 @@
 ---
-
-environment:
-  TON_NODE_GITHUB_REPO: "{{ ton_node_github_repo }}"
-  TON_NODE_GITHUB_COMMIT_ID: "{{ ton_node_github_commit_id }}"
-  TON_NODE_TOOLS_GITHUB_REPO: "{{ ton_node_tools_github_repo }}"
-  TON_NODE_TOOLS_GITHUB_COMMIT_ID: "{{ ton_node_tools_github_commit_id }}"
-  TONOS_CLI_GITHUB_REPO: "{{ tonos_cli_github_repo }}"
-  TONOS_CLI_GITHUB_COMMIT_ID: "{{ tonos_cli_github_commit_id }}"
+- name: Template config files and systemd service
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - {"src": "env.sh.j2", "dest": "{{ scripts_dir }}/env.sh"}
+  tags:
+   - install
+   - upgrade
 
 - name: Create rustnode user
   user:
@@ -18,7 +19,7 @@ environment:
    - install
 
 - name: Start remote build
-  shell: "cd {{ scripts_dir }} && ./build.sh"
+  shell: "cd {{ scripts_dir }} && source env.sh && ./build.sh"
   when: build == true
   tags: 
    - install
