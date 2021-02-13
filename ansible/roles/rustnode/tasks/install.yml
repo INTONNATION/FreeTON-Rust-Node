@@ -19,7 +19,7 @@
    - install
 
 - name: Start remote build
-  shell: "cd {{ scripts_dir }} && source env.sh && ./build.sh"
+  shell: "cd {{ scripts_dir }} && . ./env.sh  && ./build.sh"
   when: build == true
   tags: 
    - install
