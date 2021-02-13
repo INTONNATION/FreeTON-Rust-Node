@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 import os
 import time
 
-load_dotenv('/etc/rust-validator/.env')
-
 elector_addr = os.getenv('ELECTOR_ADDR')
 elector_addr_hex = os.getenv('ELECTOR_ADDR_HEX')
 msig_addr_hex = os.getenv('MSIG_ADDR_HEX')
@@ -98,7 +96,6 @@ def cli_get_active_election_id(elector_addr: str):
         active_election_id = subprocess.check_output(
             'tonos-cli run %s active_election_id {} --abi %s/Elector.abi.json | grep value0 | awk \'{print $2}\' | tr -d \"\\"\"|tr -d \"\n\"' % (
                 elector_addr, configs_dir), encoding='utf-8', shell=True)
-    logging.info('ACTIVE ELECTION ID: %s' % active_election_id)
     return active_election_id
 
 def console_create_elector_request(election_start):
@@ -117,11 +114,14 @@ def console_create_elector_request(election_start):
         shell=True)
     election_stop = (int(election_start) + 1000 + int(elections_start_before) + int(elections_end_before) + int(
         stake_held_for) + int(validators_elected_for))
+    print('console -C %s/console.json -c "election-bid %s %s"' % (configs_dir, election_start, election_stop))
     request = subprocess.check_output(
        'console -C %s/console.json -c "election-bid %s %s"' % (configs_dir, election_start, election_stop),
        encoding='utf-8', shell=True)
+    if "Error" in request:
+       quit()
     logging.info(request)
-    return election_stop
+    return (elections_start_before, elections_end_before)
 
 def validator_query_boc():
     validator_query_boc = subprocess.check_output('base64 --wrap=0 validator-query.boc', encoding='utf-8', shell=True)
@@ -165,9 +165,12 @@ def submit_stake():
 #while True:
 try:
   if validator == 'depool':
-     cli_depool_config()
+     depool_config=cli_depool_config()
+     logging.info('DEPOOL CONFIG: %s' % depool_config)
      active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
+     logging.info('ACTIVE ELECTION ID FROM DEPOOL EVENT: %s' % active_election_id_from_depool_event)
      active_election_id = cli_get_active_election_id(elector_addr)
+     logging.info('ACTIVE ELECTION ID: %s' % active_election_id)
      try:
          with open("%s/active-election-id-submitted" % configs_dir, 'r') as the_file:
              submitted_election_id = the_file.read()
@@ -176,11 +179,16 @@ try:
      if int(active_election_id) != 0 and int(active_election_id) != int(submitted_election_id):
          tick_tock()
          proxy_msig_addr = get_proxy_addr_from_depool_event(active_election_id_from_depool_event,active_election_id)
+         logging.info('PROXY ADDR: %s' % proxy_msig_addr)
          add_proxy_addr_to_console(proxy_msig_addr)
          election_stop = console_create_elector_request(active_election_id)
-         second_tick_tock_delay = (int(election_stop) - int(time.time())) + 100 + 1800 # config 15
+         logging.info('ELECTION STOP: %s' % election_stop)
+         elections_start_before,elections_end_before=console_create_elector_request(active_election_id)
+         second_tick_tock_delay = (int(active_election_id) + int(elections_start_before) + int(elections_end_before) - int(time.time())) + 100
+         logging.info('SECOND TICK TOCK DELAY: %s' % second_tick_tock_delay)
          submit_stake()
          submitted_election_id = active_election_id
+         logging.info('SUBMITTED ELECTION ID: %s' % submitted_election_id)
          with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
            the_file.write(submitted_election_id)
          time.sleep(second_tick_tock_delay)
@@ -222,5 +230,5 @@ try:
       logging.info('Validator must be depool or single!')
   time.sleep(60)
 except:
-  #time.sleep(60)
+  time.sleep(60)
   logging.info('ERROR running validator')
