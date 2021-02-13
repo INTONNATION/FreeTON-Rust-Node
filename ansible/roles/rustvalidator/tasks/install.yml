@@ -77,7 +77,7 @@
     url: "{{ item.key }}"
     dest: "{{ rustvalidator_conf_dir }}/{{ item.value }}"
   with_items:
-    - { "key": "{{ config_safemultisig_abi }}","value": "SafeMultisigWallet.abi.json" }
+    - { "key": "{{ config_abi_safemultisig_url }}","value": "SafeMultisigWallet.abi.json" }
     - { "key": "{{ config_abi_elector_url }}","value": "Elector.abi.json" }
     - { "key": "{{ config_abi_depool_helper_url }}","value": "DePoolHelper.abi.json" }
   tags:
