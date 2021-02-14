@@ -162,73 +162,73 @@ def submit_stake():
         result_of_submit = cli_submit_transaction(msig_addr, elector_addr_hex, int(nanostake), boc)
     return result_of_submit
 
-#while True:
-try:
-  if validator == 'depool':
-     depool_config=cli_depool_config()
-     logging.info('DEPOOL CONFIG: %s' % depool_config)
-     active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
-     logging.info('ACTIVE ELECTION ID FROM DEPOOL EVENT: %s' % active_election_id_from_depool_event)
-     active_election_id = cli_get_active_election_id(elector_addr)
-     logging.info('ACTIVE ELECTION ID: %s' % active_election_id)
-     try:
-         with open("%s/active-election-id-submitted" % configs_dir, 'r') as the_file:
-             submitted_election_id = the_file.read()
-     except:
-         submitted_election_id = 0
-     if int(active_election_id) != 0 and int(active_election_id) != int(submitted_election_id):
-         tick_tock()
-         proxy_msig_addr = get_proxy_addr_from_depool_event(active_election_id_from_depool_event,active_election_id)
-         logging.info('PROXY ADDR: %s' % proxy_msig_addr)
-         add_proxy_addr_to_console(proxy_msig_addr)
-         election_stop = console_create_elector_request(active_election_id)
-         logging.info('ELECTION STOP: %s' % election_stop)
-         elections_start_before,elections_end_before=console_create_elector_request(active_election_id)
-         second_tick_tock_delay = (int(active_election_id) + int(elections_start_before) + int(elections_end_before) - int(time.time())) + 100
-         logging.info('SECOND TICK TOCK DELAY: %s' % second_tick_tock_delay)
-         submit_stake()
-         submitted_election_id = active_election_id
-         logging.info('SUBMITTED ELECTION ID: %s' % submitted_election_id)
-         with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
-           the_file.write(submitted_election_id)
-         time.sleep(second_tick_tock_delay)
-         tick_tock()
-     else:
-         logging.info('Already submitted or not active elections')
-  elif validator == 'single':
-     if elector_type == 'fift':
-       recover_amount = cli_get_recover_amount_fift(elector_addr, msig_addr_hex_0)
-       logging.info('recover amount = %s' % recover_amount)
-     else:
-       recover_amount = cli_get_recover_amount(elector_addr, msig_addr_hex)
-       logging.info('recover amount = %s' % recover_amount)
-     if recover_amount != "0":
-         console_recover_stake()
-         boc = recover_query_boc()
-         cli_submit_transaction(msig_addr, elector_addr_hex, 1000000000, boc)
-         logging.info('RECOVER STAKE REQUESTED')
-     else:
-         logging.info('NO TOKENS TO RECOVER')
-     election_id = cli_get_active_election_id(elector_addr)
-     try:
-         with open("%s/active-election-id-submitted" % configs_dir, 'r') as the_file:
-             submitted_election_id = the_file.read()
-     except:
-         submitted_election_id = 0
-     if int(election_id) != 0 and int(election_id) != int(submitted_election_id):
+while True:
+  try:
+    if validator == 'depool':
+       depool_config=cli_depool_config()
+       logging.info('DEPOOL CONFIG: %s' % depool_config)
+       active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
+       logging.info('ACTIVE ELECTION ID FROM DEPOOL EVENT: %s' % active_election_id_from_depool_event)
+       active_election_id = cli_get_active_election_id(elector_addr)
+       logging.info('ACTIVE ELECTION ID: %s' % active_election_id)
        try:
-         console_create_elector_request(election_id)
-         submit_stake()
-         submitted_election_id = election_id
-         with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
-           the_file.write(submitted_election_id)
+           with open("%s/active-election-id-submitted" % configs_dir, 'r') as the_file:
+               submitted_election_id = the_file.read()
        except:
-           logging.info('Stake does not sent!')
-     else:
-         logging.info('Already submitted or not active elections')
-  else:
-      logging.info('Validator must be depool or single!')
-  time.sleep(60)
-except:
-  time.sleep(60)
-  logging.info('ERROR running validator')
+           submitted_election_id = 0
+       if int(active_election_id) != 0 and int(active_election_id) != int(submitted_election_id):
+           tick_tock()
+           proxy_msig_addr = get_proxy_addr_from_depool_event(active_election_id_from_depool_event,active_election_id)
+           logging.info('PROXY ADDR: %s' % proxy_msig_addr)
+           add_proxy_addr_to_console(proxy_msig_addr)
+           election_stop = console_create_elector_request(active_election_id)
+           logging.info('ELECTION STOP: %s' % election_stop)
+           elections_start_before,elections_end_before=console_create_elector_request(active_election_id)
+           second_tick_tock_delay = (int(active_election_id) + int(elections_start_before) + int(elections_end_before) - int(time.time())) + 100
+           logging.info('SECOND TICK TOCK DELAY: %s' % second_tick_tock_delay)
+           submit_stake()
+           submitted_election_id = active_election_id
+           logging.info('SUBMITTED ELECTION ID: %s' % submitted_election_id)
+           with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
+             the_file.write(submitted_election_id)
+           time.sleep(second_tick_tock_delay)
+           tick_tock()
+       else:
+           logging.info('Already submitted or not active elections')
+    elif validator == 'single':
+       if elector_type == 'fift':
+         recover_amount = cli_get_recover_amount_fift(elector_addr, msig_addr_hex_0)
+         logging.info('recover amount = %s' % recover_amount)
+       else:
+         recover_amount = cli_get_recover_amount(elector_addr, msig_addr_hex)
+         logging.info('recover amount = %s' % recover_amount)
+       if recover_amount != "0":
+           console_recover_stake()
+           boc = recover_query_boc()
+           cli_submit_transaction(msig_addr, elector_addr_hex, 1000000000, boc)
+           logging.info('RECOVER STAKE REQUESTED')
+       else:
+           logging.info('NO TOKENS TO RECOVER')
+       election_id = cli_get_active_election_id(elector_addr)
+       try:
+           with open("%s/active-election-id-submitted" % configs_dir, 'r') as the_file:
+               submitted_election_id = the_file.read()
+       except:
+           submitted_election_id = 0
+       if int(election_id) != 0 and int(election_id) != int(submitted_election_id):
+         try:
+           console_create_elector_request(election_id)
+           submit_stake()
+           submitted_election_id = election_id
+           with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
+             the_file.write(submitted_election_id)
+         except:
+             logging.info('Stake does not sent!')
+       else:
+           logging.info('Already submitted or not active elections')
+    else:
+        logging.info('Validator must be depool or single!')
+    time.sleep(60)
+  except:
+    time.sleep(60)
+    logging.info('ERROR running validator')
