@@ -95,9 +95,15 @@
 
 - name: setup tonoscli
   shell: 'echo "export TONOSCLI_CONFIG={{ rustvalidator_conf_dir }}/tonos-cli.conf.json" >> /etc/profile'
+  tags:
+    - install
+    - reinstall
 
 - name: Prepare console.json
   shell: "cp -r {{ rustnode_conf_dir }}/console.json {{ rustvalidator_conf_dir }}/"
+  tags:
+    - install
+    - reinstall
 
 - name: Download abis
   get_url:
