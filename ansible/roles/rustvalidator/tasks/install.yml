@@ -8,8 +8,6 @@
     group: rust
   tags:
    - install
-   - upgrade
-   - reinstall
 
 - name: Create config directory
   file:
@@ -21,8 +19,6 @@
     - "{{ rustvalidator_conf_dir }}"
   tags:
    - install
-   - upgrade
-   - reinstall
 
 - name: Install requirements for package install
   package:
@@ -48,6 +44,8 @@
     state: present
   tags:
     - install
+    - upgrade
+    - reinstall
 
 - name: "Copy requirements.txt"
   copy:
@@ -55,23 +53,45 @@
     dest: '{{ rustvalidator_conf_dir }}'
   tags:
     - install
+    - upgrade
+    - reinstall
 
 - name: Install specified python requirements in indicated
   shell : 'cd {{ rustvalidator_conf_dir }}; pip3 install -r requirements.txt'
   tags:
     - install
+    - upgrade
+    - reinstall
 
 - name: Config tonos-cli for depool
   shell : 'cd {{ rustvalidator_conf_dir }}; tonos-cli config --url {{ dapp_server_url }} --addr {{ depool_addr }} --wallet 0:{{ msig_addr }} --keys {{ rustvalidator_conf_dir }}/msig.keys.json --retries 5'
   when: validator == "depool"
   tags:
     - install
+    - upgrade
+    - reinstall
 
 - name: Config tonos-cli for single
   shell : 'cd {{ rustvalidator_conf_dir }}; tonos-cli config --url {{ dapp_server_url }} --retries 5'
   when: validator == "single"
   tags:
     - install
+    - upgrade
+    - reinstall
+
+- name: Copy keys to remote
+  copy:
+    src: "{{ item }}"
+    dest: "{{ rustvalidator_conf_dir }}"
+    mode: 0775
+    group: rust
+  when: validator == "depool"
+  with_fileglob:
+    - ../keys/*
+  tags:
+    - install
+    - reinstall
+    - upgrade
 
 - name: setup tonoscli
   shell: 'echo "export TONOSCLI_CONFIG={{ rustvalidator_conf_dir }}/tonos-cli.conf.json" >> /etc/profile'

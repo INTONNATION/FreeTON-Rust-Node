@@ -1,5 +1,5 @@
-# Dir with keys for msig and helper
-keys/
+# keys for msig and helper
+*.keys.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
