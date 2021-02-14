@@ -3,7 +3,7 @@
 build: true
 
 # this section is required in case of build:false
-#release_version: "7a091cc"                  # TON node commit id to download from Github releases
+#release_version: "latest"                  # Release from Github releases | now linked to TON node commit id or may be latest 
 #git_repo: "INTONNATION/FreeTON-Rust-Node"   # Github repo with releases
 
 # this section is required in case of build:true
