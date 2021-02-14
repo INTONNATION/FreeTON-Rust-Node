@@ -35,6 +35,10 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets: ['loki:3100']
+  - - job_name: 'promtail'
+      scrape_interval: 10s
+      static_configs:
+        - targets: ['promtail:3100']
 
 
 alerting:

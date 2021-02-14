@@ -102,6 +102,7 @@ services:
     container_name: promtail
     ports:
       - 1514:1514
+      - 9080:9080
     volumes:
       - promtail_data:/var/log
       - ./promtail/config.yml:/etc/promtail/config.yml

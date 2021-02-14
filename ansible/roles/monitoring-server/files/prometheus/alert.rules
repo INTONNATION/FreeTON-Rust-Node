@@ -27,4 +27,13 @@ groups:
     annotations:
       summary: "Server storage is almost full"
       description: "Docker host storage usage is {{ humanize $value}}%. Reported by instance {{ $labels.instance }} of job {{ $labels.job }}."
-
+- name: rustnode
+  rules:
+  - alert: High_time_difference
+    expr: rnode_timediff > 12
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "Node time diff is too high"
+      description: "Node time diff is too high {{ $value}}. Reported by instance {{ $labels.instance }}"
