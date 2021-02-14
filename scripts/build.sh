@@ -35,5 +35,5 @@ if [ ! -z $1 ]; then
         tar --transform 's/.*\///g' -cvzf rustnode-tools.tar.gz $bins
     fi
 else
-    cp -r $bins /usr/local/bin/
+    service rust-node stop && cp -r $bins /usr/local/bin/ && service rust-node start
 fi

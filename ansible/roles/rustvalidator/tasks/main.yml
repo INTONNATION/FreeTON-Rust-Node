@@ -1,10 +1,10 @@
 ---
 # tasks file for rustnode
-- name: Build Rust Node and Console (Optional)
+- name: Install tonos-cli and all dependencies
   import_tasks: install.yml
 
-- name: Cleanup configs (reinstall)
+- name: Remove config dir
   import_tasks: cleanup.yml
 
-- name: Start Rust Node
+- name: Start Rust Node Validator
   import_tasks: start.yml

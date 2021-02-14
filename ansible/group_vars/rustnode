@@ -51,10 +51,11 @@ msig_addr: "5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"   
 elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
 depool_addr: "8aec1c2470a6ffbce7179d5ab777ced781ef40f0d25ebd874a727359c341e29c"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
 helper_addr: "73877809c68bff46a25eeb47a757925797047eb018fa4f6e95bc46ccc6b1b6be"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
+elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"
 
 logging:
   remote:
-    enabled: true
+    enabled: false
     #addr: ""                                 # defaults to monitoring-server inventory hostname
   level:
     root: debug

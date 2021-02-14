@@ -1,5 +1,5 @@
 ---
-- name: Remove databases
+- name: Remove configdir
   file:
     state: absent
     path: "{{ item }}/"

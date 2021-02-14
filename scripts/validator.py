@@ -99,18 +99,18 @@ def cli_get_active_election_id(elector_addr: str):
     return active_election_id
 
 def console_create_elector_request(election_start):
-    subprocess.check_output('tonos-cli getconfig 15 > global_config_15_raw', encoding='utf-8', shell=True)
+    subprocess.check_output('tonos-cli getconfig 15 > %s/global_config_15_raw' % configs_dir, encoding='utf-8', shell=True)
     elections_end_before = subprocess.check_output(
-        'cat global_config_15_raw | grep elections_end_before | awk \'{print $2}\' | tr -d \',\'', encoding='utf-8',
+        'cat %s/global_config_15_raw | grep elections_end_before | awk \'{print $2}\' | tr -d \',\'' % configs_dir, encoding='utf-8',
         shell=True)
     elections_start_before = subprocess.check_output(
-        'cat global_config_15_raw | grep "elections_start_before" | awk \'{print $2}\' | tr -d \',\'', encoding='utf-8',
+        'cat %s/global_config_15_raw | grep "elections_start_before" | awk \'{print $2}\' | tr -d \',\'' % configs_dir, encoding='utf-8',
         shell=True)
     stake_held_for = subprocess.check_output(
-        'cat global_config_15_raw | grep "stake_held_for" | awk \'{print $2}\' | tr -d \',\'', encoding='utf-8',
+        'cat %s/global_config_15_raw | grep "stake_held_for" | awk \'{print $2}\' | tr -d \',\'' % configs_dir, encoding='utf-8',
         shell=True)
     validators_elected_for = subprocess.check_output(
-        'cat global_config_15_raw | grep "validators_elected_for" | awk \'{print $2}\' | tr -d \',\'', encoding='utf-8',
+        'cat %s/global_config_15_raw | grep "validators_elected_for" | awk \'{print $2}\' | tr -d \',\'' % configs_dir, encoding='utf-8',
         shell=True)
     election_stop = (int(election_start) + 1000 + int(elections_start_before) + int(elections_end_before) + int(
         stake_held_for) + int(validators_elected_for))

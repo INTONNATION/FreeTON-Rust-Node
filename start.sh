@@ -24,6 +24,7 @@ elif python -mplatform|grep "Ubuntu"
             sudo apt-add-repository ppa:ansible/ansible
             sudo apt-get update
             sudo apt-get install ansible
+	    sudo apt-get install python-jmespath
           else
             echo "\nFor run this playbook you need Ansible"
             exit 1

@@ -5,10 +5,10 @@ Description=FreeTON Rust full node
 Environment="STATSD_DOMAIN=localhost:"
 Environment="STATSD_PORT=9125"
 Environment="ELECTOR_ADDR=-1:{{ elector_addr }}"
-Environment="ELECTOR_ADDR_HEX=-1x{{ elector_addr_hex }}"
-Environment="MSIG_ADDR_HEX=1x{{ msig_addr_hex}}"
-Environment="MSIG_ADDR=0:{{ msig_addr}}"
-Environment="MSIG_ADDR_HEX_0=0x{{ msig_addr_hex_0 }}"
+Environment="ELECTOR_ADDR_HEX=-1x{{ elector_addr }}"
+Environment="MSIG_ADDR_HEX=1x{{ msig_addr }}"
+Environment="MSIG_ADDR=0:{{ msig_addr }}"
+Environment="MSIG_ADDR_HEX_0=0x{{ msig_addr }}"
 Environment="CONFIGS_DIR={{ rustvalidator_conf_dir }}"
 Environment="DEPOOL_ADDR=0:{{ depool_addr }}"
 Environment="HELPER_ADDR=0:{{ helper_addr }}"
@@ -18,7 +18,7 @@ Environment="ELECTOR_TYPE={{ elector_type }}"
 
 User=rustvalidator
 Type=simple
-ExecStart=/bin/bash -c "/usr/bin/python3   {{ scripts_dir }}/validator.py | /usr/bin/logger -n {{ logging.remote.addr | default(hostvars[groups['monitoring-server'][0]]['inventory_hostname']) }} -P 1514 -T --rfc5424 --octet-count"
+ExecStart=/bin/bash -c "/usr/bin/python3   {{ scripts_dir }}/validator.py {% if logging.remote.enabled %} | /usr/bin/logger -n {{ logging.remote.addr | default(hostvars[groups['monitoring-server'][0]]['inventory_hostname']) }} -P 1514 -T --rfc5424 --octet-count{% endif %}"
 Restart=on-failure
 
 [Install]
