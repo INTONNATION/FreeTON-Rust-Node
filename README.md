@@ -94,8 +94,9 @@ Ubuntu 18.04
 1. Free TON Rust node server with public IP and system requirements described above.
 2. **Optional** monitoring server system with public IP and requirements described above.
 3. Ansible installed. Recommended version 2.9.9. (Can be skipped in case of Quick start)
-4. Depool(**preferable**) or multisig with enough funds to stake:
-    1. For a depool validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in 0 chain, a depool in 0 chain, put files msig.keys.json and helper.keys.json to keys directory and configure msig_addr and helper_addr in ansible/group_vars/rustnode env file.
+4. Depool or multisig with enough funds to stake:
+
+    1. **Preferable**. For a depool validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in 0 chain, a depool in 0 chain, put files msig.keys.json and helper.keys.json to keys directory and configure msig_addr and helper_addr in ansible/group_vars/rustnode env file.
         Documentation: [Run DePool v3](https://docs.ton.dev/86757ecb2/p/04040b-run-depool-v3)
 
     2. For direct staking validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in -1 chain, put file msig.keys.json to keys directory and configure msig_addr in ansible/group_vars/rustnode env file.
