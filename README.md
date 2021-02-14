@@ -1,11 +1,9 @@
 
 # **FreeTON Rust Node Installation guide**
 
-	**ATTENTION !!! README IS WORK IN PROGRESS !!!**
+**ATTENTION !!! README IS WORK IN PROGRESS !!!**
 
-	
-
-All scripts are in the active development stage and will be updated regularly. Feel free to contact us using Github issues or directly on Telegram (@sostrovskyi, @renatSK @azavodovskyi ).
+All scripts are in the active development stage and will be updated regularly. Feel free to contact us using Github issues or directly on Telegram (@sostrovskyi, @renatSK, @azavodovskyi).
 
 This guide contains instructions on how to build and configure a RUST validator node in the Free TON blockchain. The instructions and scripts can be executed on any Debian based Linux distributions but were verified on Ubuntu 18.04 and Ubuntu 20.04.
 
@@ -98,29 +96,23 @@ Ubuntu 18.04
 3. Ansible installed. Recommended version 2.9.9. (Can be skipped in case of Quick start)
 4. Depool(**preferable**) or multisig with enough funds to stake:
     1. For a depool validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in 0 chain, a depool in 0 chain, put files msig.keys.json and helper.keys.json to keys directory and configure msig_addr and helper_addr in ansible/group_vars/rustnode env file.
-
         Documentation: [Run DePool v3](https://docs.ton.dev/86757ecb2/p/04040b-run-depool-v3)
 
     2. For direct staking validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in -1 chain, put file msig.keys.json to keys directory and configure msig_addr in ansible/group_vars/rustnode env file.
-
         Documentation: [Multisignature Wallet Management in TONOS-CLI](https://docs.ton.dev/86757ecb2/p/94921e-multisignature-wallet-management-in-tonos-cli)
-
-
 
 ## Quick start
 
-
-
-1. Clone project repository \
-_git clone [https://github.com/INTONNATION/FreeTON-Rust-Node.git](https://github.com/INTONNATION/FreeTON-Rust-Node.git)_
-
-    _cd FreeTON-Rust-Node_
-
+1. Clone project repository 
+```
+git clone [https://github.com/INTONNATION/FreeTON-Rust-Node.git](https://github.com/INTONNATION/FreeTON-Rust-Node.git)
+cd FreeTON-Rust-Node
+```
 2. Configure variables in ansible/group_vars (refer to Variables section)
 3. Execute start scripts
-
-    _./start.sh_
-
+```
+./start.sh
+```
 4. Follow prompts
 
 ## 
@@ -129,32 +121,25 @@ Advanced start
 1. Configure variables in ansible/group_vars (refer to Variables section)
 2. Configure hosts in hosts file
 3. Configure execution flow in run.yml
-4. ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t install
-
+4. Run playbook
+```
+ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t install
+```
 
 ## Manage node
 
-
-
 1. Restart
-
-    _ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t restart_
-
-
-    With this tag ansible playbook will reinstall node from scratch with all databases and configs cleanup.
-
+```
+ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t restart
+```
+With this tag ansible playbook will reinstall node from scratch with all databases and configs cleanup.
 2. Upgrade
-
-    _ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t upgrade_
-
-
-    This tag will download the latest release of Rust node and Rust console from project github or build source code on remote VM, install it and restart systemd services.  
-
-
+```
+ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t upgrade
+```
+This tag will download the latest release of Rust node and Rust console from project github or build source code on remote VM, install it and restart systemd services.  
 
 ## Features
-
-
 
 *   Easy install with help of _start.sh_
 *   Validator script written on Python (supports Singe and Depool validation)
@@ -169,41 +154,29 @@ Advanced start
 *   Alerting to Telegram channel based on metrics
 *   Alerting to Telegram channel based on validator script logs and Rust node logs
 
-
 ## Technology stack
-
-
 
 *   **Ansible** - tool which automates all the configuration
 *   **Python** - used for validator service
 *   **BASH** - used for reusable scripts which can be run on remote VM.
 *   **Prometheus** - scrapes metrics from TON-OS-DApp-Server components
 *   **Promtail** - logs aggregator/parser
-*   **Loki **- log storage 
-*   **Grafana **- metrics and logs viewer
-*   **Alertmanager **- responsible for alerts and notifications
-*   **Alertgram **- Telegram alerts
+*   **Loki ** - log storage 
+*   **Grafana ** - metrics and logs viewer
+*   **Alertmanager ** - responsible for alerts and notifications
+*   **Alertgram ** - Telegram alerts
 *   **Node-exporter** - linux VMs metrics agent
 *   **Statsd-exporter** - stastd metrics agent
-
 
 ## Variables
 
 All variables are described inside env files under ansible/group_vars/ directory.
 
-
 ## Build
 
-Installation scripts support remote source code build of the [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) and [ton-labs-node-tools](https://github.com/tonlabs/ton-labs-node-tools) or alternatively downloading already compiled binaries from Github releases inside this repository.
-
-By skipping remote builds you will be able to automatically upgrade validator nodes without performance degradation on remote nodes. INTONNATION team will take responsibility to build and release compiled binaries for each [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) stable release. 
-
-We recommend to star this project to receive notification about new rustnode releases.
-
+Installation scripts support remote source code build of the [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) and [ton-labs-node-tools](https://github.com/tonlabs/ton-labs-node-tools) or alternatively downloading already compiled binaries from Github releases inside this repository. By skipping remote builds you will be able to automatically upgrade validator nodes without performance degradation on remote nodes. INTONNATION team will take responsibility to build and release compiled binaries for each [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) stable release. We recommend to star this project to receive notification about new rustnode releases.
 It’s possible to set a specific version or use the latest available code from the master branch. To choose scripts behaviour you can use _build: true/false _variable (refer to Variables section)
-
 Build procedure described in scripts/build.sh. Release procedure described in .github/workflows/[main.yml](https://github.com/INTONNATION/FreeTON-Rust-Node/blob/main/.github/workflows/main.yml).
-
 
 ## Validator scripts
 
