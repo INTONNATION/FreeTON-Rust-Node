@@ -3,7 +3,7 @@
 build: true
 
 # this section is required in case of build:false
-#release_version: "7a091cc"                  # TON node commit id to download from Github releases
+#release_version: "latest"                  # Release from Github releases | now linked to TON node commit id or may be latest 
 #git_repo: "INTONNATION/FreeTON-Rust-Node"   # Github repo with releases
 
 # this section is required in case of build:true
@@ -21,21 +21,23 @@ statsd_conf_dir: "/etc/statsd"
 # validator setup section
 
 # FLD NET
+elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
 ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
 dapp_server_url: "https://gql.custler.net"    # URL of network entrypoint e.g. Dapp server
 
 # RUST NET
+#elector_type: "solidity"                      # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
 #ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
 #dapp_server_url: "https://rustnet.ton.dev"    # URL of network entrypoint e.g. Dapp server
 
-validator: "depool"                           # depool or single (without depool)
+validator: "depool"                           # depool or single (without depool) | !!! depool is preferable
 ipdiscovery: local                            # local, auto, or IP_ADDR
 database_path: "/opt/rustnode/db"
 scripts_dir: "/opt/rustnode/scripts"
 rustnode_conf_dir: "/etc/rustnode"
 rustvalidator_conf_dir: "/etc/rustvalidator"
 
-# abis
+# abis | default for all networks
 
 config_abi_safemultisig_url: "https://raw.githubusercontent.com/tonlabs/ton-labs-contracts/master/solidity/safemultisig/SafeMultisigWallet.abi.json"
 config_abi_elector_url: "https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/docker-compose/ton-node/configs/Elector.abi.json"
@@ -43,8 +45,7 @@ config_abi_depool_helper_url: "https://raw.githubusercontent.com/tonlabs/ton-lab
 
 # validator.py envs
 
-elector_type: "fift"                          # used if validator:single. fift or solidity. solidity should be used in rustnet. fift - in fld net now.
-remained_for_fees: 100                        # used if validator:single. amount of tokens remained for fees when sending stake | not nano
+#remained_for_fees: 100                       # Used if validator:single. amount of tokens remained for fees when sending stake | not nano
 
 # FLD NET ADDRS
 msig_addr: "5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
@@ -54,7 +55,7 @@ helper_addr: "73877809c68bff46a25eeb47a757925797047eb018fa4f6e95bc46ccc6b1b6be" 
 
 logging:
   remote:
-    enabled: false
+    enabled: true
     #addr: ""                                 # defaults to monitoring-server inventory hostname
   level:
     root: debug

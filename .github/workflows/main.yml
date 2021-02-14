@@ -3,7 +3,7 @@ name: Build Rust node and tools
 on:
   push:
     branches:
-      - 'ton-node-v*'
+      - 'ton-node-v-*'
 
 jobs:
   build:

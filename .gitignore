@@ -1,3 +1,6 @@
+# keys for msig and helper
+*.keys.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 .idea

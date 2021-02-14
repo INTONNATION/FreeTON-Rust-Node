@@ -52,7 +52,7 @@
 - name: Start rust_node
   systemd:
     enabled: yes
-    state: "started"
+    state: "restarted"
     name: "rustnode"
     daemon_reload: yes
   tags:

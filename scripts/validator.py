@@ -55,7 +55,7 @@ def add_proxy_addr_to_console(validator_msig_addr):
 
 def tick_tock():
     subprocess.check_output(
-        'tonos-cli call %s sendTicktock {} --abi %s/DePoolHelper.abi.json --sign %s/helper.json' % (
+        'tonos-cli call %s sendTicktock {} --abi %s/DePoolHelper.abi.json --sign %s/helper.keys.json' % (
             helper_addr, configs_dir, configs_dir), encoding='utf-8', shell=True)
 
 
