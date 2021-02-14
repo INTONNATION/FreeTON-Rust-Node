@@ -162,10 +162,10 @@ This tag will download the latest release of Rust node and Rust console from pro
 *   **BASH** - used for reusable scripts which can be run on remote VM.
 *   **Prometheus** - scrapes metrics from TON-OS-DApp-Server components
 *   **Promtail** - logs aggregator/parser
-*   **Loki ** - log storage 
-*   **Grafana ** - metrics and logs viewer
-*   **Alertmanager ** - responsible for alerts and notifications
-*   **Alertgram ** - Telegram alerts
+*   **Loki** - log storage 
+*   **Grafana** - metrics and logs viewer
+*   **Alertmanager** - responsible for alerts and notifications
+*   **Alertgram** - Telegram alerts
 *   **Node-exporter** - linux VMs metrics agent
 *   **Statsd-exporter** - stastd metrics agent
 
