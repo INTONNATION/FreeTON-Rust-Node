@@ -62,12 +62,12 @@
     - install
 
 - name: Config tonos-cli
-  shell : 'cd {{ rustvalidator_conf_dir }}; tonos-cli config --url {{ dapp_server_url }}'
+  shell : 'cd {{ rustvalidator_conf_dir }}; tonos-cli config --url {{ dapp_server_url }} --addr {{ depool_addr }} --wallet 0:{{ msig_addr }} --keys {{ rustvalidator_conf_dir }}/msig.keys.json --retries 5'
   tags:
     - install
 
 - name: setup tonoscli
-  shell: "export TONOSCLI_CONFIG={{ rustvalidator_conf_dir }}/tonos-cli.conf.json"
+  shell: 'echo "export TONOSCLI_CONFIG={{ rustvalidator_conf_dir }}/tonos-cli.conf.json" >> /etc/profile'
 
 - name: Prepare console.json
   shell: "cp -r {{ rustnode_conf_dir }}/console.json {{ rustvalidator_conf_dir }}/"
