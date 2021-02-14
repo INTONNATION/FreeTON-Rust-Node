@@ -1,0 +1,11 @@
+groups:
+- name: rustnode
+  rules:
+  - alert: Errors founds in validator.py logs
+    expr: sum(rate({app_name="rustvalidator"}  |= "ERROR" [1m])) > 0
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "Found errors during validator run proccess"
+      description: "Error: {{ $value}}. Reported by instance {{ $labels.nodehost }}"

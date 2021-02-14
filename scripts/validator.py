@@ -4,6 +4,7 @@ import subprocess
 from dotenv import load_dotenv
 import os
 import time
+import sys
 
 elector_addr = os.getenv('ELECTOR_ADDR')
 elector_addr_hex = os.getenv('ELECTOR_ADDR_HEX')
@@ -19,6 +20,7 @@ helper_addr = os.getenv('HELPER_ADDR')
 
 logging.basicConfig(
     level=logging.INFO,
+    stream=sys.stdout,
     format="fmt='validator-rust-node[%(process)d]: %(levelname)s: %(message)s", )
 
 
