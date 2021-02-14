@@ -21,10 +21,12 @@ statsd_conf_dir: "/etc/statsd"
 # validator setup section
 
 # FLD NET
+elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
 ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
 dapp_server_url: "https://gql.custler.net"    # URL of network entrypoint e.g. Dapp server
 
 # RUST NET
+#elector_type: "solidity"                      # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
 #ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
 #dapp_server_url: "https://rustnet.ton.dev"    # URL of network entrypoint e.g. Dapp server
 
@@ -43,9 +45,7 @@ config_abi_depool_helper_url: "https://raw.githubusercontent.com/tonlabs/ton-lab
 
 # validator.py envs
 
-# used only if validator:single
-#elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net now.
-#remained_for_fees: 100                        # amount of tokens remained for fees when sending stake | not nano
+#remained_for_fees: 100                       # Used if validator:single. amount of tokens remained for fees when sending stake | not nano
 
 # FLD NET ADDRS
 msig_addr: "5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
