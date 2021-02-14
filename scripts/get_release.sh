@@ -2,6 +2,10 @@ VERSION=$1
 REPO=$2
 TOKEN=$3
 
+set -e
+
+service rustnode stop || true
+
 if [ "$VERSION" = "latest" ]; then
   parser=".[0].assets[0].id"
 else
