@@ -16,6 +16,7 @@ jobs:
       TON_NODE_TOOLS_GITHUB_COMMIT_ID: "34f25ca"
       TONOS_CLI_GITHUB_REPO: "https://github.com/tonlabs/tonos-cli.git"
       TONOS_CLI_GITHUB_COMMIT_ID: "master"
+      TON_NODE_BUILD_ARGS: "--release"
 
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +25,7 @@ jobs:
         cd scripts && bash install_deps.sh
     - name: Build tools
       run: |
-        cd scripts && bash build.sh --release-tar
+        cd scripts && bash build.sh --release-tar 
     - name: Extract branch name
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
