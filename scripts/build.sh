@@ -7,6 +7,8 @@ source ~/.cargo/env
 mkdir -p build
 cd build
 
+TON_NODE_BUILD_ARGS=$5
+
 #clone_and_build 1pkg_name 2repo 3commit 4cargo_args
 
 clone_and_build () {
@@ -17,7 +19,7 @@ clone_and_build () {
     cd ..
 }
 
-clone_and_build ton-node ${TON_NODE_GITHUB_REPO} ${TON_NODE_GITHUB_COMMIT_ID} "--release --features metrics"
+clone_and_build ton-node ${TON_NODE_GITHUB_REPO} ${TON_NODE_GITHUB_COMMIT_ID} "$TON_NODE_BUILD_ARGS"
 clone_and_build ton-labs-node-tools ${TON_NODE_TOOLS_GITHUB_REPO} ${TON_NODE_TOOLS_GITHUB_COMMIT_ID} "--release"
 clone_and_build tonos-cli ${TONOS_CLI_GITHUB_REPO} ${TONOS_CLI_GITHUB_COMMIT_ID} "--release"
 

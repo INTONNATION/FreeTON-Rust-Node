@@ -7,6 +7,9 @@ build: true
 #git_repo: "INTONNATION/FreeTON-Rust-Node"   # Github repo with releases
 
 # this section is required in case of build:true
+#ton_node_build_args: "--release --features metrics"
+
+ton_node_build_args: "--release"              # disable metrics for rustcup
 ton_node_github_repo: "https://github.com/tonlabs/ton-labs-node.git"
 ton_node_github_commit_id: "dc1a964"
 ton_node_tools_github_repo: "https://github.com/tonlabs/ton-labs-node-tools.git"

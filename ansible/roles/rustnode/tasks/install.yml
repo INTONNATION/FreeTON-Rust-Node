@@ -26,7 +26,7 @@
    - upgrade
 
 - name: Install node tools from repo
-  shell: "{{ scripts_dir }}/get_release.sh {{ release_version }} {{ git_repo }} {{ github_token }}"
+  shell: '{{ scripts_dir }}/get_release.sh {{ release_version }} {{ git_repo }} {{ github_token }} "{{ ton_node_build_args }}"'
   when: build == false
   tags: 
    - install
