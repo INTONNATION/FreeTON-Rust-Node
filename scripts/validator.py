@@ -21,7 +21,7 @@ helper_addr = os.getenv('HELPER_ADDR')
 logging.basicConfig(
     level=logging.INFO,
     stream=sys.stdout,
-    format="fmt='validator-rust-node[%(process)d]: %(levelname)s: %(message)s", )
+    format="fmt=validator-rust-node[%(process)d]: %(levelname)s: %(message)s", )
 
 
 def cli_get_active_election_id_from_depool_event():
@@ -76,6 +76,12 @@ def cli_get_recover_amount_fift(elector_addr: str, msig_addr_hex: str):
             elector_addr, msig_addr_hex), encoding='utf-8', shell=True)
     return recover_amount
 
+def console_check():
+    console_check=subprocess.check_output('console -C %s/console.json -c getstats' % (configs_dir), encoding='utf-8', shell=True)
+    if "Error" in console_check:
+        logging.error('CONSOLE CHECK FAILS')
+        quit()
+    return console_check
 
 def console_recover_stake():
     subprocess.check_output('console -C %s/console.json -c recover_stake' % (configs_dir), encoding='utf-8', shell=True)
@@ -137,7 +143,7 @@ def console_create_elector_request(election_start):
         encoding='utf-8', shell=True)
     if "Error" in request:
         quit()
-    logging.info(request)
+    logging.error(request)
     return (elections_start_before, elections_end_before)
 
 
@@ -187,7 +193,15 @@ def submit_stake():
 
 while True:
     try:
+        console_check()
         if validator == 'depool':
+            try:
+                with open("%s/active-election-tick-tock-time" % configs_dir, 'r') as tick_tock_time:
+                    active_election_tick_tock_time = tick_tock_time.read()
+                if int(active_election_tick_tock_time) < int(time.time()):
+                    tick_tock()
+            except:
+                pass
             logging.info('VALIDATOR MODE: %s' % validator)
             active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
             logging.info('ACTIVE ELECTION ID FROM DEPOOL EVENT: %s' % active_election_id_from_depool_event)
@@ -204,8 +218,6 @@ while True:
                                                                    active_election_id)
                 logging.info('PROXY ADDR: %s' % proxy_msig_addr)
                 add_proxy_addr_to_console(proxy_msig_addr)
-                election_stop = console_create_elector_request(active_election_id)
-                logging.info('ELECTION STOP: %s' % election_stop)
                 elections_start_before, elections_end_before = console_create_elector_request(active_election_id)
                 second_tick_tock_delay = (int(active_election_id) + int(elections_start_before) + int(
                     elections_end_before) - int(time.time())) + 100
@@ -215,8 +227,8 @@ while True:
                 logging.info('SUBMITTED ELECTION ID: %s' % submitted_election_id)
                 with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
                     the_file.write(submitted_election_id)
-                time.sleep(second_tick_tock_delay)
-                tick_tock()
+                with open("%s/active-election-tick-tock-time" % configs_dir, 'w') as tick_tock_time:
+                    tick_tock_time.write(int(time.time() + int(second_tick_tock_delay)))
             else:
                 logging.info('Already submitted or not active elections')
         elif validator == 'single':
@@ -247,12 +259,12 @@ while True:
                     with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
                         the_file.write(submitted_election_id)
                 except:
-                    logging.info('Stake does not sent!')
+                    logging.error('Stake does not sent!')
             else:
                 logging.info('Already submitted or not active elections')
         else:
-            logging.info('Validator must be depool or single!')
+            logging.error('Validator must be depool or single!')
         time.sleep(60)
     except:
         time.sleep(60)
-        logging.info('ERROR running validator')
+        logging.error('ERROR running validator')

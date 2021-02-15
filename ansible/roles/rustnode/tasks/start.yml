@@ -4,6 +4,7 @@
   file:
     path: "{{ item }}"
     state: directory
+    group: rust
     owner: rustnode
     mode: '0755'
   with_items:
@@ -18,6 +19,8 @@
   copy:
     content: "{{ item.key }}"
     dest: "{{ rustnode_conf_dir }}/{{ item.value }}"
+    owner: rustnode
+    group: rust
   tags:
    - install
    - reinstall
@@ -30,6 +33,8 @@
   get_url:
     url: "{{ ton_network_global_conf_url }}"
     dest: "{{ rustnode_conf_dir }}/ton-global.config.json"
+    owner: rustnode
+    group: rust
   tags:
    - install
    - upgrade
@@ -39,6 +44,8 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
+    owner: rustnode
+    group: rust
   with_items:
     - {"src": "rustnode.service.j2", "dest": "/etc/systemd/system/rustnode.service"}
     - {"src": "default_config.json.j2", "dest": "{{ rustnode_conf_dir }}/default_config.json"}
@@ -72,6 +79,8 @@
   copy:
     content: "{{ json.stdout }}"
     dest: "{{ rustnode_conf_dir }}/console.json"
+    owner: rustnode
+    group: rust
   tags:
    - install
    - reinstall
@@ -88,6 +97,8 @@
   copy:
     content: "{{ json.stdout }}"
     dest: "{{ rustnode_conf_dir }}/console.json"
+    owner: rustnode
+    group: rust
   tags:
    - install
    - reinstall
