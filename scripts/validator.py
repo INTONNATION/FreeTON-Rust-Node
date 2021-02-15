@@ -267,4 +267,4 @@ while True:
         time.sleep(60)
     except:
         time.sleep(60)
-        logging.error('ERROR running validator')
+        logging.error('Validator fails')
