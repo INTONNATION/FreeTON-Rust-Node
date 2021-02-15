@@ -85,11 +85,7 @@ Ubuntu 18.04
   </tr>
 </table>
 
-
-
 ## Prerequisites
-
-
 
 1. Free TON Rust node server with public IP and system requirements described above.
 2. **Optional** monitoring server with public IP and system requirements described above.
@@ -129,16 +125,14 @@ ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t install
 
 ## Manage node
 
-1. Restart
+1. Restart. With this tag ansible playbook will be reinstalled from scratch with all databases and configs cleanup.
 ```
 ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t restart
 ```
-With this tag ansible playbook will reinstall node from scratch with all databases and configs cleanup.
-2. Upgrade
+2. Upgrade. With this tag ansible playbook will download the latest release of Rust node and Rust console from project github or build source code on remote VM dependinf on vars in ansible/group_vars/rustnode, install it and restart systemd services.  
 ```
 ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t upgrade
 ```
-This tag will download the latest release of Rust node and Rust console from project github or build source code on remote VM, install it and restart systemd services.  
 
 ## Variables
 
@@ -147,8 +141,8 @@ All variables are described inside env files under ansible/group_vars/ directory
 ## Features
 
 *   Easy install with help of _start.sh_
-*   Validator script written on Python (supports Singe and Depool validation)
-*   Validator script controlled by systemd (Cron job failures can be disastrous! no cron anymore!)
+*   Validator script written on Python (supports Singe and Depool validation(**Preferable**))
+*   Validator script controlled by systemd (Cron job failures can be disastrous! **NO CRON** anymore!)
 *   No need to have additional tick tock script (all validator logic in one place)
 *   Embedded RUST validator node release management or remote build from any commit
 *   Upgrade RUST validator node and restart (from scratch) capability
@@ -186,10 +180,9 @@ All validator scripts are rewritten on Python. To run validator with our scripts
 
 ## Monitoring
 
-Monitoring server includes metrics and logs. Metrics aggregation is based on Prometheus, Promtail, Grafana, Alertmanager and Alertgram installed on a separate server using docker-compose. TON node server  installation includes node and statsd metrics exporters which send metrics to monitoring server. Alert stack notifies you in Telegram. \
- \
-**NEED TO ADD MORE INFO HERE**
+Monitoring server includes metrics and logs. Metrics aggregation is based on Prometheus, Promtail, Grafana, Alertmanager and Alertgram installed on a separate server using docker-compose. TON node server  installation includes node and statsd metrics exporters which send metrics to monitoring server. Alert stack notifies you in Telegram.
 
+**NEED TO ADD MORE INFO HERE**
 
 ##  Logging
 
