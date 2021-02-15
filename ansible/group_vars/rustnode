@@ -3,13 +3,13 @@
 build: true
 
 # this section is required in case of build:false
-#release_version: "latest"                  # Release from Github releases | now linked to TON node commit id or may be latest 
-#git_repo: "INTONNATION/FreeTON-Rust-Node"   # Github repo with releases
+#release_version: "latest"                    # Release from Github releases | now linked to TON node commit id or may be latest 
+#git_repo: "INTONNATION/FreeTON-Rust-Node"    # Github repo with releases
 
 # this section is required in case of build:true
 #ton_node_build_args: "--release --features metrics"
 
-ton_node_build_args: "--release"              # disable metrics for rustcup
+ton_node_build_args: "--release"             # disable metrics for rustcup
 ton_node_github_repo: "https://github.com/tonlabs/ton-labs-node.git"
 ton_node_github_commit_id: "dc1a964"
 ton_node_tools_github_repo: "https://github.com/tonlabs/ton-labs-node-tools.git"
@@ -61,4 +61,4 @@ logging:
     enabled: true
     #addr: ""                                 # defaults to monitoring-server inventory hostname
   level:
-    root: debug
+    root: debug # possible error warn info debug trace
