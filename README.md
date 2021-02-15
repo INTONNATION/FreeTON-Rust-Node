@@ -5,8 +5,7 @@
 
 All scripts are in the active development stage and will be updated regularly. Feel free to contact us using Github issues or directly on Telegram (@sostrovskyi, @renatSK, @azavodovskyi).
 
-This guide contains instructions on how to build and configure a RUST validator node in the Free TON blockchain. The instructions and scripts can be executed on any Debian based Linux distributions but were verified on Ubuntu 18.04 and Ubuntu 20.04.
-
+This guide contains instructions on how to build and configure a RUST validator node in the Free TON blockchain. The instructions and scripts can be executed on any Debian based Linux distributions but were verified on Ubuntu 18.04 and Ubuntu 20.04. TON node installation **doesn't use Docker** because of some potential users concerns and its specific setup for such applications.
 
 ## System requirements
 
@@ -146,6 +145,7 @@ All variables are described inside env files under ansible/group_vars/ directory
 *   No need to have additional tick tock script (all validator logic in one place)
 *   Embedded RUST validator node release management or remote build from any commit
 *   Upgrade RUST validator node and restart (from scratch) capability
+*   Remove service restarts for console keys generation
 *   Easy to understand and sequential installation procedure (without node start/stop/start manipulation with configs)
 *   Configurable logging levels
 *   Support of remote log shipping (syslog compatible) (to optimize IOPS)
