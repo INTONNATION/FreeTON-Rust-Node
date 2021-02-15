@@ -106,7 +106,7 @@ git clone https://github.com/INTONNATION/FreeTON-Rust-Node.git
 cd FreeTON-Rust-Node
 ```
 2. Configure variables in ansible/group_vars (refer to Variables section)
-3. Execute start scripts
+3. Execute start scripts (remote user should be root)
 ```
 ./start.sh
 ```
@@ -120,18 +120,18 @@ Advanced start
 3. Configure execution flow in run.yml
 4. Run playbook
 ```
-ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t install
+ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t install
 ```
 
 ## Manage node
 
 1. Restart. With this tag ansible playbook will be reinstalled from scratch with all databases and configs cleanup.
 ```
-ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t restart
+ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t restart
 ```
 2. Upgrade. With this tag ansible playbook will download the latest release of Rust node and Rust console from project github or build source code on remote VM dependinf on vars in ansible/group_vars/rustnode, install it and restart systemd services.  
 ```
-ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t upgrade
+ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t upgrade
 ```
 
 ## Variables
