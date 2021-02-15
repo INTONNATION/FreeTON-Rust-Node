@@ -64,7 +64,7 @@
     - reinstall
 
 - name: Config tonos-cli for depool
-  shell : 'cd {{ rustvalidator_conf_dir }}; tonos-cli config --url {{ dapp_server_url }} --addr {{ depool_addr }} --wallet 0:{{ msig_addr }} --keys {{ rustvalidator_conf_dir }}/msig.keys.json --retries 5'
+  shell : 'cd {{ rustvalidator_conf_dir }}; tonos-cli config --url {{ dapp_server_url }} --addr 0:{{ depool_addr }} --wallet 0:{{ msig_addr }} --keys {{ rustvalidator_conf_dir }}/msig.keys.json --retries 5'
   when: validator == "depool"
   tags:
     - install

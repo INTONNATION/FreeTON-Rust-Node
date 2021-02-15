@@ -106,7 +106,7 @@ Ubuntu 18.04
 
 1. Clone project repository 
 ```
-git clone [https://github.com/INTONNATION/FreeTON-Rust-Node.git](https://github.com/INTONNATION/FreeTON-Rust-Node.git)
+git clone https://github.com/INTONNATION/FreeTON-Rust-Node.git
 cd FreeTON-Rust-Node
 ```
 2. Configure variables in ansible/group_vars (refer to Variables section)
