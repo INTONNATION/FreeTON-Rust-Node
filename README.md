@@ -40,7 +40,7 @@ This guide contains instructions on how to build and configure a RUST validator 
    </td>
    <td>1
    </td>
-   <td>Ubuntu 20.04/ \
+   <td>Ubuntu 20.04 \
 Ubuntu 18.04
    </td>
   </tr>
@@ -92,7 +92,7 @@ Ubuntu 18.04
 
 
 1. Free TON Rust node server with public IP and system requirements described above.
-2. **Optional** monitoring server system with public IP and requirements described above.
+2. **Optional** monitoring server with public IP and system requirements described above.
 3. Ansible installed. Recommended version 2.9.9. (Can be skipped in case of Quick start)
 4. Depool or multisig with enough funds to stake:
 
@@ -140,6 +140,10 @@ ansible-playbook -u root --private-key &lt;ssh key> -i hosts run.yml -t upgrade
 ```
 This tag will download the latest release of Rust node and Rust console from project github or build source code on remote VM, install it and restart systemd services.  
 
+## Variables
+
+All variables are described inside env files under ansible/group_vars/ directory.
+
 ## Features
 
 *   Easy install with help of _start.sh_
@@ -168,10 +172,6 @@ This tag will download the latest release of Rust node and Rust console from pro
 *   **Alertgram** - Telegram alerts
 *   **Node-exporter** - linux VMs metrics agent
 *   **Statsd-exporter** - stastd metrics agent
-
-## Variables
-
-All variables are described inside env files under ansible/group_vars/ directory.
 
 ## Build
 
