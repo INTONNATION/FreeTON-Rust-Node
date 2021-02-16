@@ -14,6 +14,7 @@
     path: "{{ item }}"
     state: directory
     owner: rustvalidator
+    group: rust
     mode: '0755'
   with_items:
     - "{{ rustvalidator_conf_dir }}/"
