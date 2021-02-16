@@ -94,7 +94,7 @@
     - upgrade
 
 - name: setup tonoscli
-  shell: 'echo "export TONOSCLI_CONFIG={{ rustvalidator_conf_dir }}/tonos-cli.conf.json" >> /etc/profile'
+  shell: 'echo "export TONOSCLI_CONFIG={{ rustvalidator_conf_dir }}/tonos-cli.conf.json" > /etc/profile.d/tonos.sh'
   tags:
     - install
     - reinstall
