@@ -24,9 +24,9 @@ statsd_conf_dir: "/etc/statsd"
 # validator setup section
 
 # DEV NET
-#elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
-#ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/net.ton.dev/master/configs/net.ton.dev/ton-global.config.json
-#dapp_server_url: "https://net.ton.dev"    # URL of network entrypoint e.g. Dapp server
+elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
+ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/net.ton.dev/master/configs/net.ton.dev/ton-global.config.json
+dapp_server_url: "https://net.ton.dev"    # URL of network entrypoint e.g. Dapp server
 
 # MAIN NET
 #elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
@@ -34,9 +34,9 @@ statsd_conf_dir: "/etc/statsd"
 #dapp_server_url: "https://main.ton.dev"    # URL of network entrypoint e.g. Dapp server
 
 # FLD NET
-elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
-ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
-dapp_server_url: "https://gql.custler.net"    # URL of network entrypoint e.g. Dapp server
+#elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
+#ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
+#dapp_server_url: "https://gql.custler.net"    # URL of network entrypoint e.g. Dapp server
 
 # RUST NET
 #elector_type: "solidity"                      # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.

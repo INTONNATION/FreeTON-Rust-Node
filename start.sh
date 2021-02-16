@@ -42,11 +42,11 @@ select opt in "${options[@]}"
 do
     case $opt in
         "Rust Node")
-	    echo '[rustnode]' > hosts.start.sh
+	    echo '[rustnode]' > hosts
             break
 	    ;;
         "Monitoring Server")
-	    echo '[monitoring-server]' > hosts.start.sh
+	    echo '[monitoring-server]' > hosts
 	    break
 	    ;;
         *) echo "invalid option $REPLY";;
@@ -62,14 +62,14 @@ do
             echo "Installation on remote server..."
 	    read -p "IP address or hostname of remote server: " -r host
             read -p "SSH username: " -r username
-	    echo ${host} >> hosts.start.sh
-            ansible-playbook -i hosts.start.sh -u $username --become --become-method=sudo -k --tags install  ansible/run.yml
+	    echo ${host} >> hosts
+            ansible-playbook -i hosts -u $username --become --become-method=sudo -k --tags install  ansible/run.yml
 	    break
             ;;
         "Local")
             echo "Installation on local server..."
-	    echo 'localhost ansible_connection=local' >> hosts.start.sh
-	    ansible-playbook -i hosts.start.sh --tags install ansible/run.yml
+	    echo 'localhost ansible_connection=local' >> hosts
+	    ansible-playbook -i hosts --tags install ansible/run.yml
 	    break
             ;;
         "Quit")
