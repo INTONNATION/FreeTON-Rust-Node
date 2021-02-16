@@ -16,9 +16,10 @@
     owner: rustvalidator
     mode: '0755'
   with_items:
-    - "{{ rustvalidator_conf_dir }}"
+    - "{{ rustvalidator_conf_dir }}/"
   tags:
    - install
+   - reinstall
 
 - name: Install requirements for package install
   package:
