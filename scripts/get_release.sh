@@ -12,6 +12,6 @@ else
   parser=".[] | select(.tag_name == \"ton-node-v-$VERSION\").assets[0].id"
 fi;
 
-asset_id=`curl -H "Authorization: token $TOKEN" H "Accept: application/vnd.github.v3.raw" -s https://api.github.com/repos/$REPO/releases | jq "$parser"`
+asset_id=`curl -H "Accept: application/vnd.github.v3.raw" -s https://api.github.com/repos/$REPO/releases | jq "$parser"`
 
-wget -qO- --auth-no-challenge --header='Accept:application/octet-stream' https://$TOKEN:@api.github.com/repos/$REPO/releases/assets/$asset_id | tar xvz -C /usr/local/bin/
+wget -qO- --auth-no-challenge --header='Accept:application/octet-stream' https://api.github.com/repos/$REPO/releases/assets/$asset_id | tar xvz -C /usr/local/bin/

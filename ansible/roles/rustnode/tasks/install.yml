@@ -1,10 +1,11 @@
 ---
-- name: Template config files and systemd service
+- name: Template env file
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
     - {"src": "env.sh.j2", "dest": "{{ scripts_dir }}/env.sh"}
+  when: build == true
   tags:
    - install
    - upgrade
@@ -26,7 +27,7 @@
    - upgrade
 
 - name: Install node tools from repo
-  shell: '{{ scripts_dir }}/get_release.sh {{ release_version }} {{ git_repo }} {{ github_token }}'
+  shell: '{{ scripts_dir }}/get_release.sh {{ release_version }} {{ git_repo }}'
   when: build == false
   tags: 
    - install
