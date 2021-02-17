@@ -8,6 +8,7 @@ volumes:
     grafana_data: {}
     alertgram_data: {}
     promtail_data: {}
+    loki_data: {}
 
 services:
   prometheus:
@@ -91,8 +92,9 @@ services:
     ports:
       - 3100:3100
     volumes:
-      - ./loki/config.yml:/etc/loki/local-config.yaml
-      - ./loki/rules.yml:/loki/rules/rules.yml
+      - ./loki/config.yaml:/etc/loki/local-config.yaml
+      - ./loki/rules.yaml:/loki/rules/fake/rules.yaml
+      - loki_data:/loki/chunks
     networks:
       - proxy_nw
     labels:
@@ -106,7 +108,7 @@ services:
       - 9080:9080
     volumes:
       - promtail_data:/var/log
-      - ./promtail/config.yml:/etc/promtail/config.yml
-    command: -config.file=/etc/promtail/config.yml
+      - ./promtail/config.yml:/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yaml
     networks:
       - proxy_nw

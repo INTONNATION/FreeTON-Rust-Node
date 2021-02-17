@@ -1,0 +1,24 @@
+groups:
+    - name: rustnode
+      rules:
+        - alert: Errors founds in validator.py logs
+          expr: |
+            sum(rate({app_name="rustvalidator"} |= "ERROR" [3m])) by (job)
+              /
+            sum(rate({app_name="rustvalidator"}[3m])) by (job)
+              > 0.05
+          for: 30s
+          labels:
+            severity: warning
+          annotations:
+            description: 'Error: {{ $value}}. Reported by instance {{ $labels.rustnode }}'
+            summary: Found errors during validator run proccess
+        - alert: No validator logs received in the last 5m
+          expr: count_over_time({app_name="rustvalidator",job="rustnode"}[5m]) == 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            description: 'No logs received in the last 5m. Reported by instance {{ $labels.rustnode }}'
+            summary: Found errors during validator run proccess
+

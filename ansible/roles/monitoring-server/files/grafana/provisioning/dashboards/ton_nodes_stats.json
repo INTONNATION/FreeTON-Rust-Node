@@ -15,123 +15,19 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 8,
-  "iteration": 1613479015360,
+  "id": 6,
+  "iteration": 1613478995984,
   "links": [],
   "panels": [
-    {
-      "datasource": "Loki",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "line {job=\"rustnode\", nodehost=\"ns3174448\"}"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 866
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Log msg"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 1331
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Time"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 187
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 14,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 2,
-      "options": {
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "pluginVersion": "7.1.1",
-      "targets": [
-        {
-          "expr": "{rustnode=\"$node\"} |= \"ERROR\" != \"WARN\"",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Error logs",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time ns": true,
-              "id": true
-            },
-            "indexByName": {},
-            "renameByName": {
-              "id": "Log ID",
-              "line {job=\"rustnode\", nodehost=\"ns3174448\"}": "Log msg"
-            }
-          }
-        }
-      ],
-      "type": "logs"
-    },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "custom": {}
         },
         "overrides": []
       },
@@ -141,10 +37,10 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 0
       },
       "hiddenSeries": false,
-      "id": 4,
+      "id": 14,
       "legend": {
         "avg": false,
         "current": false,
@@ -168,7 +64,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate (loki_distributor_ingester_appends_total[1m])",
+          "expr": "rnode_shards_client_mc_block{instance=\"$Node\"}",
+          "interval": "",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -176,7 +74,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Average batch appends sent to ingesters (Loki)",
+      "title": "Last client applied block",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -218,11 +116,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "custom": {}
         },
         "overrides": []
       },
@@ -232,17 +129,16 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 0
       },
       "hiddenSeries": false,
-      "id": 6,
-      "interval": "",
+      "id": 12,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -260,7 +156,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg_over_time(loki_ingester_chunk_entries_count[5m])",
+          "expr": "rnode_last_applied_mc_block{instance=\"$Node\"}",
+          "interval": "",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -268,7 +166,99 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Loki's stored chunk entries",
+      "title": "Last Applied Block",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 16,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "7.1.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rnode_timediff{instance=\"$Node\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Time Diff",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -306,6 +296,7 @@
       }
     }
   ],
+  "refresh": false,
   "schemaVersion": 26,
   "style": "dark",
   "tags": [],
@@ -314,36 +305,20 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "ovh02",
-          "value": "ovh02"
+          "selected": false,
+          "text": "51.195.62.84:9102",
+          "value": "51.195.62.84:9102"
         },
-        "datasource": "Loki",
-        "definition": "label_values(nodehost)",
+        "datasource": "Prometheus",
+        "definition": "label_values(rnode_shards_client_mc_block, instance)",
         "hide": 0,
         "includeAll": false,
-        "label": "Node",
+        "label": null,
         "multi": false,
-        "name": "node",
-        "options": [
-          {
-            "selected": false,
-            "text": "ns3174448",
-            "value": "ns3174448"
-          },
-          {
-            "selected": false,
-            "text": "ovh01rustnetfrnk",
-            "value": "ovh01rustnetfrnk"
-          },
-          {
-            "selected": true,
-            "text": "ovh02",
-            "value": "ovh02"
-          }
-        ],
-        "query": "label_values(nodehost)",
-        "refresh": 0,
+        "name": "Node",
+        "options": [],
+        "query": "label_values(rnode_shards_client_mc_block, instance)",
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -356,7 +331,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -373,7 +348,7 @@
     ]
   },
   "timezone": "",
-  "title": "Rustnode logs",
-  "uid": "FZ9nXDYGk",
-  "version": 22
+  "title": "TON Nodes stats",
+  "uid": "vAc6LDDGz",
+  "version": 11
 }
