@@ -242,7 +242,6 @@ Also you can configure the additional labels in promtail config in section syslo
 ![Alt text](images/ton_node_alerts.png)
 
 Loki and Prometheus have been configured with helpful alerts rules which includes notifications for both TON node host status and TON node Rust application:
-
 * CPU usage 
 * RAM usage 
 * Disk usage
@@ -252,15 +251,14 @@ Loki and Prometheus have been configured with helpful alerts rules which include
 Alerts can be received on Telegram chat or channel. You have to create a Telegram API token and chat/channel(id is needed) and specify them in group_vars/monitoring_server.
 
 HOW TO:
-[Get telegram API token](https://core.telegram.org/bots#6-botfather) \
-[Get telegram chat IDs](https://github.com/GabrielRF/telegram-id)
+* [Get telegram API token](https://core.telegram.org/bots#6-botfather)
+* [Get telegram chat IDs](https://github.com/GabrielRF/telegram-id)
 
 ### Logging architecture
 
 Especially for TON Rust validator nodes we implement a log shipping approach without storing and even writing logs to the disk. It was especially done to optimize performance during the Rust Cap competition. Rust node sends logs directly to remote monitoring server without writing them to Syslog or any file. It was done with help of piping stdout/stderr output to logger utility which sends logs directly to Promtail.
 
 You can find Rust node logging configuration in group_vars/rustnode. Where you can customize loglevel and remote logging configuration options:
-
 *   remote=true | send logs directly to promtail Syslog server(without saving on host) 
 *   remote=false | logs will be saved on the host
 
