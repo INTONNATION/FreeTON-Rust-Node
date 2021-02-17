@@ -23,7 +23,6 @@ logging.basicConfig(
     stream=sys.stdout,
     format="fmt=validator-rust-node[%(process)d]: %(levelname)s: %(message)s", )
 
-
 def cli_get_active_election_id_from_depool_event():
     subprocess.check_output(
         'tonos-cli depool --addr %s events > %s/events.txt 2>&1' % (
@@ -33,7 +32,6 @@ def cli_get_active_election_id_from_depool_event():
         '"%%d\n" | tr -d \"\n\" ' % (
             configs_dir), encoding='utf-8', shell=True)
     return active_election_id_from_depool_event
-
 
 def get_proxy_addr_from_depool_event(active_election_id_from_depool_event, active_election_id):
     if active_election_id_from_depool_event == active_election_id:
@@ -46,7 +44,6 @@ def get_proxy_addr_from_depool_event(active_election_id_from_depool_event, activ
             int(active_election_id_from_depool_event), active_election_id))
         exit(0)
 
-
 def add_proxy_addr_to_console(validator_msig_addr):
     subprocess.check_output(
         'jq \".wallet_id = \\"%s\\" \" %s/console.json > /tmp/console.json' % (
@@ -54,12 +51,10 @@ def add_proxy_addr_to_console(validator_msig_addr):
     subprocess.check_output(
         'cp /tmp/console.json %s/console.json' % (configs_dir), encoding='utf-8', shell=True)
 
-
 def tick_tock():
     subprocess.check_output(
         'tonos-cli call %s sendTicktock {} --abi %s/DePoolHelper.abi.json --sign %s/helper.keys.json' % (
             helper_addr, configs_dir, configs_dir), encoding='utf-8', shell=True)
-
 
 def cli_get_recover_amount(elector_addr: str, msig_addr_hex: str):
     recover_amount = subprocess.check_output(
@@ -67,7 +62,6 @@ def cli_get_recover_amount(elector_addr: str, msig_addr_hex: str):
         'value0 | awk \'{print $2}\' | tr -d \'"\' | printf %%d' % (
             elector_addr, msig_addr_hex, configs_dir), encoding='utf-8', shell=True)
     return recover_amount
-
 
 def cli_get_recover_amount_fift(elector_addr: str, msig_addr_hex: str):
     recover_amount = subprocess.check_output(
@@ -78,7 +72,7 @@ def cli_get_recover_amount_fift(elector_addr: str, msig_addr_hex: str):
 
 def console_check():
     console_check=subprocess.check_output('console -C %s/console.json -c getstats' % (configs_dir), encoding='utf-8', shell=True)
-    if "Error" in console_check:
+    if "Error" in console_check or "error" in console_check:
         logging.error('CONSOLE CHECK FAILS')
         quit()
     return console_check
@@ -86,12 +80,10 @@ def console_check():
 def console_recover_stake():
     subprocess.check_output('console -C %s/console.json -c recover_stake' % (configs_dir), encoding='utf-8', shell=True)
 
-
 def recover_query_boc():
     recover_query_boc = subprocess.check_output('base64 --wrap=0 recover-query.boc', encoding='utf-8', shell=True)
     logging.info('RECOVER QUERY BOC: %s' % recover_query_boc)
     return recover_query_boc
-
 
 def cli_submit_transaction(msig_addr: str, elector_addr_hex: str, value: str, boc: str):
     trx = subprocess.check_output('tonos-cli call %s submitTransaction \
@@ -101,7 +93,6 @@ def cli_submit_transaction(msig_addr: str, elector_addr_hex: str, value: str, bo
                                   encoding='utf-8', shell=True)
     logging.info(trx)
     return trx
-
 
 def cli_get_active_election_id(elector_addr: str):
     if elector_type == 'fift':
@@ -115,43 +106,56 @@ def cli_get_active_election_id(elector_addr: str):
                 elector_addr, configs_dir), encoding='utf-8', shell=True)
     return active_election_id
 
-
 def console_create_elector_request(election_start):
     subprocess.check_output('tonos-cli getconfig 15 > %s/global_config_15_raw' % configs_dir, encoding='utf-8',
                             shell=True)
-    elections_end_before = subprocess.check_output(
-        'cat %s/global_config_15_raw | grep elections_end_before | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
-        encoding='utf-8',
-        shell=True)
-    elections_start_before = subprocess.check_output(
-        'cat %s/global_config_15_raw | grep "elections_start_before" | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
-        encoding='utf-8',
-        shell=True)
-    stake_held_for = subprocess.check_output(
-        'cat %s/global_config_15_raw | grep "stake_held_for" | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
-        encoding='utf-8',
-        shell=True)
+    elections_end_before = elections_end_before()
+    elections_start_before = elections_start_before()
+    stake_held_for = stake_held_for()
+    validators_elected_for = validators_elected_for()
+    election_stop = (int(election_start) + 1000 + int(elections_start_before) + int(elections_end_before) + int(
+        stake_held_for) + int(validators_elected_for))
+    request = subprocess.check_output(
+        'cd %s && console -C console.json -c "election-bid %s %s"' % (configs_dir, election_start, election_stop),
+        encoding='utf-8', shell=True)
+    logging.info(request)
+    if "error" in request or "Error" in request:
+        logging.info(request)
+        quit()
+    return (elections_start_before)
+
+def validators_elected_for():
     validators_elected_for = subprocess.check_output(
         'cat %s/global_config_15_raw | grep "validators_elected_for" | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
         encoding='utf-8',
         shell=True)
-    election_stop = (int(election_start) + 1000 + int(elections_start_before) + int(elections_end_before) + int(
-        stake_held_for) + int(validators_elected_for))
-    print('console -C %s/console.json -c "election-bid %s %s"' % (configs_dir, election_start, election_stop))
-    request = subprocess.check_output(
-        'console -C %s/console.json -c "election-bid %s %s"' % (configs_dir, election_start, election_stop),
-        encoding='utf-8', shell=True)
-    if "Error" in request:
-        quit()
-    logging.error(request)
-    return (elections_start_before, elections_end_before)
+    return(validators_elected_for)
 
+def stake_held_for():
+    stake_held_for = subprocess.check_output(
+        'cat %s/global_config_15_raw | grep stake_held_for | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
+        encoding='utf-8',
+        shell=True)
+    return(stake_held_for)
+
+def elections_start_before():
+    elections_start_before = subprocess.check_output(
+        'cat %s/global_config_15_raw | grep elections_start_before | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
+        encoding='utf-8',
+        shell=True)
+    return(elections_start_before)
+
+def elections_end_before():
+    elections_end_before = subprocess.check_output(
+        'cat %s/global_config_15_raw | grep elections_end_before | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
+        encoding='utf-8',
+        shell=True)
+    return(elections_end_before)
 
 def validator_query_boc():
-    validator_query_boc = subprocess.check_output('base64 --wrap=0 validator-query.boc', encoding='utf-8', shell=True)
+    validator_query_boc = subprocess.check_output('base64 --wrap=0 %s/validator-query.boc'  % (configs_dir), encoding='utf-8', shell=True)
     logging.info('VALIDATOR QUERY BOC %s' % validator_query_boc)
     return validator_query_boc
-
 
 def check_validator_balance():
     balance = subprocess.check_output('tonos-cli account %s | grep balance | awk \'{print $2}\'' % (msig_addr),
@@ -159,7 +163,6 @@ def check_validator_balance():
     balance_in_tokens = int(balance) / 1000000000
     logging.info('BALANCE %s' % balance_in_tokens)
     return balance_in_tokens
-
 
 def get_min_stake():
     min_stake = subprocess.check_output(
@@ -169,7 +172,6 @@ def get_min_stake():
     logging.info('MIN STAKE %s' % min_stake_in_tokens)
     return min_stake_in_tokens
 
-
 def get_stake():
     actual_balance = check_validator_balance()
     stake = (int(actual_balance) - int(remained_for_fees)) / 2
@@ -177,11 +179,11 @@ def get_stake():
     logging.info('WILL BE STAKED %s' % stake)
     return stake
 
-
 def submit_stake():
     if validator == 'depool':
         boc = validator_query_boc()
         result_of_submit = cli_submit_transaction(msig_addr, depool_addr, 1000000000, boc)
+        logging.info(result_of_submit)
     elif validator == 'single':
         stake = get_stake()
         nanostake = subprocess.check_output('tonos-cli convert tokens %s | tail -1' % (int(stake)), encoding='utf-8',
@@ -189,7 +191,6 @@ def submit_stake():
         boc = validator_query_boc()
         result_of_submit = cli_submit_transaction(msig_addr, elector_addr_hex, int(nanostake), boc)
     return result_of_submit
-
 
 while True:
     try:
@@ -218,7 +219,9 @@ while True:
                                                                    active_election_id)
                 logging.info('PROXY ADDR: %s' % proxy_msig_addr)
                 add_proxy_addr_to_console(proxy_msig_addr)
-                elections_start_before, elections_end_before = console_create_elector_request(active_election_id)
+                elections_start_before = console_create_elector_request(active_election_id)
+                elections_end_before = elections_end_before()
+                logging.info('START BEFORE: %s END BEFORE: %s' % (elections_start_before, elections_end_before))
                 second_tick_tock_delay = (int(active_election_id) + int(elections_start_before) + int(
                     elections_end_before) - int(time.time())) + 100
                 logging.info('SECOND TICK TOCK DELAY: %s' % second_tick_tock_delay)
@@ -228,7 +231,7 @@ while True:
                 with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
                     the_file.write(submitted_election_id)
                 with open("%s/active-election-tick-tock-time" % configs_dir, 'w') as tick_tock_time:
-                    tick_tock_time.write(int(time.time() + int(second_tick_tock_delay)))
+                    tick_tock_time.write(int(time.time()) + int(second_tick_tock_delay))
             else:
                 logging.info('Already submitted or not active elections')
         elif validator == 'single':
