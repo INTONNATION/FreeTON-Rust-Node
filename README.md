@@ -257,7 +257,7 @@ HOW TO:
 Especially for TON Rust validator nodes we implement a log shipping approach without storing and even writing logs to the disk. It was especially done to optimize performance during the Rust Cap competition. Rust node sends logs directly to remote monitoring server without writing them to Syslog or any file. It was done with help of piping stdout/stderr output to logger utility which sends logs directly to Promtail.
 
 You can find Rust node logging configuration in group_vars/rustnode. Where you can customize loglevel and remote logging configuration options:
-*   remote=true | send logs directly to promtail Syslog server(without saving on host) 
-*   remote=false | logs will be saved on the host
+*   remote=true   - send logs directly to promtail Syslog server(without saving on host) 
+*   remote=false  - logs will be saved on the host
 
 Loki also has configured with default alerts for rate errors from Node and Validator apps, which will be received to Telegram.
