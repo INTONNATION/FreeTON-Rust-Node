@@ -179,29 +179,17 @@ All validator scripts are rewritten on Python. To run validator with our scripts
 
 ## Monitoring Server
 
-The monitoring server installation includes metrics and logs aggregation, parsing, visualization and alerting. Metrics approach is based on Prometheus, Promtail, Grafana, Alertmanager, and Alertgram installed on a separate server using docker-compose. TON node server installation includes node and statsd metrics exporters which send metrics to the monitoring server.
+Monitoring server installation includes metrics and logs aggregation, parsing, visualization and alerting. Metrics approach is based on Prometheus, Promtail, Grafana, Alertmanager, and Alertgram installed on a separate server using docker-compose. TON node server installation includes node and statsd metrics exporters which send metrics to the monitoring server.
 
 Each component of the monitoring system have an info/view panel, which can be accessible using the following URLs:
 
-**Grafana**
-[http://[monitoring-server-ip]:3000/](http://[monitoring-server-ip]:3000/)
-Default credentials are set up into group_vars for monitoring_server group.
+* **Grafana** - http://[monitoring-server-ip]:3000/
+* **Prometheus** - http://[monitoring-server-ip]:9090/
+* **Loki** - http://[monitoring-server-ip]:3100/
+* **Promtail** - http://[monitoring-server-ip]:9080/
+* **Alertmanager** - http://[monitoring-server-ip]:9090/
 
-**Prometheus**
-[http://[monitoring-server-ip]:](http://[monitoring-server-ip]:3000/)9090/
-No credential needed
-
-**Loki**
-[http://[monitoring-server-ip]:](http://[monitoring-server-ip]:3000/)3100/
-No credential needed
-
-**Promtail**
-[http://[monitoring-server-ip]:](http://[monitoring-server-ip]:3000/)9080/
-No credential needed
-
-**Alertmanager**
-[http://[monitoring-server-ip]:](http://[monitoring-server-ip]:3000/)9090/
-No credential needed
+Default credentials should be configured in group_vars/monitoring_server variables file.
 
 **NOTE**: for the working state of the monitoring server you have to open several ports:
 *   3000(TCP&UDP) Grafana
