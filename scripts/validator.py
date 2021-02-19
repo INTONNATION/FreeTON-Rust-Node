@@ -241,7 +241,7 @@ while True:
                     validators_elected_for = validators_elected_for()
                     logging.info('VALIDATORS ELECTED FOR: %s' % (validators_elected_for))
                     second_tick_tock_delay = int(validators_elected_for) - (int(elections_start_before) + int(
-                        elections_end_before)) + 1000
+                        elections_end_before)) + int(elections_end_before) + 1000
                     logging.info('SECOND TICK TOCK DELAY: %s' % second_tick_tock_delay)
                     logging.info('SUBMITTING STAKE')
                     submit_stake()
