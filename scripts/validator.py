@@ -229,6 +229,7 @@ while True:
             if int(active_election_id) != 0 and int(active_election_id) != int(submitted_election_id):
                 logging.info('SENDING FIRST TICK TOCK')
                 tick_tock()
+                time.sleep(600)
                 if active_election_id_from_depool_event == active_election_id:
                     proxy_msig_addr = get_proxy_addr_from_depool_event()
                     logging.info('PROXY ADDR: %s' % proxy_msig_addr)
@@ -256,6 +257,7 @@ while True:
                         logging.info('SAVE SECOND-TICK-TOCK-TIME TO second-tick-tock-time FILE')
                 else:
                     logging.error("ACTIVE_ELECTION_ID_FROM_DEPOOL_EVENT %s DOESNT MATCH TO ACTIVE_ELECTION_ID %s" % (int(active_election_id_from_depool_event), active_election_id))
+                    time.sleep(6000)
                     continue
             elif int(active_election_id) == 0:
                 logging.info('NO ACTIVE ELECTIONS')
