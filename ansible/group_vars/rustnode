@@ -38,7 +38,7 @@ statsd_conf_dir: "/etc/statsd"
 #ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
 #dapp_server_url: "https://gql.custler.net"    # URL of network entrypoint e.g. Dapp server
 
- RUST NET
+# RUST NET
 elector_type: "solidity"                      # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
 ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
 dapp_server_url: "https://rustnet.ton.dev"    # URL of network entrypoint e.g. Dapp server
