@@ -109,8 +109,7 @@ cd FreeTON-Rust-Node
 ```
 4. Follow prompts
 
-## 
-Advanced start 
+## Advanced start
 
 1. Configure variables in ansible/group_vars (refer to Variables section)
 2. Configure hosts in hosts file
