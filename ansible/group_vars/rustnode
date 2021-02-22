@@ -11,7 +11,7 @@ build: true
 
 ton_node_build_args: "--release"             # disable metrics for rustcup
 ton_node_github_repo: "https://github.com/tonlabs/ton-labs-node.git"
-ton_node_github_commit_id: "7655f14"
+ton_node_github_commit_id: "d182731"
 ton_node_tools_github_repo: "https://github.com/tonlabs/ton-labs-node-tools.git"
 ton_node_tools_github_commit_id: "34f25ca"
 tonos_cli_github_repo: "https://github.com/tonlabs/tonos-cli.git"
@@ -38,6 +38,7 @@ elector_type: "fift"                          # fift or solidity. solidity shoul
 ton_network_global_conf_url: https://raw.githubusercontent.com/FreeTON-Network/fld.ton.dev/main/configs/fld.ton.dev/ton-global.config.json
 dapp_server_url: "https://gql.custler.net"    # URL of network entrypoint e.g. Dapp server
 
+
 # RUST NET
 #elector_type: "solidity"                      # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
 #ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
@@ -63,7 +64,7 @@ config_abi_depool_helper_url: "https://raw.githubusercontent.com/tonlabs/ton-lab
 # FLD NET ADDRS
 msig_addr: "5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
 elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
-depool_addr: "8aec1c2470a6ffbce7179d5ab777ced781ef40f0d25ebd874a727359c341e29c"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
+depool_addr: "8aec1c2470a6ffbce7179d5ab777ced781ef40f0d25ebd874a727359c341e29c"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0.
 helper_addr: "73877809c68bff46a25eeb47a757925797047eb018fa4f6e95bc46ccc6b1b6be"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # DEV NET ADDRS
@@ -75,7 +76,7 @@ helper_addr: "73877809c68bff46a25eeb47a757925797047eb018fa4f6e95bc46ccc6b1b6be" 
 # RUST NET ADDRS | DEPOOL 01
 #msig_addr: "30e16bb655b7ec69f1d541f3c5b3498d2c3616e8c946c2188e6a52a541401786"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
 #elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
-#depool_addr: "cd90f7be62b92362b9f0a0aae7d51ef895b9c8483c5fcb7c0eaed49ec58de864"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
+#depool_addr: "cd90f7be62b92362b9f0a0aae7d51ef895b9c8483c5fcb7c0eaed49ec58de864"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0.
 #helper_addr: "8531841c073538f501a2543e1b197f4c0d5431f2f279dd22d294d2314db1efd2"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # RUST NET ADDRS | DEPOOL 02
