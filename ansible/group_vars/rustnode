@@ -93,5 +93,6 @@ logging:
     level:
       root: debug # possible error warn info debug trace off
   validator:
+    remote:
       enabled: false                            # if true, will send logs to monitoring server specified in inventory hostname, false - node to file system.
       #addr: ""                                 # defaults to monitoring-server inventory hostname
