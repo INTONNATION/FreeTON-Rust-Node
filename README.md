@@ -1,7 +1,7 @@
 
 # **FreeTON Rust Node Installation guide**
 
-All scripts are in the active development stage and will be updated regularly. Feel free to contact us using Github issues or directly on Telegram (@sostrovskyi, @renatSK, @azavodovskyi).
+All scripts are in the active development stage and will be updated regularly. Feel free to contact us using Github issues, directly on Telegram (@sostrovskyi, @renatSK, @azavodovskyi) or better in [INTONNATION PUB telegram chat](https://t.me/intonnationpub), where we support everyone who is using our scripts and answer all the questions.
 
 This guide contains instructions on how to build and configure a RUST validator node in the Free TON blockchain. The instructions and scripts can be executed on any Debian based Linux distributions but were verified on Ubuntu 18.04 and Ubuntu 20.04. TON node installation **doesn't use Docker** because of some potential users concerns and its specific setup for such applications.
 
