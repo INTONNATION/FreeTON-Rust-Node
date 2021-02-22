@@ -1,4 +1,4 @@
-telegram_api_token:
-telegram_chat_id:
-grafana_username: admin
-grafana_password: rust_admin
+telegram_api_token: ""
+telegram_chat_id: ""
+grafana_username: "admin"
+grafana_password: "rust_admin"
