@@ -34,14 +34,14 @@ statsd_conf_dir: "/etc/statsd"
 #dapp_server_url: "https://main.ton.dev"       # URL of network entrypoint e.g. Dapp server
 
 # FLD NET
-#elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
-#ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
-#dapp_server_url: "https://gql.custler.net"    # URL of network entrypoint e.g. Dapp server
+elector_type: "fift"                          # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
+ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
+dapp_server_url: "https://gql.custler.net"    # URL of network entrypoint e.g. Dapp server
 
 # RUST NET
-elector_type: "solidity"                      # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
-ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
-dapp_server_url: "https://rustnet.ton.dev"    # URL of network entrypoint e.g. Dapp server
+#elector_type: "solidity"                      # fift or solidity. solidity should be used in rustnet. fift - in fld net for now.
+#ton_network_global_conf_url: https://raw.githubusercontent.com/tonlabs/rustnet.ton.dev/main/configs/ton-global.config.json
+#dapp_server_url: "https://rustnet.ton.dev"    # URL of network entrypoint e.g. Dapp server
 
 validator: "depool"                           # depool or single (without depool) | !!! depool is preferable
 ipdiscovery: local                            # local, auto, or IP_ADDR
@@ -61,10 +61,10 @@ config_abi_depool_helper_url: "https://raw.githubusercontent.com/tonlabs/ton-lab
 #remained_for_fees: 100                       # Used if validator:single. amount of tokens remained for fees when sending stake | not nano
 
 # FLD NET ADDRS
-#msig_addr: "5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
-#elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
-#depool_addr: "8aec1c2470a6ffbce7179d5ab777ced781ef40f0d25ebd874a727359c341e29c"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
-#helper_addr: "73877809c68bff46a25eeb47a757925797047eb018fa4f6e95bc46ccc6b1b6be"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
+msig_addr: "5dcaaa93f50d148e66d4504457d008528b5ca0d1365146816a80b656520f748d"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
+elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
+depool_addr: "8aec1c2470a6ffbce7179d5ab777ced781ef40f0d25ebd874a727359c341e29c"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
+helper_addr: "73877809c68bff46a25eeb47a757925797047eb018fa4f6e95bc46ccc6b1b6be"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # DEV NET ADDRS
 #msig_addr: "12658a2ea3dc3fe0ad34de2a8c364568adb4a01c8ee8e2dc08779afabd502816"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
@@ -73,10 +73,10 @@ config_abi_depool_helper_url: "https://raw.githubusercontent.com/tonlabs/ton-lab
 #helper_addr: "16e11bf2bd853841be8eebbbae3b7e7599d9e5b2aee879cd9468477c89373f16"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # RUST NET ADDRS | DEPOOL 01
-msig_addr: "30e16bb655b7ec69f1d541f3c5b3498d2c3616e8c946c2188e6a52a541401786"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
-elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
-depool_addr: "cd90f7be62b92362b9f0a0aae7d51ef895b9c8483c5fcb7c0eaed49ec58de864"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
-helper_addr: "8531841c073538f501a2543e1b197f4c0d5431f2f279dd22d294d2314db1efd2"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
+#msig_addr: "30e16bb655b7ec69f1d541f3c5b3498d2c3616e8c946c2188e6a52a541401786"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
+#elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
+#depool_addr: "cd90f7be62b92362b9f0a0aae7d51ef895b9c8483c5fcb7c0eaed49ec58de864"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
+#helper_addr: "8531841c073538f501a2543e1b197f4c0d5431f2f279dd22d294d2314db1efd2"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # RUST NET ADDRS | DEPOOL 02
 #msig_addr: "4000610da7d7f89b92cd64212e5b983d9ccac9938333174f352a5b3c416997c4"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
@@ -84,14 +84,14 @@ helper_addr: "8531841c073538f501a2543e1b197f4c0d5431f2f279dd22d294d2314db1efd2" 
 #depool_addr: "8fba61cbf5df181736bf41640217dee4eef453d7dc0b2c0a095a5590ffa2c225"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
 #helper_addr: "31b2f1c4c2c889d1b9b4586c36a1ed8fc153b154ac63c35676b7f2a1dfa516e4"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
-
 logging:
-  remote:
-    enabled: false
-    #addr: ""                                 # defaults to monitoring-server inventory hostname
-  level:
-    root: debug # possible error warn info debug trace off
-
-logging_validator:
-  remote:
-    enabled: true
+  rustnode:
+    remote:
+      enabled: false
+      #addr: ""                                 # defaults to monitoring-server inventory hostname
+    level:
+      root: debug # possible error warn info debug trace off
+  validator:
+    remote:
+      enabled: true
+      #addr: ""                                 # defaults to monitoring-server inventory hostname

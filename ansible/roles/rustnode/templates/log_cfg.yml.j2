@@ -19,53 +19,53 @@ appenders:
       pattern: "{m}{n}"
 
 root:
-  level: {{ logging.level.root }}
+  level: {{ logging.rustnode.level.root }}
   appenders:
     - console
 
 loggers:
   # node messages
   node:
-    level: {{ logging.level.node | default(logging.level.root) }}
+    level: {{ logging.rustnode.level.node | default(logging.rustnode.level.root) }}
     appenders:
       - stdout
 
   ton_node:
-    level: {{ logging.level.ton_node | default(logging.level.root) }}
+    level: {{ logging.rustnode.level.ton_node | default(logging.rustnode.level.root) }}
     additive: false
     appenders:
       - stdout
 
   # adnl messages
   adnl:
-    level: {{ logging.level.adnl | default(logging.level.root) }}
+    level: {{ logging.rustnode.level.adnl | default(logging.rustnode.level.root) }}
     appenders:
       - stdout
 
   # block messages
   ton_block:
-    level: {{ logging.level.ton_block | default(logging.level.root) }}
+    level: {{ logging.rustnode.level.ton_block | default(logging.rustnode.level.root) }}
     appenders:
       - stdout
 
   # block messages
   executor:
-    level: {{ logging.level.executor | default(logging.level.root) }}
+    level: {{ logging.rustnode.level.executor | default(logging.rustnode.level.root) }}
     appenders:
       - stdout
 
   # tvm messages
   tvm:
-    level: {{ logging.level.tvm | default(logging.level.root) }}
+    level: {{ logging.rustnode.level.tvm | default(logging.rustnode.level.root) }}
     appenders:
       - tvm_stdout
 
   librdkafka:
-    level: {{ logging.level.librdkafka | default(logging.level.root) }}
+    level: {{ logging.rustnode.level.librdkafka | default(logging.rustnode.level.root) }}
     appenders:
       - stdout
 
   validator:
-    level: {{ logging.level.validator | default(logging.level.root) }}
+    level: {{ logging.rustnode.level.validator | default(logging.rustnode.level.root) }}
     appenders:
       - stdout_ref
