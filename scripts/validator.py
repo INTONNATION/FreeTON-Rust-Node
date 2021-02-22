@@ -196,27 +196,6 @@ while True:
         console_check()
         logging.info('VALIDATOR MODE: %s' % validator)
         if validator == 'depool':
-            try:
-                current_time=int(time.time())
-                with open("%s/second-tick-tock-time" % configs_dir, 'r') as tick_tock_time:
-                    active_election_tick_tock_time = tick_tock_time.read()
-                    active_election_tick_tock_time = int(active_election_tick_tock_time)
-                    if active_election_tick_tock_time != 0:
-                      if active_election_tick_tock_time < current_time:
-                        logging.info('SENDING SECOND TICK-TOCK')
-                        tick_tock()
-                        with open("%s/second-tick-tock-time" % configs_dir, 'w') as the_file:
-                          second_tick = '0'
-                          the_file.write(second_tick)
-                      else:
-                          tick_send_in = active_election_tick_tock_time - current_time
-                          logging.info('SECOND TICK TOCK WILL BE SENT IN: %s seconds' % (tick_send_in))
-                    else:
-                      logging.info('SECOND TICK TOCK TIME: %s. ALREADY SENT' % (active_election_tick_tock_time))
-            except Exception as e:
-                print(e)
-                logging.info('File second-tick-tock-time DOES NOT EXIST')
-                pass
             active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
             logging.info('ACTIVE ELECTION ID FROM DEPOOL EVENT: %s' % active_election_id_from_depool_event)
             active_election_id = cli_get_active_election_id(elector_addr)
@@ -252,9 +231,6 @@ while True:
                     with open("%s/active-election-id-submitted" % configs_dir, 'w') as the_file:
                         the_file.write(submitted_election_id)
                         logging.info('SAVE ACTIVE-ELECTION-ID TO active-election-id-submitted FILE')
-                    with open("%s/second-tick-tock-time" % configs_dir, 'w') as tick_tock_time:
-                        tick_tock_time.write(str(int(time.time()) + int(second_tick_tock_delay)))
-                        logging.info('SAVE SECOND-TICK-TOCK-TIME TO second-tick-tock-time FILE')
                 else:
                     logging.error("ACTIVE_ELECTION_ID_FROM_DEPOOL_EVENT %s DOESNT MATCH TO ACTIVE_ELECTION_ID %s" % (int(active_election_id_from_depool_event), active_election_id))
                     time.sleep(6000)
