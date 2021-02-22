@@ -9,7 +9,7 @@
   remote_user: root
   roles:
    - pre-install
-#   - nodeexporter
+   - nodeexporter
 #   - statsd
    - rustnode
    - rustvalidator
