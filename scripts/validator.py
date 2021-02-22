@@ -66,11 +66,10 @@ def cli_get_recover_amount_fift(elector_addr: str, msig_addr_hex: str):
     return recover_amount
 
 def console_check():
-    console_check=subprocess.check_output('console -C %s/console.json -c getstats' % (configs_dir), encoding='utf-8', shell=True)
-    if "Error" in console_check or "error" in console_check:
+    console_check_result=subprocess.check_output('console -C %s/console.json -c getstats | grep timediff | awk \'{print $2}\' | tr -d \',\'' % (configs_dir), encoding='utf-8', shell=True)
+    if "Error" in console_check_result or "error" in console_check_result:
         logging.error('CONSOLE CHECK FAILS')
-        quit()
-    return console_check
+    return console_check_result
 
 def console_recover_stake():
     subprocess.check_output('console -C %s/console.json -c recover_stake' % (configs_dir), encoding='utf-8', shell=True)
@@ -148,8 +147,7 @@ def console_create_elector_request(election_start):
         encoding='utf-8', shell=True)
     logging.info('VALIDATOR BOC IS GENERATED')
     if "error" in request or "Error" in request:
-        logging.info(request)
-        quit()
+        logging.error(request)
     return (elections_start_before_local)
 
 def validator_query_boc():
@@ -193,8 +191,13 @@ def submit_stake():
 
 while True:
     try:
-        console_check()
         logging.info('VALIDATOR MODE: %s' % validator)
+        logging.info('CHECK IF CONSOLE WORKS')
+        console_check_result=console_check()
+        while int(console_check_result) > 10:
+            logging.info('CONSOLE CHECK FAILED. NODE IS NOT SYNCED YET. SLEEP 5m')
+            time.sleep(600)
+        logging.info('CONSOLE CHECK SUCCEEDED')
         if validator == 'depool':
             active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
             logging.info('ACTIVE ELECTION ID FROM DEPOOL EVENT: %s' % active_election_id_from_depool_event)
@@ -206,9 +209,9 @@ while True:
             except:
                 submitted_election_id = 0
             if int(active_election_id) != 0 and int(active_election_id) != int(submitted_election_id):
-                logging.info('SENDING FIRST TICK TOCK')
+                logging.info('SENDING TICK TOCK')
                 tick_tock()
-                time.sleep(600)
+                time.sleep(300)
                 if active_election_id_from_depool_event == active_election_id:
                     proxy_msig_addr = get_proxy_addr_from_depool_event()
                     logging.info('PROXY ADDR: %s' % proxy_msig_addr)
@@ -220,9 +223,6 @@ while True:
                     logging.info('END BEFORE: %s' % (elections_end_before))
                     validators_elected_for = validators_elected_for()
                     logging.info('VALIDATORS ELECTED FOR: %s' % (validators_elected_for))
-                    second_tick_tock_delay = int(validators_elected_for) - (int(elections_start_before) + int(
-                        elections_end_before)) + int(elections_end_before) + 1000
-                    logging.info('SECOND TICK TOCK DELAY: %s' % second_tick_tock_delay)
                     logging.info('SUBMITTING STAKE')
                     submit_stake()
                     logging.info('STAKE IS SUBMITTED')
@@ -233,7 +233,7 @@ while True:
                         logging.info('SAVE ACTIVE-ELECTION-ID TO active-election-id-submitted FILE')
                 else:
                     logging.error("ACTIVE_ELECTION_ID_FROM_DEPOOL_EVENT %s DOESNT MATCH TO ACTIVE_ELECTION_ID %s" % (int(active_election_id_from_depool_event), active_election_id))
-                    time.sleep(6000)
+                    time.sleep(300)
                     continue
             elif int(active_election_id) == 0:
                 logging.info('NO ACTIVE ELECTIONS')

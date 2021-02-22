@@ -17,7 +17,10 @@ apt-get update && apt-get install -y \
     automake \
     clang \
     git \
+    python3-pip \
     jq
+
+pip3 install jmespath
 
 # This script downloads latest version but 1.45.2 was tested by TONLabs
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y 
