@@ -1,4 +1,4 @@
 ---
 - import_tasks: install_node_exporter.yml
   tags:
-    - node_exporter_install
+    - install
