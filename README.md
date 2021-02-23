@@ -140,23 +140,23 @@ cd FreeTON-Rust-Node
     ```
 4. Execute start script depending on required action
 ```
-./start.sh --remote-user root --action install   # installation
-./start.sh --remote-user root --action reinstall # changes keys, configs, variables, restarts systemd services
-./start.sh --remote-user root --action upgrade   # build or download new release
+./start.sh --remote-user ubuntu --action install   # installation
+./start.sh --remote-user ubuntu --action reinstall # changes keys, configs, variables, restarts systemd services
+./start.sh --remote-user ubuntu --action upgrade   # build or download new release
 ```
 5. Follow prompts
 
 It is also possible to use Ansible directly without start.sh and interactive output. Examples:
 ```
 # Rustnode
-ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --private-key <keypath> --tags install ansible/rustonde.yml
-ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --private-key <keypath> --tags reinstall ansible/rustonde.yml
-ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --private-key <keypath> --tags upgrade ansible/rustonde.yml
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/rustonde.yml
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags reinstall ansible/rustonde.yml
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags upgrade ansible/rustonde.yml
 
 # Monitoring server
-ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --private-key <keypath> --tags install ansible/monitoring-server.yml
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/monitoring-server.yml
 ``` 
-NOTE: user can be root. In this case no need to use "--become --become-method=sudo"
+NOTE: user can be root. In this case no need to use "--become --become-method=sudo --ask-become-pass"
 
 ## Variables
 
