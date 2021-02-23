@@ -30,7 +30,7 @@ else
     echo "OS is not supported"
   fi
 
-  echo 'Please enter what do you want to install: '
+  echo "Please enter what do you want to $4: "
   options=("Rust Node" "Monitoring Server")
   select opt in "${options[@]}"
   do
