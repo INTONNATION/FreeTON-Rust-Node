@@ -130,7 +130,6 @@ cd FreeTON-Rust-Node
     
     [rustnode]
     131.11.89.30 ansible_connection=local
-    
     ```
     4. Example hosts file if running only Rust node locally (don't forget do disable remote logging in variables section):
     ```
@@ -138,7 +137,6 @@ cd FreeTON-Rust-Node
     
     [rustnode]
     131.11.89.30 ansible_connection=local
-    
     ```
 4. Execute start script depending on required action
 ```
