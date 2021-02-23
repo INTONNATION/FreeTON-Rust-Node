@@ -1,0 +1,8 @@
+- name: rustnode
+  hosts: rustnode
+  roles:
+   - pre-install
+   - nodeexporter
+#   - statsd # disable metrics for Rust Cup. Degradates performance
+   - rustnode
+   - rustvalidator

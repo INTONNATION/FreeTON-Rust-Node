@@ -86,8 +86,7 @@ Ubuntu 18.04
 
 1. Free TON Rust node server with public IP and system requirements described above.
 2. **Optional** monitoring server with public IP and system requirements described above.
-3. Ansible installed. Recommended version 2.9.9. (Can be skipped in case of Quick start)
-4. Depool or multisig with enough funds to stake:
+3. Depool or multisig with enough funds to stake:
 
     1. **Preferable**. For a depool validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in 0 chain, a depool in 0 chain, put files msig.keys.json and helper.keys.json to keys directory and configure msig_addr and helper_addr in ansible/group_vars/rustnode env file.
         Documentation: [Run DePool v3](https://docs.ton.dev/86757ecb2/p/04040b-run-depool-v3)
@@ -95,40 +94,69 @@ Ubuntu 18.04
     2. For direct staking validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in -1 chain, put file msig.keys.json to keys directory and configure msig_addr in ansible/group_vars/rustnode env file.
         Documentation: [Multisignature Wallet Management in TONOS-CLI](https://docs.ton.dev/86757ecb2/p/94921e-multisignature-wallet-management-in-tonos-cli)
 
-## Quick start
+## Getting started
 
-1. Clone project repository 
+There are 2 methods of installation - from remote host and locally. The only difference will be in hosts file configuration described below. If you are going to run start.sh from remote host, Operating System should be also Ubuntu. For Mac OS you should install Ansible yourself and use it directly without start.sh.
+
+Scripts support optional monitoring server installation to be able to get statistic about TON node and server. It's required to setup it on a separate VM to avoid performance degradation.
+
+1. Clone project repository (on either remote host or locally)
 ```
 git clone https://github.com/INTONNATION/FreeTON-Rust-Node.git
 cd FreeTON-Rust-Node
 ```
 2. Configure variables in ansible/group_vars (refer to Variables section)
-3. Execute start scripts (remote user should be root)
+3. Configure hosts file. Put public IP address under rustnode and optionally under monitoring server section. Examples:
+    1. Example hosts file if running Rust node and monitoring-server remotely:
+    ```
+    [monitoring-server]
+    64.221.146.31
+    
+    [rustnode]
+    131.11.89.30
+    ```
+    2. Example hosts file if running Rust node locally with remote monitoring-server:
+    ```
+    [monitoring-server]
+    64.221.146.31 
+    
+    [rustnode]
+    131.11.89.30 ansible_connection=local
+    ```
+    3. Example hosts file if running Rust node and monitoring server locally (**not recommended**):
+    ```
+    [monitoring-server]
+    131.11.89.30 ansible_connection=local
+    
+    [rustnode]
+    131.11.89.30 ansible_connection=local
+    ```
+    4. Example hosts file if running only Rust node locally (don't forget do disable remote logging in variables section):
+    ```
+    [monitoring-server]
+    
+    [rustnode]
+    131.11.89.30 ansible_connection=local
+    ```
+4. Execute start script depending on required action
 ```
-./start.sh
+./start.sh --remote-user ubuntu --action install   # installation
+./start.sh --remote-user ubuntu --action reinstall # changes keys, configs, variables, restarts systemd services
+./start.sh --remote-user ubuntu --action upgrade   # build or download new release
 ```
-4. Follow prompts
+5. Follow prompts
 
-## Advanced start
+It is also possible to use Ansible directly without start.sh and interactive output. Examples:
+```
+# Rustnode
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/rustonde.yml
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags reinstall ansible/rustonde.yml
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags upgrade ansible/rustonde.yml
 
-1. Configure variables in ansible/group_vars (refer to Variables section)
-2. Configure hosts in hosts file
-3. Configure execution flow in run.yml
-4. Run playbook
-```
-ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t install
-```
-
-## Manage node
-
-1. Restart. With this tag ansible playbook will be reinstalled from scratch with all databases and configs cleanup.
-```
-ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t restart
-```
-2. Upgrade. With this tag ansible playbook will download the latest release of Rust node and Rust console from project github or build source code on remote VM dependinf on vars in ansible/group_vars/rustnode, install it and restart systemd services.  
-```
-ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t upgrade
-```
+# Monitoring server
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/monitoring-server.yml
+``` 
+NOTE: user can be root. In this case no need to use "--become --become-method=sudo --ask-become-pass"
 
 ## Variables
 
@@ -166,7 +194,7 @@ All variables are described inside env files under ansible/group_vars/ directory
 
 ## Build
 
-Installation scripts support remote source code build of the [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) and [ton-labs-node-tools](https://github.com/tonlabs/ton-labs-node-tools) or alternatively downloading already compiled binaries from Github releases inside this repository(**Preferable**). By skipping remote builds you will be able to automatically upgrade validator nodes without performance degradation on remote nodes. INTONNATION team will take responsibility to build and release compiled binaries for each [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) stable release. We recommend to star this project to receive notification about new rustnode releases.
+Installation scripts support remote source code build of the [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) and [ton-labs-node-tools](https://github.com/tonlabs/ton-labs-node-tools) or alternatively downloading already compiled binaries from Github releases inside this repository(**Preferable**). NOTE: current builds don't contain metrcis feature to avoid performance degradation in Rust Cup. By skipping remote builds you will be able to automatically upgrade validator nodes without performance degradation on remote nodes. INTONNATION team will take responsibility to build and release compiled binaries for each [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) stable release. We recommend to star this project to receive notification about new rustnode releases.
 It’s possible to set a specific version or use the latest available code from the master branch. To choose scripts behaviour you can use _build: true/false _variable (refer to Variables section)
 Build procedure described in scripts/build.sh. Release procedure described in .github/workflows/[main.yml](https://github.com/INTONNATION/FreeTON-Rust-Node/blob/main/.github/workflows/main.yml).
 

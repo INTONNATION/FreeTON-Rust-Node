@@ -1,0 +1,4 @@
+- name: monitoring-server
+  hosts: monitoring-server
+  roles:
+    - monitoring-server

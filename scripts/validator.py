@@ -68,7 +68,7 @@ def cli_get_recover_amount_fift(elector_addr: str, msig_addr_hex: str):
 def console_check():
     console_check_result=subprocess.check_output('console -C %s/console.json -c getstats | grep timediff | awk \'{print $2}\' | tr -d \',\'' % (configs_dir), encoding='utf-8', shell=True)
     if "Error" in console_check_result or "error" in console_check_result:
-        logging.error('CONSOLE CHECK FAILS')
+        logging.error('CONSOLE CHECK FAILS. CONNECTION REFUSED. NODE IS NOT UP YET.')
     return console_check_result
 
 def console_recover_stake():
