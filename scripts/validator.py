@@ -194,7 +194,7 @@ while True:
         logging.info('VALIDATOR MODE: %s' % validator)
         logging.info('CHECK IF CONSOLE WORKS')
         console_check_result=console_check()
-        while int(console_check_result) > 10:
+        while int(console_check_result) > 50:
             logging.info('CONSOLE CHECK FAILED. NODE IS NOT SYNCED YET. SLEEP 5m')
             time.sleep(600)
         logging.info('CONSOLE CHECK SUCCEEDED')
