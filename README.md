@@ -95,40 +95,59 @@ Ubuntu 18.04
     2. For direct staking validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in -1 chain, put file msig.keys.json to keys directory and configure msig_addr in ansible/group_vars/rustnode env file.
         Documentation: [Multisignature Wallet Management in TONOS-CLI](https://docs.ton.dev/86757ecb2/p/94921e-multisignature-wallet-management-in-tonos-cli)
 
-## Quick start
+## Getting started
 
-1. Clone project repository 
+There are 2 methods of installation - from remote host and locally. The only difference will be in hosts file configuration described below. If you are going to run start.sh from remote host, Operating System should be also Ubuntu. 
+
+Scripts support optional monitoring server installation to be able to get statistic about TON node and server. It's required to setup it on a separate VM to avoid performance degradation.
+
+1. Clone project repository (on either remote host or locally)
 ```
 git clone https://github.com/INTONNATION/FreeTON-Rust-Node.git
 cd FreeTON-Rust-Node
 ```
 2. Configure variables in ansible/group_vars (refer to Variables section)
-3. Execute start scripts (remote user should be root)
+3. Configure hosts file. Put public IP address under rustnode and optionally under monitoring server section. Examples:
+    1. Example hosts file if running Rust node and monitoring-server remotely:
 ```
-./start.sh
-```
-4. Follow prompts
+[monitoring-server]
+64.221.146.31
 
-## Advanced start
+[rustnode]
+131.11.89.30
+```
+    2. Example hosts file if running Rust node locally with remote monitoring-server:
+```
+[monitoring-server]
+64.221.146.31 
 
-1. Configure variables in ansible/group_vars (refer to Variables section)
-2. Configure hosts in hosts file
-3. Configure execution flow in run.yml
-4. Run playbook
+[rustnode]
+131.11.89.30 ansible_connection=local
 ```
-ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t install
+    3. Example hosts file if running Rust node and monitoring server locally (**not recommended**):
 ```
+[monitoring-server]
+131.11.89.30 ansible_connection=local
 
-## Manage node
+[rustnode]
+131.11.89.30 ansible_connection=local
 
-1. Restart. With this tag ansible playbook will be reinstalled from scratch with all databases and configs cleanup.
 ```
-ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t restart
+    4. Example hosts file if running only Rust node locally (don't forget do disable remote logging in variables section):
 ```
-2. Upgrade. With this tag ansible playbook will download the latest release of Rust node and Rust console from project github or build source code on remote VM dependinf on vars in ansible/group_vars/rustnode, install it and restart systemd services.  
+[monitoring-server]
+
+[rustnode]
+131.11.89.30 ansible_connection=local
+
 ```
-ansible-playbook -u root --private-key <ssh key> -i hosts run.yml -t upgrade
+4. Execute start script depending on required action
 ```
+./start.sh --remote-user root --action install   # installation
+./start.sh --remote-user root --action reinstall # changes keys, configs, variables, restarts systemd services
+./start.sh --remote-user root --action upgrade   # build or download new release
+```
+5. Follow prompts
 
 ## Variables
 
