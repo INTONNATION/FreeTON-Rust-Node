@@ -109,38 +109,38 @@ cd FreeTON-Rust-Node
 2. Configure variables in ansible/group_vars (refer to Variables section)
 3. Configure hosts file. Put public IP address under rustnode and optionally under monitoring server section. Examples:
     1. Example hosts file if running Rust node and monitoring-server remotely:
-```
-[monitoring-server]
-64.221.146.31
-
-[rustnode]
-131.11.89.30
-```
+    ```
+    [monitoring-server]
+    64.221.146.31
+    
+    [rustnode]
+    131.11.89.30
+    ```
     2. Example hosts file if running Rust node locally with remote monitoring-server:
-```
-[monitoring-server]
-64.221.146.31 
-
-[rustnode]
-131.11.89.30 ansible_connection=local
-```
+    ```
+    [monitoring-server]
+    64.221.146.31 
+    
+    [rustnode]
+    131.11.89.30 ansible_connection=local
+    ```
     3. Example hosts file if running Rust node and monitoring server locally (**not recommended**):
-```
-[monitoring-server]
-131.11.89.30 ansible_connection=local
-
-[rustnode]
-131.11.89.30 ansible_connection=local
-
-```
+    ```
+    [monitoring-server]
+    131.11.89.30 ansible_connection=local
+    
+    [rustnode]
+    131.11.89.30 ansible_connection=local
+    
+    ```
     4. Example hosts file if running only Rust node locally (don't forget do disable remote logging in variables section):
-```
-[monitoring-server]
-
-[rustnode]
-131.11.89.30 ansible_connection=local
-
-```
+    ```
+    [monitoring-server]
+    
+    [rustnode]
+    131.11.89.30 ansible_connection=local
+    
+    ```
 4. Execute start script depending on required action
 ```
 ./start.sh --remote-user root --action install   # installation

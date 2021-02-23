@@ -2,7 +2,7 @@
   hosts: rustnode
   roles:
    - pre-install
-#   - nodeexporter
+   - nodeexporter
 #   - statsd # disable metrics for Rust Cup. Degradates performance
-#   - rustnode
-#   - rustvalidator
+   - rustnode
+   - rustvalidator
