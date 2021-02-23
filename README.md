@@ -86,8 +86,7 @@ Ubuntu 18.04
 
 1. Free TON Rust node server with public IP and system requirements described above.
 2. **Optional** monitoring server with public IP and system requirements described above.
-3. Ansible installed. Recommended version 2.9.9. (Can be skipped in case of Quick start)
-4. Depool or multisig with enough funds to stake:
+3. Depool or multisig with enough funds to stake:
 
     1. **Preferable**. For a depool validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in 0 chain, a depool in 0 chain, put files msig.keys.json and helper.keys.json to keys directory and configure msig_addr and helper_addr in ansible/group_vars/rustnode env file.
         Documentation: [Run DePool v3](https://docs.ton.dev/86757ecb2/p/04040b-run-depool-v3)
@@ -185,7 +184,7 @@ All variables are described inside env files under ansible/group_vars/ directory
 
 ## Build
 
-Installation scripts support remote source code build of the [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) and [ton-labs-node-tools](https://github.com/tonlabs/ton-labs-node-tools) or alternatively downloading already compiled binaries from Github releases inside this repository(**Preferable**). By skipping remote builds you will be able to automatically upgrade validator nodes without performance degradation on remote nodes. INTONNATION team will take responsibility to build and release compiled binaries for each [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) stable release. We recommend to star this project to receive notification about new rustnode releases.
+Installation scripts support remote source code build of the [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) and [ton-labs-node-tools](https://github.com/tonlabs/ton-labs-node-tools) or alternatively downloading already compiled binaries from Github releases inside this repository(**Preferable**). NOTE: current builds don't contain metrcis feature to avoid performance degradation in Rust Cup. By skipping remote builds you will be able to automatically upgrade validator nodes without performance degradation on remote nodes. INTONNATION team will take responsibility to build and release compiled binaries for each [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) stable release. We recommend to star this project to receive notification about new rustnode releases.
 It’s possible to set a specific version or use the latest available code from the master branch. To choose scripts behaviour you can use _build: true/false _variable (refer to Variables section)
 Build procedure described in scripts/build.sh. Release procedure described in .github/workflows/[main.yml](https://github.com/INTONNATION/FreeTON-Rust-Node/blob/main/.github/workflows/main.yml).
 
