@@ -90,11 +90,9 @@ helper_addr: "8531841c073538f501a2543e1b197f4c0d5431f2f279dd22d294d2314db1efd2" 
 logging:
   rustnode:
     remote:
-      enabled: false                            # if true, will send logs to monitoring server specified in inventory hostname, false - to node file system.
-      #addr: ""                                 # defaults to monitoring-server inventory hostname
+      enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - to node file system.
     level:
-      root: debug # possible error warn info debug trace off
+      root: debug                               # possible error warn info debug trace off
   validator:
     remote:
-      enabled: false                            # if true, will send logs to monitoring server specified in inventory hostname, false - node to file system.
-      #addr: ""          
+      enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - node to file system.
