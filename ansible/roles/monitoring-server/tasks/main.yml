@@ -12,29 +12,33 @@
 
 - name: "Create /opt dir"
   shell: 'mkdir -p /opt'
-  tags: install,up
+  tags: install,reinstall
 
 - name: "Copy build files"
   copy:
     src: '.'
     dest: '/opt/{{ role_name }}/'
     mode: 0755
-  tags: install,up
+  tags: reinstall,install
 
 - name: "Template docker-compose.yml"
   template:
     src: 'docker-compose.yml'
     dest: '/opt/{{ role_name }}'
     mode: 0755
-  tags: install,up
+  tags: reinstall,install
 
 - name: "Template prometheus.yml"
   template:
     src: 'prometheus.yml'
     dest: '/opt/{{ role_name }}/prometheus'
     mode: 0755
-  tags: install,up
+  tags: reinstall,install
+
+- name: "Shut down docker-compose"
+  shell: 'cd /opt/{{ role_name }} && docker-compose down'
+  tags: reinstall
 
 - name: "Run docker-compose"
   shell: 'cd /opt/{{ role_name }} && docker-compose up -d'
-  tags: install,up
+  tags: reinstall,install
