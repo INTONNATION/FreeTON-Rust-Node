@@ -3,7 +3,8 @@
 build: false
 
 # this section is required in case of build:false
-release_version: "latest"                    # Release from Github releases | now linked to TON node commit id or may be latest 
+release_version: "d182731"                   # Release from Github releases. May be equal to TON node commit ID or latest.
+                                             # Use commit id + "-metrics" to download release with metrics feature. Example d182731-metrics
 git_repo: "INTONNATION/FreeTON-Rust-Node"    # Github repo with releases
 
 # this section is required in case of build:true
