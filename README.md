@@ -138,7 +138,7 @@ cd FreeTON-Rust-Node
     [rustnode]
     131.11.89.30 ansible_connection=local
     ```
-4. Execute start script depending on required action
+4. Execute start script depending on required action, where --remote-user is an already created user on remote server(can be root) for Ansible ssh connection.
 ```
 ./start.sh --remote-user ubuntu --action install   # installation
 ./start.sh --remote-user ubuntu --action reinstall # changes keys, configs, variables, restarts systemd services
@@ -146,7 +146,7 @@ cd FreeTON-Rust-Node
 ```
 5. Follow prompts
 
-It is also possible to use Ansible directly without start.sh and interactive output. Examples:
+It is also possible to use Ansible directly without start.sh and interactive output. "-u ubuntu" is an already created user on remote server for Ansible ssh connection. In case of "-u root" there is no need to use "--become --become-method=sudo --ask-become-pass".
 ```
 # Rustnode
 ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/rustonde.yml
@@ -156,7 +156,6 @@ ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-p
 # Monitoring server
 ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/monitoring-server.yml
 ``` 
-NOTE: user can be root. In this case no need to use "--become --become-method=sudo --ask-become-pass"
 
 ## Variables
 
@@ -165,7 +164,7 @@ All variables are described inside env files under ansible/group_vars/ directory
 ## Features
 
 *   Easy install with help of _start.sh_
-*   Validator script written on Python (supports Singe and Depool validation(**Preferable**))
+*   Validator script written on Python (supports Single and Depool validation(**Preferable**))
 *   Validator script controlled by systemd (Cron job failures can be disastrous! **NO CRON** anymore!)
 *   No need to have additional tick tock script (all validator logic in one place)
 *   Embedded RUST validator node release management or remote build from any commit
