@@ -30,7 +30,7 @@ else
     echo "OS is not supported"
   fi
 
-  echo 'Please enter what do you want to install: '
+  echo "Please enter what do you want to $4: "
   options=("Rust Node" "Monitoring Server")
   select opt in "${options[@]}"
   do
@@ -50,21 +50,42 @@ else
   export ANSIBLE_HOST_KEY_CHECKING=False
   echo 'Please enter connection method: '
   options=("SSH key" "SSH password")
-  select opt in "${options[@]}"
-  do
-    case $opt in
-      "SSH key")
-          read -p "Enter path to your SSH key: " keypath
-          echo "Start installation..."
-          ansible-playbook -i hosts -u $username --become --become-method=sudo --private-key $keypath --tags $action ansible/$yml.yml
-          break
-          ;;
-      "SSH password")
-          echo "Start installation..."
-          ansible-playbook -i hosts -u $username --become --become-method=sudo -k --tags $action ansible/$yml.yml
-          break
-          ;;
-      *) echo "invalid option $REPLY";;
-    esac
-  done
+  if [ $username = "root" ]
+  then
+    select opt in "${options[@]}"
+    do
+      case $opt in
+        "SSH key")
+            read -p "Enter path to your SSH key: " keypath
+            echo "Start installation..."
+            ansible-playbook -i hosts -u $username --private-key $keypath --tags $action ansible/$yml.yml
+            break
+            ;;
+        "SSH password")
+            echo "Start installation..."
+            ansible-playbook -i hosts -u $username -k --tags $action ansible/$yml.yml
+            break
+            ;;
+        *) echo "invalid option $REPLY";;
+      esac
+    done
+  else
+    select opt in "${options[@]}"
+    do
+      case $opt in
+        "SSH key")
+            read -p "Enter path to your SSH key: " keypath
+            echo "Start installation..."
+            ansible-playbook -i hosts -u $username --become --become-method=sudo --ask-become-pass --private-key $keypath --tags $action ansible/$yml.yml
+            break
+            ;;
+        "SSH password")
+            echo "Start installation..."
+            ansible-playbook -i hosts -u $username --become --become-method=sudo --ask-become-pass -k --tags $action ansible/$yml.yml
+            break
+            ;;
+        *) echo "invalid option $REPLY";;
+      esac
+    done
+  fi
 fi
