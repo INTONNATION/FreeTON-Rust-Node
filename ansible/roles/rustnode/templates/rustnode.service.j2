@@ -8,7 +8,7 @@ LimitNOFILE=1024000
 LimitNOFILESoft=1024000
 User=rustnode
 Type=simple
-ExecStart=/bin/bash -c "/usr/local/bin/ton_node --configs /etc/rustnode --ckey \"$(cat "{{ rustnode_conf_dir }}/console.pub")\" {% if logging.rustnode.remote.enabled %} | /usr/bin/logger -n {{ logging.rustnode.remote.addr | default(hostvars[groups['monitoring-server'][0]]['inventory_hostname']) }} -P 1514 -T --rfc5424 --octet-count{% endif %}"
+ExecStart=/bin/bash -c "/usr/local/bin/ton_node --configs {{ rustnode_conf_dir }} --ckey \"$(cat "{{ rustnode_conf_dir }}/console.pub")\" {% if logging.rustnode.remote.enabled %} | /usr/bin/logger -n {{ logging.rustnode.remote.addr | default(hostvars[groups['monitoring-server'][0]]['inventory_hostname']) }} -P 1514 -T --rfc5424 --octet-count{% endif %}"
 Restart=on-failure
 
 [Install]
