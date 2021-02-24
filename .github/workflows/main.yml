@@ -16,7 +16,7 @@ jobs:
       TON_NODE_TOOLS_GITHUB_COMMIT_ID: "34f25ca"
       TONOS_CLI_GITHUB_REPO: "https://github.com/tonlabs/tonos-cli.git"
       TONOS_CLI_GITHUB_COMMIT_ID: "master"
-      TON_NODE_BUILD_ARGS: "--release"
+      TON_NODE_BUILD_ARGS: "--release --features metrics"
 
     steps:
     - uses: actions/checkout@v2
