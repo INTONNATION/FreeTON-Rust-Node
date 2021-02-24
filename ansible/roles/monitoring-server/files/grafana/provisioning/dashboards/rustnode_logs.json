@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 8,
-  "iteration": 1613479015360,
+  "iteration": 1614163155248,
   "links": [],
   "panels": [
     {
@@ -89,7 +89,7 @@
       "id": 2,
       "options": {
         "showLabels": false,
-        "showTime": false,
+        "showTime": true,
         "sortOrder": "Descending",
         "wrapLogMessage": false
       },
@@ -314,9 +314,10 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "ovh02",
-          "value": "ovh02"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
         },
         "datasource": "Loki",
         "definition": "label_values(nodehost)",
@@ -325,25 +326,9 @@
         "label": "Node",
         "multi": false,
         "name": "node",
-        "options": [
-          {
-            "selected": false,
-            "text": "ns3174448",
-            "value": "ns3174448"
-          },
-          {
-            "selected": false,
-            "text": "ovh01rustnetfrnk",
-            "value": "ovh01rustnetfrnk"
-          },
-          {
-            "selected": true,
-            "text": "ovh02",
-            "value": "ovh02"
-          }
-        ],
+        "options": [],
         "query": "label_values(nodehost)",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -356,7 +341,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -375,5 +360,5 @@
   "timezone": "",
   "title": "Rustnode logs",
   "uid": "FZ9nXDYGk",
-  "version": 22
+  "version": 27
 }

@@ -138,7 +138,7 @@ cd FreeTON-Rust-Node
     [rustnode]
     131.11.89.30 ansible_connection=local
     ```
-4. Execute start script depending on required action
+4. Execute start script depending on required action, where --remote-user is an already created user on remote server(can be root) for Ansible ssh connection.
 ```
 ./start.sh --remote-user ubuntu --action install   # installation
 ./start.sh --remote-user ubuntu --action reinstall # changes keys, configs, variables, restarts systemd services
@@ -146,7 +146,7 @@ cd FreeTON-Rust-Node
 ```
 5. Follow prompts
 
-It is also possible to use Ansible directly without start.sh and interactive output. Examples:
+It is also possible to use Ansible directly without start.sh and interactive output. "-u ubuntu" is an already created user on remote server for Ansible ssh connection. In case of "-u root" there is no need to use "--become --become-method=sudo --ask-become-pass".
 ```
 # Rustnode
 ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/rustonde.yml
@@ -156,7 +156,6 @@ ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-p
 # Monitoring server
 ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/monitoring-server.yml
 ``` 
-NOTE: user can be root. In this case no need to use "--become --become-method=sudo --ask-become-pass"
 
 ## Variables
 
@@ -165,7 +164,7 @@ All variables are described inside env files under ansible/group_vars/ directory
 ## Features
 
 *   Easy install with help of _start.sh_
-*   Validator script written on Python (supports Singe and Depool validation(**Preferable**))
+*   Validator script written on Python (supports Single and Depool validation(**Preferable**))
 *   Validator script controlled by systemd (Cron job failures can be disastrous! **NO CRON** anymore!)
 *   No need to have additional tick tock script (all validator logic in one place)
 *   Embedded RUST validator node release management or remote build from any commit
@@ -194,7 +193,7 @@ All variables are described inside env files under ansible/group_vars/ directory
 
 ## Build
 
-Installation scripts support remote source code build of the [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) and [ton-labs-node-tools](https://github.com/tonlabs/ton-labs-node-tools) or alternatively downloading already compiled binaries from Github releases inside this repository(**Preferable**). NOTE: current builds don't contain metrcis feature to avoid performance degradation in Rust Cup. By skipping remote builds you will be able to automatically upgrade validator nodes without performance degradation on remote nodes. INTONNATION team will take responsibility to build and release compiled binaries for each [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) stable release. We recommend to star this project to receive notification about new rustnode releases.
+Installation scripts support remote source code build of the [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) and [ton-labs-node-tools](https://github.com/tonlabs/ton-labs-node-tools) or alternatively downloading already compiled binaries from Github releases inside this repository(**Preferable**). NOTE: There are 2 kind of builds - with metrics feature enabled and disables. Build without metrics is recommended for Rust Cup. By skipping remote builds you will be able to automatically upgrade validator nodes without performance degradation on remote nodes. INTONNATION team will take responsibility to build and release compiled binaries for each [tonlabs-rust-node](https://github.com/tonlabs/ton-labs-node) stable release. We recommend to star this project to receive notification about new rustnode releases.
 It’s possible to set a specific version or use the latest available code from the master branch. To choose scripts behaviour you can use _build: true/false _variable (refer to Variables section)
 Build procedure described in scripts/build.sh. Release procedure described in .github/workflows/[main.yml](https://github.com/INTONNATION/FreeTON-Rust-Node/blob/main/.github/workflows/main.yml).
 

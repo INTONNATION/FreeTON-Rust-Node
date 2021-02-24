@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 12,
-  "iteration": 1613479022136,
+  "iteration": 1614162737729,
   "links": [],
   "panels": [
     {
@@ -89,7 +89,7 @@
       "id": 2,
       "options": {
         "showLabels": false,
-        "showTime": false,
+        "showTime": true,
         "sortOrder": "Descending",
         "wrapLogMessage": false
       },
@@ -132,8 +132,8 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "ovh02",
-          "value": "ovh02"
+          "text": "htz01",
+          "value": "htz01"
         },
         "datasource": "Loki",
         "definition": "label_values(rustnode)",
@@ -142,20 +142,9 @@
         "label": "Node",
         "multi": false,
         "name": "node",
-        "options": [
-          {
-            "selected": false,
-            "text": "ovh01rustnetfrnk",
-            "value": "ovh01rustnetfrnk"
-          },
-          {
-            "selected": true,
-            "text": "ovh02",
-            "value": "ovh02"
-          }
-        ],
+        "options": [],
         "query": "label_values(rustnode)",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -187,5 +176,5 @@
   "timezone": "",
   "title": "Validator logs",
   "uid": "validator",
-  "version": 6
+  "version": 9
 }
