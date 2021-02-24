@@ -15,4 +15,4 @@
     state: "started"
     name: "statsd-exporter"
     daemon_reload: yes
-  tags: start
+  tags: install,start
