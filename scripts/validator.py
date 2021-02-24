@@ -227,6 +227,7 @@ while True:
                 continue
             else:
                 break
+        logging.info('CONSOLE CHECK SUCCEEDED')
         if validator == 'depool':
             active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
             logging.info('ACTIVE ELECTION ID FROM DEPOOL EVENT: %s' % active_election_id_from_depool_event)
