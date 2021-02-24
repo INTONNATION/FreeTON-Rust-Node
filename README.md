@@ -144,7 +144,7 @@ cd FreeTON-Rust-Node
 ./start.sh --remote-user ubuntu --action reinstall # changes keys, configs, variables, restarts systemd services
 ./start.sh --remote-user ubuntu --action upgrade   # build or download new release
 ```
-**NOTE**: Use **install** for the first installation, **reinstall** in case of upgrading variables, keys or configs, **upgrade** in case of new release or build.  
+**NOTE**: use **install** for the first installation. **reinstall** in case of 2nd and so on, this action will upgrade variables, keys and configs. **upgrade** in case of new release or build.  
 5. Follow prompts
 
 It is also possible to use Ansible directly without start.sh and interactive output. "-u ubuntu" is an already created user on remote server for Ansible ssh connection. In case of "-u root" there is no need to use "--become --become-method=sudo --ask-become-pass".
