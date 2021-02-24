@@ -101,32 +101,32 @@ def cli_get_active_election_id(elector_addr: str):
     return active_election_id
 
 def validators_elected_for():
-    validators_elected_for = subprocess.check_output(
+    validators_elected_for_internal = subprocess.check_output(
         'cat %s/global_config_15_raw | grep "validators_elected_for" | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
         encoding='utf-8',
         shell=True)
-    return(validators_elected_for)
+    return(validators_elected_for_internal)
 
 def stake_held_for():
-    stake_held_for = subprocess.check_output(
+    stake_held_for_internal = subprocess.check_output(
         'cat %s/global_config_15_raw | grep stake_held_for | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
         encoding='utf-8',
         shell=True)
-    return(stake_held_for)
+    return stake_held_for_internal
 
 def elections_start_before():
-    elections_start_before = subprocess.check_output(
+    elections_start_before_internal = subprocess.check_output(
         'cat %s/global_config_15_raw | grep elections_start_before | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
         encoding='utf-8',
         shell=True)
-    return(elections_start_before)
+    return(elections_start_before_internal)
 
 def elections_end_before():
     elections_end_before_internal = subprocess.check_output(
         'cat %s/global_config_15_raw | grep elections_end_before | awk \'{print $2}\' | tr -d \',\'' % configs_dir,
         encoding='utf-8',
         shell=True)
-    return(elections_end_before_internal)
+    return elections_end_before_internal
 
 def console_create_elector_request(election_start):
     subprocess.check_output('tonos-cli getconfig 15 > %s/global_config_15_raw' % configs_dir, encoding='utf-8',
@@ -222,11 +222,11 @@ while True:
                     logging.info('PROXY ADDR: %s' % proxy_msig_addr)
                     add_proxy_addr_to_console(proxy_msig_addr)
                     logging.info('PROXY ADDR ADDED TO console.json')
-                    elections_start_before = console_create_elector_request(active_election_id)
-                    logging.info('START BEFORE: %s' % (elections_start_before))
+                    elections_start_before_global = console_create_elector_request(active_election_id)
+                    logging.info('START BEFORE: %s' % (elections_start_before_global))
                     elections_end_before_global = elections_end_before()
                     logging.info('END BEFORE: %s' % (elections_end_before_global))
-                    validators_elected_for = validators_elected_for()
+                    validators_elected_for_global = validators_elected_for()
                     logging.info('VALIDATORS ELECTED FOR: %s' % (validators_elected_for))
                     logging.info('SUBMITTING STAKE')
                     submit_stake()
