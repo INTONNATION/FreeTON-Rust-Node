@@ -96,7 +96,7 @@ Ubuntu 18.04
 
 ## Getting started
 
-There are 2 methods of installation - from remote host and locally. The only difference will be in hosts file configuration described below. If you are going to run start.sh from remote host, Operating System should be also Ubuntu. For Mac OS you should install Ansible yourself and use it directly without start.sh.
+There are 2 methods of installation - from a remote host and locally. The only difference will be in hosts file configuration described below. If you are going to run start.sh from a remote host, Operating System should be also Ubuntu. For Mac OS you should install Ansible yourself and use it directly without start.sh.
 
 Scripts support optional monitoring server installation to be able to get statistic about TON node and server. It's required to setup it on a separate VM to avoid performance degradation.
 
@@ -115,7 +115,7 @@ cd FreeTON-Rust-Node
     [rustnode]
     131.11.89.30
     ```
-    2. Example hosts file if running Rust node locally with remote monitoring-server:
+    2. Example hosts file if running Rust node locally with a remote monitoring-server:
     ```
     [monitoring-server]
     64.221.146.31 
@@ -138,7 +138,7 @@ cd FreeTON-Rust-Node
     [rustnode]
     131.11.89.30 ansible_connection=local
     ```
-4. Execute start script depending on required action, where --remote-user is an already created user on remote server(can be root) for Ansible ssh connection.
+4. Execute start script depending on required action, where --remote-user is an already created user on a remote server(can be root) for Ansible ssh connection.
 ```
 ./start.sh --remote-user ubuntu --action install   # installation
 ./start.sh --remote-user ubuntu --action reinstall # changes keys, configs, variables, restarts systemd services
@@ -147,7 +147,7 @@ cd FreeTON-Rust-Node
 **NOTE**: use **install** for the first installation. **reinstall** in case of 2nd and so on, this action will upgrade variables, keys and configs. **upgrade** in case of new release or build.  
 5. Follow prompts
 
-It is also possible to use Ansible directly without start.sh and interactive output. "-u ubuntu" is an already created user on remote server for Ansible ssh connection. In case of "-u root" there is no need to use "--become --become-method=sudo --ask-become-pass".
+It is also possible to use Ansible directly without start.sh and interactive output. "-u ubuntu" is an already created user on a remote server for Ansible ssh connection. In case of "-u root" there is no need to use "--become --become-method=sudo --ask-become-pass".
 ```
 # Rustnode
 ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/rustonde.yml
