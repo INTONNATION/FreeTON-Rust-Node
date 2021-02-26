@@ -7,6 +7,7 @@
    - "{{ scripts_dir }}"
   tags:
    - upgrade
+   - reinstall
 
 - name: create rust user group
   group:
@@ -25,6 +26,7 @@
   tags:
    - install
    - upgrade
+   - reinstall
 
 - name: Copy scripts to remote
   copy:
@@ -37,7 +39,11 @@
   tags: 
     - install
     - upgrade
+    - reinstall
 
 - name: Install dependencies
   shell: '{{ scripts_dir }}/install_deps.sh'
-  tags: install
+  tags:
+    - install
+    - upgrade
+    - reinstall
