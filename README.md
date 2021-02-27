@@ -107,17 +107,17 @@ cd FreeTON-Rust-Node
 ```
 2. Configure variables in ansible/group_vars (refer to Variables section)
 3. Configure hosts file. Put public IP address under rustnode and optionally under monitoring server section. Examples:
-    1. Example hosts file if running Rust node and monitoring-server remotely:
+    1. Example hosts file if running Rust node and monitoring_server remotely:
     ```
-    [monitoring-server]
+    [monitoring_server]
     64.221.146.31
     
     [rustnode]
     131.11.89.30
     ```
-    2. Example hosts file if running Rust node locally with remote monitoring-server:
+    2. Example hosts file if running Rust node locally with remote monitoring_server:
     ```
-    [monitoring-server]
+    [monitoring_server]
     64.221.146.31 
     
     [rustnode]
@@ -125,7 +125,7 @@ cd FreeTON-Rust-Node
     ```
     3. Example hosts file if running Rust node and monitoring server locally (**not recommended**):
     ```
-    [monitoring-server]
+    [monitoring_server]
     131.11.89.30 ansible_connection=local
     
     [rustnode]
@@ -133,7 +133,7 @@ cd FreeTON-Rust-Node
     ```
     4. Example hosts file if running only Rust node locally (don't forget do disable remote logging in variables section):
     ```
-    [monitoring-server]
+    [monitoring_server]
     
     [rustnode]
     131.11.89.30 ansible_connection=local
@@ -155,7 +155,7 @@ ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-p
 ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags upgrade ansible/rustonde.yml
 
 # Monitoring server
-ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/monitoring-server.yml
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/monitoring_server.yml
 ``` 
 
 ## Variables
@@ -208,11 +208,11 @@ Monitoring server installation includes metrics and logs aggregation, parsing, v
 
 Each component of the monitoring system have an info/view panel, which can be accessible using the following URLs:
 
-* **Grafana** - http://[monitoring-server-ip]:3000/
-* **Prometheus** - http://[monitoring-server-ip]:9090/
-* **Loki** - http://[monitoring-server-ip]:3100/
-* **Promtail** - http://[monitoring-server-ip]:9080/
-* **Alertmanager** - http://[monitoring-server-ip]:9090/
+* **Grafana** - http://[monitoring_server_ip]:3000/
+* **Prometheus** - http://[monitoring_server_ip]:9090/
+* **Loki** - http://[monitoring_server_ip]:3100/
+* **Promtail** - http://[monitoring_server_ip]:9080/
+* **Alertmanager** - http://[monitoring_server_ip]:9090/
 
 Default credentials should be configured in group_vars/monitoring_server variables file.
 

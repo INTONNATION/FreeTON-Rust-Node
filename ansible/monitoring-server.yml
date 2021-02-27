@@ -1,5 +1,5 @@
 ---
-- name: monitoring-server
-  hosts: monitoring-server
+- name: monitoring_server
+  hosts: monitoring_server
   roles:
-    - monitoring-server
+    - monitoring_server

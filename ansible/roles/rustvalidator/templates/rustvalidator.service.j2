@@ -19,7 +19,7 @@ Environment="TONOSCLI_CONFIG={{ rustvalidator_conf_dir }}/tonos-cli.conf.json"
 
 User=rustvalidator
 Type=simple
-ExecStart=/bin/bash -c "/usr/bin/python3   {{ scripts_dir }}/validator.py {% if logging.validator.remote.enabled %} | /usr/bin/logger -n {{ logging.validator.remote.addr | default(hostvars[groups['monitoring-server'][0]]['inventory_hostname']) }} -P 1514 -T --rfc5424 --octet-count{% endif %}"
+ExecStart=/bin/bash -c "/usr/bin/python3   {{ scripts_dir }}/validator.py {% if logging.validator.remote.enabled %} | /usr/bin/logger -n {{ logging.validator.remote.addr | default(hostvars[groups['monitoring_server'][0]]['inventory_hostname']) }} -P 1514 -T --rfc5424 --octet-count{% endif %}"
 Restart=on-failure
 
 [Install]
