@@ -40,7 +40,7 @@ else
             break
   	    ;;
           "Monitoring Server")
-            yml="monitoring_server"
+            yml="monitoring-server"
   	    break
   	    ;;
           *) echo "invalid option $REPLY";;
