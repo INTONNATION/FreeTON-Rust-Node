@@ -155,7 +155,7 @@ ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-p
 ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags upgrade ansible/rustonde.yml
 
 # Monitoring server
-ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/monitoring_server.yml
+ansible-playbook -i hosts -u ubuntu --become --become-method=sudo --ask-become-pass --private-key <keypath> --tags install ansible/monitoring-server.yml
 ``` 
 
 ## Variables
