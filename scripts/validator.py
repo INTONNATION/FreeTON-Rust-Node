@@ -197,7 +197,7 @@ while True:
         while True:
             console_check_result=console_check()
             if int(console_check_result) > 50:
-                logging.info('CONSOLE CHECK FAILED. NODE IS NOT SYNCED YET. SLEEP 5m')
+                logging.error('CONSOLE CHECK FAILED. NODE IS NOT SYNCED. SLEEP 5m')
                 time.sleep(600)
                 continue
             else:
