@@ -10,6 +10,12 @@
    - install
    - upgrade
 
+- name: Ugly fix for non-root systemd user
+  shell: "mkdir -p /node_db && chmod -R ugo+rw /node_db"
+  tags:
+   - install
+   - reinstall
+
 - name: Create rustnode user
   user:
     name: rustnode

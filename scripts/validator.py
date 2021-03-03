@@ -67,8 +67,6 @@ def cli_get_recover_amount_fift(elector_addr: str, msig_addr_hex: str):
 
 def console_check():
     console_check_result=subprocess.check_output('console -C %s/console.json -c getstats | grep timediff | awk \'{print $2}\' | tr -d \',\'' % (configs_dir), encoding='utf-8', shell=True)
-    if "Error" in console_check_result or "error" in console_check_result:
-        logging.error('CONSOLE CHECK FAILS')
     return console_check_result
 
 def console_recover_stake():
@@ -193,12 +191,19 @@ def submit_stake():
 while True:
     try:
         logging.info('VALIDATOR MODE: %s' % validator)
-        logging.info('CHECK IF CONSOLE WORKS')
         while True:
             console_check_result=console_check()
+            if console_check_result == "":
+                logging.info('CHECK IF NODE IS AVAILABLE')
+                logging.error('CONNECTION REFUSED. SLEEP 5m')
+                time.sleep(300)
+                continue
+            else:
+                logging.info('NODE IS UP AND RUNNING')
             if int(console_check_result) > 50:
-                logging.error('CONSOLE CHECK FAILED. NODE IS NOT SYNCED. SLEEP 5m')
-                time.sleep(600)
+                logging.info('CHECK SYNC STATUS')
+                logging.error('NODE IS NOT SYNCED. SLEEP 5m')
+                time.sleep(300)
                 continue
             else:
                 break

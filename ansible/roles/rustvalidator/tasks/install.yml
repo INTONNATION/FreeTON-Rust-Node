@@ -102,7 +102,7 @@
     - reinstall
 
 - name: Prepare console.json
-  shell: "cp -r {{ rustnode_conf_dir }}/console.json {{ rustvalidator_conf_dir }}/"
+  shell: "cp -r {{ rustnode_conf_dir }}/console.json {{ rustvalidator_conf_dir }}/ && chown -R rustvalidator: {{ rustvalidator_conf_dir }}/console.json"
   tags:
     - install
     - reinstall
