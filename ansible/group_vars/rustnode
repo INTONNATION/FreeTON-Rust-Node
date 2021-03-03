@@ -1,5 +1,5 @@
 
-# if true - all bins will be built remotely. If false - downloaded from Github releases. 
+# if true - all bins will be built remotely. If false - downloaded from Github releases.
 build: false
 
 # this section is required in case of build:false
@@ -71,7 +71,7 @@ config_abi_depool_helper_url: "https://raw.githubusercontent.com/tonlabs/ton-lab
 # DEV NET ADDRS
 #msig_addr: "12658a2ea3dc3fe0ad34de2a8c364568adb4a01c8ee8e2dc08779afabd502816"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
 #elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
-#depool_addr: "edd4f0dbf5d4181599e31690468689bc3d8bab4ce082aeb5b78f1fd08809366a"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
+#depool_addr: "edd4f0dbf5d4181599e31690468689bc3d8bab4ce082aeb5b78f1fd08809366a"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0.
 #helper_addr: "16e11bf2bd853841be8eebbbae3b7e7599d9e5b2aee879cd9468477c89373f16"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # RUST NET ADDRS | DEPOOL 01
@@ -83,16 +83,16 @@ helper_addr: "8531841c073538f501a2543e1b197f4c0d5431f2f279dd22d294d2314db1efd2" 
 # RUST NET ADDRS | DEPOOL 02
 #msig_addr: "4000610da7d7f89b92cd64212e5b983d9ccac9938333174f352a5b3c416997c4"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
 #elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
-#depool_addr: "8fba61cbf5df181736bf41640217dee4eef453d7dc0b2c0a095a5590ffa2c225"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
+#depool_addr: "8fba61cbf5df181736bf41640217dee4eef453d7dc0b2c0a095a5590ffa2c225"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0.
 #helper_addr: "31b2f1c4c2c889d1b9b4586c36a1ed8fc153b154ac63c35676b7f2a1dfa516e4"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # Logging configuration section
 logging:
   rustnode:
     remote:
-      enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - to node file system.
+      enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring_server], false - to node file system.
     level:
       root: debug                               # possible error warn info debug trace off
   validator:
     remote:
-      enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - node to file system.
+      enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring_server], false - node to file system.

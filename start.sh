@@ -9,7 +9,7 @@ else
 
   username=$2
   action=$4
-  
+
   if python -mplatform|grep "Ubuntu"
     then
      echo "OS is Ubuntu"
@@ -25,7 +25,7 @@ else
           echo "\nFor run this playbook you need Ansible"
           exit 1
        fi
-    fi  
+    fi
   else
     echo "OS is not supported"
   fi
@@ -46,7 +46,7 @@ else
           *) echo "invalid option $REPLY";;
       esac
   done
-  
+
   export ANSIBLE_HOST_KEY_CHECKING=False
   echo 'Please enter connection method: '
   options=("SSH key" "SSH password")
