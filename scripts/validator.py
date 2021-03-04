@@ -140,7 +140,6 @@ def console_create_elector_request(election_start):
     logging.info('CONSOLE_CREATE_ELECTOR_REQUEST: ELECTED FOR: %s' % validators_elected_for_local)
     election_stop = (int(election_start) + 1000 + int(elections_start_before_local) + int(elections_end_before_local) + int(
         stake_held_for_local) + int(validators_elected_for_local))
-    logging.info('CONSOLE_CREATE_ELECTOR_REQUEST: ')
     request = subprocess.check_output(
         'cd %s && console -C console.json -c "election-bid %s %s"' % (configs_dir, election_start, election_stop),
         encoding='utf-8', shell=True)
@@ -232,7 +231,7 @@ while True:
                     elections_end_before_global = elections_end_before()
                     logging.info('END BEFORE: %s' % (elections_end_before_global))
                     validators_elected_for_global = validators_elected_for()
-                    logging.info('VALIDATORS ELECTED FOR: %s' % (validators_elected_for))
+                    logging.info('VALIDATORS ELECTED FOR: %s' % (validators_elected_for_global))
                     logging.info('SUBMITTING STAKE')
                     submit_stake()
                     logging.info('STAKE IS SUBMITTED')
@@ -283,8 +282,8 @@ while True:
                 logging.info('ALREADY SUBMITTED OR NOT ACTIVE ELECTIONS')
         else:
             logging.error('VALIDATOR MUST BE depool OR single!')
-        time.sleep(60)
+        time.sleep(180)
     except Exception as e:
         print(e)
         logging.error('VALIDATOR SCRIPT FAILS')
-        time.sleep(60)
+        time.sleep(180)
