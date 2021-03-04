@@ -192,20 +192,21 @@ while True:
         logging.info('VALIDATOR MODE: %s' % validator)
         while True:
             console_check_result=console_check()
+            logging.info('CHECK IF NODE IS AVAILABLE')
             if console_check_result == "":
-                logging.info('CHECK IF NODE IS AVAILABLE')
                 logging.error('CONNECTION REFUSED. SLEEP 5m')
                 time.sleep(300)
                 continue
             else:
                 logging.info('NODE IS UP AND RUNNING')
-            if int(console_check_result) > 50:
-                logging.info('CHECK SYNC STATUS')
-                logging.error('NODE IS NOT SYNCED. SLEEP 5m')
-                time.sleep(300)
-                continue
-            else:
-                break
+                if int(console_check_result) > 50:
+                    logging.info('CHECK SYNC STATUS')
+                    logging.error('NODE IS NOT SYNCED. SLEEP 5m')
+                    time.sleep(300)
+                    continue
+                else:
+                    logging.error('NODE IS SYNCED')
+                    break
         logging.info('CONSOLE CHECK SUCCEEDED')
         if validator == 'depool':
             active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
