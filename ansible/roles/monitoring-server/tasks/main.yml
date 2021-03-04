@@ -1,9 +1,10 @@
+---
 - name: "Install docker"
-  shell: 'curl -fsSL https://get.docker.com | sh'
+  shell: 'which docker | grep -o docker || curl -fsSL https://get.docker.com | sh'
   tags: docker,install
 
 - name: "Install docker-compose"
-  shell: 'curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+  shell: 'which docker-compose | grep -o docker-compose || curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
   tags: docker,install
 
 - name: "Install docker-compose | chmod"
