@@ -88,8 +88,9 @@
     group: rust
     owner: rustvalidator
   when: validator == "depool"
-  with_fileglob:
-    - ../keys/*
+  with_items:
+    - ../keys/msig.keys.json
+    - ../keys/helper.keys.json
   tags:
     - install
     - reinstall
