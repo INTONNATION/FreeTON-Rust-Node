@@ -86,9 +86,11 @@
     dest: "{{ rustvalidator_conf_dir }}"
     mode: 0775
     group: rust
+    owner: rustvalidator
   when: validator == "depool"
-  with_fileglob:
-    - ../keys/*
+  with_items:
+    - ../keys/msig.keys.json
+    - ../keys/helper.keys.json
   tags:
     - install
     - reinstall
@@ -110,6 +112,8 @@
   get_url:
     url: "{{ item.key }}"
     dest: "{{ rustvalidator_conf_dir }}/{{ item.value }}"
+    group: rust
+    owner: rustvalidator
   with_items:
     - { "key": "{{ config_abi_safemultisig_url }}","value": "SafeMultisigWallet.abi.json" }
     - { "key": "{{ config_abi_elector_url }}","value": "Elector.abi.json" }
@@ -123,6 +127,8 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
+    group: rust
+    owner: rustvalidator
   with_items:
     - {"src": "rustvalidator.service.j2", "dest": "/etc/systemd/system/rustvalidator.service"}
   tags:

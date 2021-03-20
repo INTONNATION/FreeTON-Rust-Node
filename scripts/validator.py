@@ -50,6 +50,7 @@ def tick_tock():
     subprocess.check_output(
         'tonos-cli call %s sendTicktock {} --abi %s/DePoolHelper.abi.json --sign %s/helper.keys.json' % (
             helper_addr, configs_dir, configs_dir), encoding='utf-8', shell=True)
+    logging.info("TICK TOCK WAS SEND")
 
 def cli_get_recover_amount(elector_addr: str, msig_addr_hex: str):
     recover_amount = subprocess.check_output(
@@ -205,7 +206,7 @@ while True:
                     time.sleep(300)
                     continue
                 else:
-                    logging.error('NODE IS SYNCED')
+                    logging.info('NODE IS SYNCED')
                     break
         logging.info('CONSOLE CHECK SUCCEEDED')
         if validator == 'depool':
@@ -219,10 +220,22 @@ while True:
             except:
                 submitted_election_id = 0
             if int(active_election_id) != 0 and int(active_election_id) != int(submitted_election_id):
-                logging.info('SENDING TICK TOCK')
-                tick_tock()
-                time.sleep(300)
                 if active_election_id_from_depool_event == active_election_id:
+                    logging.info('SENDING TICK TOCK')
+                    tick_tock()
+                    logging.info("WAIT 3 mins")
+                    time.sleep(180)
+                    logging.info("3 mins IS OVER")
+                    active_election_id_from_depool_event = cli_get_active_election_id_from_depool_event()
+                    logging.info('ACTIVE ELECTION ID FROM DEPOOL EVENT AFTER TICK TOCK: %s' % active_election_id_from_depool_event)
+                    active_election_id = cli_get_active_election_id(elector_addr)
+                    logging.info('ACTIVE ELECTION ID AFTER TICK TOCK: %s' % active_election_id)
+                else:
+                    logging.error("ACTIVE_ELECTION_ID_FROM_DEPOOL_EVENT %s DOESNT MATCH TO ACTIVE_ELECTION_ID %s" % (int(active_election_id_from_depool_event), active_election_id))
+                    time.sleep(300)
+                    continue
+                if active_election_id_from_depool_event == active_election_id:
+                    logging.info("GETTING PROXY ADDR")
                     proxy_msig_addr = get_proxy_addr_from_depool_event()
                     logging.info('PROXY ADDR: %s' % proxy_msig_addr)
                     add_proxy_addr_to_console(proxy_msig_addr)
