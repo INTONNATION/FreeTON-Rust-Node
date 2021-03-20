@@ -1,6 +1,6 @@
 # keys for msig and helper
 *.keys.json
-hosts.me
+hosts
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
