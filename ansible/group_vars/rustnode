@@ -75,16 +75,16 @@ config_abi_depool_helper_url: "https://raw.githubusercontent.com/tonlabs/ton-lab
 #helper_addr: "16e11bf2bd853841be8eebbbae3b7e7599d9e5b2aee879cd9468477c89373f16"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # RUST NET ADDRS | DEPOOL 01
-msig_addr: "30e16bb655b7ec69f1d541f3c5b3498d2c3616e8c946c2188e6a52a541401786"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
-elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
-depool_addr: "cd90f7be62b92362b9f0a0aae7d51ef895b9c8483c5fcb7c0eaed49ec58de864"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0.
-helper_addr: "8531841c073538f501a2543e1b197f4c0d5431f2f279dd22d294d2314db1efd2"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
+#msig_addr: "6dfb5225b7021df8050b9b0a993812d84cc4905d876a528ab8a582a3275c6c09"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
+#elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
+#depool_addr: "685d581d4b0a44e8d97b407066a7f623b062ad8165d8aa153eb8e6c246929dbc"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0.
+#helper_addr: "949797c0013cedf9533a7b85ed09f321cda848b9f49bc319103a3eba6a9dc080"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # RUST NET ADDRS | DEPOOL 02
-#msig_addr: "4000610da7d7f89b92cd64212e5b983d9ccac9938333174f352a5b3c416997c4"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
-#elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
-#depool_addr: "8fba61cbf5df181736bf41640217dee4eef453d7dc0b2c0a095a5590ffa2c225"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
-#helper_addr: "31b2f1c4c2c889d1b9b4586c36a1ed8fc153b154ac63c35676b7f2a1dfa516e4"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
+msig_addr: "d236e83ee6080b3596f7bed91cb014add1191e3eb8fe4af9f5786bee6bbfe87f"     # !!! without WC. MSIG should be deployed to both 0 and -1 if validator:single. To 0 only if validator:depool.
+elector_addr: "3333333333333333333333333333333333333333333333333333333333333333"  # !!! without WC. Used if validator:depool. Deployed to -1.
+depool_addr: "3027d3cd87a45f5466edb5248d39ef98cfdb79c8f8ac0fb00ef7c7da0fe9e5c9"   # !!! without WC. Used if validator:depool. Depool should be deployed to 0. 
+helper_addr: "3433535aaf54ca8e9e38d7418c5595d602e1e9f0c7994c1a096169bd4be42c5a"   # !!! without WC. Used if validator:depool. Depool helper should be deployed to 0.
 
 # Logging configuration section
 logging:
@@ -92,7 +92,7 @@ logging:
     remote:
       enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - to node file system.
     level:
-      root: debug                               # possible error warn info debug trace off
+      root: "off"                               # possible error warn info debug trace off
   validator:
     remote:
-      enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - node to file system.
+      enabled: true                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - node to file system.
