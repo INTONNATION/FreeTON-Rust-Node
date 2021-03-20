@@ -45,15 +45,15 @@ groups:
     annotations:
       summary: "Node time diff has not changed last 10 min"
       description: "Node sync diff has not changed for the last 10 minutes {{ $value}}. Reported by instance {{ $labels.instance }}"
-// Disabled for Rust Cup
-//  - alert: No metrics from rust node
-//    expr: absent(rnode_last_applied_mc_block{job="statsdexporter"}) == 1
-//    for: 30s
-//    labels:
-//      severity: warning
-//    annotations:
-//      summary: "No metrics from rust node"
-//      description: "No metrics from rust node {{ $value}}. Reported by instance {{ $labels.instance }}"
+# Disabled for Rust Cup
+#  - alert: No metrics from rust node
+#    expr: absent(rnode_last_applied_mc_block{job="statsdexporter"}) == 1
+#    for: 30s
+#    labels:
+#      severity: warning
+#    annotations:
+#      summary: "No metrics from rust node"
+#      description: "No metrics from rust node {{ $value}}. Reported by instance {{ $labels.instance }}"
   - alert: Rust node service down
     expr: node_systemd_unit_state{job="nodeexporter",name="rustnode.service",state="active"} == 0
     for: 30s
