@@ -220,7 +220,7 @@ while True:
             except:
                 submitted_election_id = 0
             if int(active_election_id) != 0 and int(active_election_id) != int(submitted_election_id):
-                if active_election_id_from_depool_event == active_election_id:
+                if active_election_id_from_depool_event != active_election_id:
                     logging.info('SENDING TICK TOCK')
                     tick_tock()
                     logging.info("WAIT 3 mins")
@@ -231,8 +231,8 @@ while True:
                     active_election_id = cli_get_active_election_id(elector_addr)
                     logging.info('ACTIVE ELECTION ID AFTER TICK TOCK: %s' % active_election_id)
                 else:
-                    logging.error("ACTIVE_ELECTION_ID_FROM_DEPOOL_EVENT %s DOESNT MATCH TO ACTIVE_ELECTION_ID %s" % (int(active_election_id_from_depool_event), active_election_id))
-                    time.sleep(300)
+                    logging.error("ACTIVE_ELECTION_ID_FROM_DEPOOL_EVENT %s equal TO ACTIVE_ELECTION_ID %s, ticktock was sent earlier" % (int(active_election_id_from_depool_event), active_election_id))
+                    time.sleep(60)
                     continue
                 if active_election_id_from_depool_event == active_election_id:
                     logging.info("GETTING PROXY ADDR")
