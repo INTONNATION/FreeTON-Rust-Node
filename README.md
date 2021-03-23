@@ -88,10 +88,10 @@ Ubuntu 18.04
 2. **Optional** monitoring server with public IP and system requirements described above.
 3. Depool or multisig with enough funds to stake:
 
-    1. **Preferable**. For a depool validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in 0 chain, a depool in 0 chain, put files msig.keys.json and helper.keys.json to keys directory and configure msig_addr and helper_addr in ansible/group_vars/rustnode env file.
+    1. **Preferable**. For a depool validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in 0 chain, a depool in 0 chain, create keys directory in root of this project, put files msig.keys.json and helper.keys.json into it and configure msig_addr and helper_addr in ansible/group_vars/rustnode env file.
         Documentation: [Run DePool v3](https://docs.ton.dev/86757ecb2/p/04040b-run-depool-v3)
 
-    2. For direct staking validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in -1 chain, put file msig.keys.json to keys directory and configure msig_addr in ansible/group_vars/rustnode env file.
+    2. For direct staking validator it is necessary to create and deploy a validator [SafeMultisig](https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig) wallet in -1 chain, create keys directory in root of this project, put file msig.keys.json into it and configure msig_addr in ansible/group_vars/rustnode env file.
         Documentation: [Multisignature Wallet Management in TONOS-CLI](https://docs.ton.dev/86757ecb2/p/94921e-multisignature-wallet-management-in-tonos-cli)
 
 ## Getting started
