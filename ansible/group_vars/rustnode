@@ -100,4 +100,4 @@ logging:
       root: "off"                               # possible error warn info debug trace off
   validator:
     remote:
-      enabled: true                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - node to file system.
+      enabled: false                            # if true, will send logs to monitoring server specified in hosts file [monitoring-server], false - node to file system.
