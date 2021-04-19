@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       TON_NODE_GITHUB_REPO: "https://github.com/tonlabs/ton-labs-node.git"
-      TON_NODE_GITHUB_COMMIT_ID: "14b184f"
+      TON_NODE_GITHUB_COMMIT_ID: "1213c05"
       TON_NODE_TOOLS_GITHUB_REPO: "https://github.com/tonlabs/ton-labs-node-tools.git"
-      TON_NODE_TOOLS_GITHUB_COMMIT_ID: "187fbd0"
+      TON_NODE_TOOLS_GITHUB_COMMIT_ID: "16cab3d"
       TONOS_CLI_GITHUB_REPO: "https://github.com/tonlabs/tonos-cli.git"
       TONOS_CLI_GITHUB_COMMIT_ID: "master"
       TON_NODE_BUILD_ARGS: "--release"
