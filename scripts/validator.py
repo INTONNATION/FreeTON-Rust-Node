@@ -233,7 +233,6 @@ while True:
                 else:
                     logging.error("ACTIVE_ELECTION_ID_FROM_DEPOOL_EVENT %s equal TO ACTIVE_ELECTION_ID %s, ticktock was sent earlier" % (int(active_election_id_from_depool_event), active_election_id))
                     time.sleep(60)
-                    continue
                 if active_election_id_from_depool_event == active_election_id:
                     logging.info("GETTING PROXY ADDR")
                     proxy_msig_addr = get_proxy_addr_from_depool_event()
